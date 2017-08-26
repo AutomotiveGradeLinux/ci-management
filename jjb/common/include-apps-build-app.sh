@@ -63,6 +63,12 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
           sleep 2
           # if not reset, we leave it to master
         fi
+
+        # update git submodules
+        if test -f .gitmodules ; then
+           git submodule init && git submodule update
+        fi
+
         git log -1 --pretty=oneline
 
         # Fixme: use aglbuild script
