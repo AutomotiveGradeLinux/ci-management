@@ -77,7 +77,7 @@
           description: "patchset # to build"
       - string:
           name: AGLBRANCH
-          default: '{aglbranch}'
+          default: 'master'
           description: "AGL release branch to use"
     build-discarder:
       days-to-keep: 30
@@ -113,18 +113,22 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH=master
             - name: 'ci-apps-{project}-verify-master-CIB-aarch64'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH=master
             - name: 'ci-apps-{project}-verify-master-CIB-x86-64'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH=master
             - name: 'ci-apps-{project}-verify-dab-CIB-arm'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH=dab
             #- name: 'ci-apps-{project}-verify-dab-CIB-aarch64'  # does not exist in dab
             #  current-parameters: true
             #  #abort-all-job: true
@@ -133,6 +137,7 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH=dab
       - multijob:
           name: CIB-{project}-finish-success
           condition: SUCCESSFUL
