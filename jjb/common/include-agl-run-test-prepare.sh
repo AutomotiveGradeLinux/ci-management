@@ -12,6 +12,12 @@ set -x
 
 cd $REPODIR
 
+# clone repo for templates and related utils, add to $PATH for later use
+git clone --branch release https://git.automotivelinux.org/AGL/releng-scripts
+if [ -e releng-scripts/utils ]; then
+    export PATH=$PATH:$PWD/releng-scripts/utils
+fi
+
 ls -alhR meta-agl/templates/machine/${MACHINE}
 
 #### Find out if machine can be tested.
