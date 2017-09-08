@@ -15,11 +15,15 @@
         #= dra7xx-evm
     project:
       - agl-service-bluetooth
+      - agl-service-geoclue
+      - agl-service-gps
+      - agl-service-mediascanner
+      - agl-service-radio
       - agl-service-steering-wheel
       - agl-service-wifi
+      - als-meter-demo
       - controls
       - dashboard
-      - home
       - homescreen
       - hvac
       - low-level-can-service
