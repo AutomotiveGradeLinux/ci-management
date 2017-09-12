@@ -92,27 +92,27 @@
           projects:
             - name: 'ci-platform-{project}-verify-CIB-porter-nogfx'
               current-parameters: true
-              abort-all-job: true
+              #abort-all-job: true
               kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-intel-corei7-64'
               current-parameters: true
-              abort-all-job: true
+              #abort-all-job: true
               kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-raspberrypi3'
               current-parameters: true
-              abort-all-job: true
+              #abort-all-job: true
               kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-dra7xx-evm'
               current-parameters: true
-              abort-all-job: true
+              #abort-all-job: true
               kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-qemux86-64'
               current-parameters: true
-              abort-all-job: true
+              #abort-all-job: true
               kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-m3ulcb-nogfx'
               current-parameters: true
-              abort-all-job: true
+              #abort-all-job: true
               kill-phase-on: FAILURE
       - multijob:
           name: CIB-{project}-finish-success
@@ -120,7 +120,7 @@
           projects:
             - name: 'ci-platform-{project}-verify-CIB-finish-success'
               current-parameters: true
-              abort-all-job: true
+              #abort-all-job: true
               kill-phase-on: FAILURE
               # - multijob:
               #     name: 'CIBT-{project}-start'
