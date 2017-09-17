@@ -128,20 +128,20 @@
               #abort-all-job: true
               kill-phase-on: FAILURE
               predefined-parameters: AGLBRANCH=master
-            - name: 'ci-apps-{project}-verify-dab-CIB-arm'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
-              predefined-parameters: AGLBRANCH=dab
+            #- name: 'ci-apps-{project}-verify-dab-CIB-arm'
+            #  current-parameters: true
+            #  #abort-all-job: true
+            #  kill-phase-on: FAILURE
+            #  predefined-parameters: AGLBRANCH=dab
             #- name: 'ci-apps-{project}-verify-dab-CIB-aarch64'  # does not exist in dab
             #  current-parameters: true
             #  #abort-all-job: true
             #  kill-phase-on: FAILURE
-            - name: 'ci-apps-{project}-verify-dab-CIB-x86-64'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
-              predefined-parameters: AGLBRANCH=dab
+            #- name: 'ci-apps-{project}-verify-dab-CIB-x86-64'
+            #  current-parameters: true
+            #  #abort-all-job: true
+            #  kill-phase-on: FAILURE
+            #  predefined-parameters: AGLBRANCH=dab
       - multijob:
           name: CIB-{project}-finish-success
           condition: SUCCESSFUL
