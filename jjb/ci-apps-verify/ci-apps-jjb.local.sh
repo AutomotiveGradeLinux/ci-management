@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #set -x
-
+export AGLBRANCH=master
 export GERRIT_REFSPEC="refs/changes/51/9551/2"
 export GERRIT_PROJECT="apps/mediaplayer"
-export GERRIT_CHANGE_NUMBER="9551"
-export GERRIT_PATCHSET_NUMBER="2"
-export GERRIT_PATCHSET_REVISION="f3ddc376291262a6b305cc2b0a52792abdc7c85c"
+export GERRIT_CHANGE_NUMBER="10799"
+export GERRIT_PATCHSET_NUMBER="1"
+export GERRIT_PATCHSET_REVISION="1a1ff962da92aff5a1d3e757710c725e03238458"
 export GERRIT_HOST="gerrit.automotivelinux.org"
 export GERRIT_PORT="29418"
 
@@ -22,23 +22,17 @@ done
 
 source env.save
 
-#set -x
-#export GERRIT_REFSPEC=\"$GERRIT_REFSPEC\"
-#export GERRIT_PROJECT=\"$GERRIT_PROJECT\"
-#export GERRIT_CHANGE_NUMBER=\"$GERRIT_CHANGE_NUMBER\"
-#export GERRIT_PATCHSET_NUMBER=\"$GERRIT_PATCHSET_NUMBER\"
-#export GERRIT_PATCHSET_REVISION=\"$GERRIT_PATCHSET_REVISION\"
-#export GERRIT_HOST=\"$GERRIT_HOST\"
-#export GERRIT_PORT=\"$GERRIT_PORT\"
 rm -rf ~/agl-sdk || true
 
 . ../common/include-apps-header.sh
 . ../common/include-apps-fetch-install-sdk.sh
 . ../common/include-apps-build-app.sh
-. ../common/include-apps-rsync-download-changeid.sh
-
-#"
+. ../common/include-apps-prepare-upload-folder.sh
+# do not really upload
+#. ../common/include-apps-rsync-download-changeid.sh
 
 popd
+
+ls -R UPLOAD
 
 done
