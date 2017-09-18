@@ -1,0 +1,32 @@
+---
+- project:
+    name: daily-jjb-doc
+    jobs:
+      - daily-jjb-doc-update
+
+- job-template:
+    name: 'daily-jjb-doc-update'
+    project-type: freestyle
+    concurrent: false
+    node: agl-test-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
+
+    build-discarder:
+      days-to-keep: 30
+      num-to-keep: 40
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+
+    triggers:
+      - timed: '@daily'
+
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell:
+          !include-raw-escape: include-doc-update.sh
+      - shell:
+          !include-raw-escape: include-doc-upload.sh
