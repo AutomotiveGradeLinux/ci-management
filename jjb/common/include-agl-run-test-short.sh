@@ -11,6 +11,20 @@ set -x
 echo "## ${MACHINE} ##"
 cd $REPODIR
 
+# WIP: use $RELENG for subset of boards
+__MACHINE=${MACHINE%-nogfx} # releng doesn't care
+if [ ! -z $RELENG ] && \
+       (( x$__MACHINE == x"qemux86-64" || \\
+	  x$__MACHINE == x"m3ulcb" )); then
+    CREATE_ARGS=""
+    [[ ! -z $GERRIT_CHANGE_NUMBER ]] && CREATE_ARGS+="-j $GERRIT_CHANGE_NUMBER "
+    [[ ! -z $GERRIT_PATCHSET_NUMBER ]] && CREATE_ARGS+="-i $GERRIT_PATCHSET_NUMBER "
+    [[ ! -z $TARGETIMAGE ]] && CREATE_ARGS+="--img-name $TARGETIMAGE --img-ext ext4.xz "
+    CREATE_ARGS+="--test smoke -- "
+    $RELENG/utils/create-jobs.py ${CREATE_ARGS} ${__MACHINE} > testjob.yaml
+    cat testjob.yaml
+else
+
 cat <<EOF > testjob.yaml
 # Your first LAVA JOB definition for a $MACHINE board
 device_type: @REPLACE_DEVICE_TYPE@
@@ -122,3 +136,4 @@ sed -i -e "s#@REPLACE_KERNEL_CMDLINE@#${DEVICE_KERNEL_CMDLINE}#g" testjob.yaml
 
 cat testjob.yaml
 
+fi

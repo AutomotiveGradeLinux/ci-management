@@ -13,9 +13,15 @@ set -x
 cd $REPODIR
 
 # clone repo for templates and related utils, add to $PATH for later use
-git clone --branch release https://git.automotivelinux.org/AGL/releng-scripts
+if [ ! -e releng-scripts ]; then
+    git clone --branch release https://git.automotivelinux.org/AGL/releng-scripts
+else
+    (cd releng-scripts; git remote update; git checkout -f origin/release)
+fi
+
 if [ -e releng-scripts/utils ]; then
     export PATH=$PATH:$PWD/releng-scripts/utils
+    RELENG=$PWD/releng-scripts
 fi
 
 ls -alhR meta-agl/templates/machine/${MACHINE}
@@ -78,4 +84,3 @@ set | grep DEVICE_
 
 # echo NEXT is rsync
 #exit 0
-
