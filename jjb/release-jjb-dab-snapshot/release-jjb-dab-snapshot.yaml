@@ -17,15 +17,15 @@
           description: "Project to build"
       - string:
           name: GERRIT_BRANCH
-          default: master
+          default: dab
           description: "branch to build"
       - string:
           name: GERRIT_REFSPEC
-          default: refs/tags/dab_3.99.1
+          default: refs/tags/dab_4.0.2
           description: "refspec to build"
       - string:
           name: RELEASE_VERSION
-          default: 3.99.1
+          default: 4.0.2
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH
@@ -46,6 +46,8 @@
             - raspberrypi3
             - dra7xx-evm
             - m3ulcb-nogfx
+            - dragonboard-410c
+            # for aarch64
       - axis:
           type: slave
           name: label
