@@ -24,6 +24,10 @@ if test x"chinook" = x"$AGLBRANCH" ; then
   SDKBASEURL="https://download.automotivelinux.org/AGL/release/chinook/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 fi
 if test x"dab" = x"$AGLBRANCH" ; then
+  if test x"dragonboard-410c" = x"$TARGETSDKMACHINE"; then
+      echo "Skipping dragonboard-410c/aarch64 .... "
+      exit 0
+  fi
   SDKBASEURL="https://download.automotivelinux.org/AGL/release/dab/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 fi
 
