@@ -90,7 +90,7 @@
     triggers:
       - gerrit-trigger-patch-submitted-manual-verified:
           name: 'apps/{project}'
-          branch: 'refs/heads/{aglbranch}'
+          branch: '{aglbranch}'
           silent: 'true'
     wrappers:
       - agl-infra-wrappers:
