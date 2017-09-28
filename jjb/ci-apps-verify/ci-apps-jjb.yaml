@@ -436,7 +436,7 @@
           name: CIB-{project}-{aglbranch}-finish-success
           condition: SUCCESSFUL
           projects:
-            - name: 'ci-apps-{project}-merge-{aglbranch}-CIB-finish-success'
+            - name: 'ci-apps-{project}-merge-{aglbranch}-finish-success'
               current-parameters: true
               abort-all-job: true
               kill-phase-on: FAILURE

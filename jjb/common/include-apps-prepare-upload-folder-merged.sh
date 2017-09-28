@@ -8,7 +8,7 @@ echo "#########################################"
 echo -e "\n\n\n"
 
 #failsafe
-if test x"" = x"${ALGBRANCH}" ; then
+if test x"" = x"${AGLBRANCH}" ; then
   echo "AGLBRANCH not defined"
   exit 1
 fi
