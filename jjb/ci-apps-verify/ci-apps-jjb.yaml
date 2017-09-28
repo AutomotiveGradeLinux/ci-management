@@ -22,8 +22,10 @@
       - agl-service-homescreen-2017
       - agl-service-mediascanner
       - agl-service-radio
+      - agl-service-soundmanager-2017
       - agl-service-steering-wheel
       - agl-service-wifi
+      - agl-service-windowmanager-2017
       - als-meter-demo
       - controls
       - dashboard
