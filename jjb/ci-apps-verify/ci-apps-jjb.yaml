@@ -6,6 +6,7 @@
       - dab
     architecture:
       - aarch64
+        #= dragonboard-410c (disabled for dab atm)
       - x86-64
         #= intel-corei7-64
         #= qemux86-64
@@ -16,7 +17,9 @@
     project:
       - agl-service-bluetooth
       - agl-service-geoclue
+      - agl-service-geofence
       - agl-service-gps
+      - agl-service-homescreen-2017
       - agl-service-mediascanner
       - agl-service-radio
       - agl-service-steering-wheel
@@ -40,6 +43,10 @@
       - ci-apps-{project}-verify-{aglbranch}-CIB-finish-success
       - ci-apps-{project}-verify-{aglbranch}-failure
       - ci-apps-{project}-remove-{aglbranch}-artifacts
+      - ci-apps-{project}-merge-{aglbranch}
+      - ci-apps-{project}-merge-{aglbranch}-{architecture}
+      - ci-apps-{project}-merge-{aglbranch}-finish-success
+      # currently unused templates
       # - ci-apps-{project}-verify-CIB-start
       # - ci-apps-{project}-verify-CIBT-start
       #- ci-apps-{project}-verify-CIBT-{architecture}
@@ -49,6 +56,7 @@
 ################################################################################################################################################################
 ################################################################################################################################################################
 
+################# VERIFY #################
 
 ################################################################################
 # ci-apps-{project}-verify  =  trigger from gerrit and control job
@@ -298,6 +306,258 @@
 
 
 
+################################################################################################################################################################
+################################################################################################################################################################
+
+################# REMOVE #################
+
+
+#####################################################
+# -remove-artifacts = merge/abandon, remove artifacts
+#####################################################
+- job-template:
+    name: 'ci-apps-{project}-remove-{aglbranch}-artifacts'
+    project-type: freestyle
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'apps/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: refs/heads/{aglbranch}
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "9551"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+      - openstack:
+          single-use: false
+    triggers:
+      - gerrit-trigger-silent-patch-merged-abandoned:
+          name: 'apps/{project}'
+          branch: 'refs/heads/{aglbranch}'
+    builders:
+      - shell:
+          !include-raw-escape:
+          - ../common/include-agl-remove-artifacts-changeid.sh
+
+
+
+
+
+################################################################################################################################################################
+################################################################################################################################################################
+
+################# MERGE #################
+
+################################################################################
+# ci-apps-{project}-merge  =  trigger from gerrit and control job
+################################################################################
+- job-template:
+    name: 'ci-apps-{project}-merge-{aglbranch}'
+    project-type: multijob
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'apps/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: 'refs/heads/{aglbranch}'
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    triggers:
+      - gerrit-trigger-silent-patch-merged:
+          name: 'apps/{project}'
+          branch: '{aglbranch}'
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - multijob:
+          name: CI-merge-{project}
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-apps-{project}-merge-{aglbranch}-arm'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH={aglbranch}
+            - name: 'ci-apps-{project}-merge-{aglbranch}-aarch64'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH={aglbranch}
+            - name: 'ci-apps-{project}-merge-{aglbranch}-x86-64'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH={aglbranch}
+      - multijob:
+          name: CIB-{project}-{aglbranch}-finish-success
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-apps-{project}-merge-{aglbranch}-CIB-finish-success'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+
+
+################################################################################
+# ci-apps-{project}-merge-CIB-{architecture}  =  build job per arch
+################################################################################
+- job-template:
+    name: 'ci-apps-{project}-merge-{aglbranch}-{architecture}'
+    project-type: freestyle
+    concurrent: true
+    node: agl-test-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'apps/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: refs/heads/{aglbranch}
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: ""
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: ""
+          description: "patchset # to build"
+      - string:
+          name: TARGETARCH
+          default: '{architecture}'
+          description: "Machine to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+      - openstack:
+          single-use: true
+
+    builders:
+      - shell:
+          # including from ../common into ci-apps-{project}-merge-{aglbranch}-CIB-{architecture}
+          !include-raw-escape:
+          - ../common/include-apps-header.sh
+          - ../common/include-apps-fetch-install-sdk.sh
+          - ../common/include-apps-build-app.sh
+          - ../common/include-apps-prepare-upload-folder-merged.sh
+          - ../common/include-apps-rsync-download-apprepo.sh
+
+    publishers:
+      - naginator:
+          rerun-unstable-builds: true
+          progressive-delay-increment: 5
+          progressive-delay-maximum: 15
+          max-failed-builds: 2
+          #regular-expression: "Unexpected termination of the channel"
+
+
+################################################################################
+# ci-apps-{project}-merge-finish-succcess  =  success, msg to gerrit
+################################################################################
+- job-template:
+    name: 'ci-apps-{project}-merge-{aglbranch}-finish-success'
+    project-type: freestyle
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'apps/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: 'refs/heads/{aglbranch}'
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - shell: |
+          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="Merge\ finished,\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/apps/{project}/\ ." || true
+
+
+
+
+
 
 
 
@@ -307,7 +567,7 @@
 
 
 ################################################################################################################################################################
-################################################################################################################################################################
+# ATTIC ###############################################################################################################################################################
 ################################################################################################################################################################
 ################################################################################################################################################################
 
@@ -528,54 +788,4 @@
 
 
 
-
-
-
-################################################################################
-################################################################################
-# -remove-artifacts = merge/abandon, remove artifacts and later trigger sstate
-################################################################################
-- job-template:
-    name: 'ci-apps-{project}-remove-{aglbranch}-artifacts'
-    project-type: freestyle
-    concurrent: true
-    node: control-slave
-    parameters:
-      - string:
-          name: GERRIT_PROJECT
-          default: 'apps/{project}'
-          description: "Project to build"
-      - string:
-          name: GERRIT_BRANCH
-          default: '{aglbranch}'
-          description: "branch to build"
-      - string:
-          name: GERRIT_REFSPEC
-          default: refs/heads/{aglbranch}
-          description: "refspec to build"
-      - string:
-          name: GERRIT_CHANGE_NUMBER
-          default: "9551"
-          description: "change # to build"
-      - string:
-          name: GERRIT_PATCHSET_NUMBER
-          default: "2"
-          description: "patchset # to build"
-    build-discarder:
-      days-to-keep: 30
-      artifact-days-to-keep: -1
-      artifact-num-to-keep: 5
-    wrappers:
-      - agl-infra-wrappers:
-          build-timeout: '{build-timeout}'
-      - openstack:
-          single-use: false
-    triggers:
-      - gerrit-trigger-silent-patch-merged-abandoned:
-          name: 'apps/{project}'
-          branch: 'refs/heads/{aglbranch}'
-    builders:
-      - shell:
-          !include-raw-escape:
-          - ../common/include-agl-remove-artifacts-changeid.sh
 

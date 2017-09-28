@@ -24,18 +24,9 @@ function dprint() {
     :
 }
 
-#export TARGETARCHALL="arm aarch64 x86-64"
-#set | grep arm
-#set | grep aarch64
-#set | grep x86-64
-
 echo "################################################################################"
 set | grep TARGETARCH
 echo "################################################################################"
-#if test x"" = x"${TARGETARCH}"; then
-#    export TARGETARCH="arm"
-#fi
-#set +x
 
 # finally cmdline arguments
 while getopts ":b:a:p:r:dvx" opt; do
