@@ -20,7 +20,12 @@ if [ ! -z $RELENG ] && \
     [[ ! -z $GERRIT_CHANGE_NUMBER ]] && CREATE_ARGS+="-j $GERRIT_CHANGE_NUMBER "
     [[ ! -z $GERRIT_PATCHSET_NUMBER ]] && CREATE_ARGS+="-i $GERRIT_PATCHSET_NUMBER "
     [[ ! -z $TARGETIMAGE ]] && CREATE_ARGS+="--img-name $TARGETIMAGE --img-ext ext4.xz "
-    CREATE_ARGS+="--test smoke -- "
+    BUILD_VERSION="AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
+    [[ -e output/repo-manifest-r.txt.sha1 ]] && BUILD_VERSION+="-$(cat output/repo-manifest-r.txt.sha1)"
+    CREATE_ARGS+="--name AGL-gerrit "
+    CREATE_ARGS+="--build-version $BUILD_VERSION "
+    CREATE_ARGS+="--callback lab-baylibre-legacy "
+    CREATE_ARGS+="--test all -- "
     $RELENG/utils/create-jobs.py ${CREATE_ARGS} ${__MACHINE} > testjob.yaml
     cat testjob.yaml
 else
