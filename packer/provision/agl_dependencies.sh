@@ -95,4 +95,7 @@ sudo gem install mdl
 # python markdown linter
 sudo pip install mdlint
 
+# releng-scripts needs latest (stable v2.9) jinja2
+sudo pip install --upgrade jinja2
+
 exit 0
