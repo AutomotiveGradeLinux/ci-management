@@ -14,8 +14,8 @@ cd $REPODIR
 # WIP: use $RELENG for subset of boards
 __MACHINE=${MACHINE%-nogfx} # releng doesn't care
 if [ ! -z $RELENG ] && \
-       (( x$__MACHINE == x"qemux86-64" || \
-	  x$__MACHINE == x"m3ulcb" )); then
+       [[ x$__MACHINE == x"qemux86-64" || \
+	  x$__MACHINE == x"m3ulcb" ]]; then
     CREATE_ARGS=""
     [[ ! -z $GERRIT_CHANGE_NUMBER ]] && CREATE_ARGS+="-j $GERRIT_CHANGE_NUMBER "
     [[ ! -z $GERRIT_PATCHSET_NUMBER ]] && CREATE_ARGS+="-i $GERRIT_PATCHSET_NUMBER "
