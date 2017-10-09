@@ -17,8 +17,8 @@ if [ ! -z $RELENG ] && \
        [[ x$__MACHINE == x"qemux86-64" || \
 	  x$__MACHINE == x"m3ulcb" ]]; then
     # releng-scripts depends on jinja2 >= 2.9
-    echo -n "## Check version of python-jinja2: "
-    pip list --format=legacy |grep -i jinja2
+    echo "## Check version of python-jinja2: "
+    pip show jinja2
     CREATE_ARGS=""
     [[ ! -z $GERRIT_CHANGE_NUMBER ]] && CREATE_ARGS+="-j $GERRIT_CHANGE_NUMBER "
     [[ ! -z $GERRIT_PATCHSET_NUMBER ]] && CREATE_ARGS+="-i $GERRIT_PATCHSET_NUMBER "
