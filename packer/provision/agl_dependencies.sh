@@ -96,6 +96,11 @@ sudo gem install mdl
 sudo pip install mdlint
 
 # releng-scripts needs latest (stable v2.9) jinja2
+sudo pip install --force-reinstall --ignore-installed jinja2
 sudo pip install --upgrade jinja2
+
+python -c "import sys; print sys.path"
+
+sudo pip show jinja2
 
 exit 0
