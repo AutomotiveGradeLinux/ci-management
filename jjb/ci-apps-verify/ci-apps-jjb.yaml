@@ -19,6 +19,7 @@
       - agl-service-geoclue
       - agl-service-geofence
       - agl-service-gps
+      - agl-service-gstreamer
       - agl-service-homescreen-2017
       - agl-service-mediascanner
       - agl-service-radio
