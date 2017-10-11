@@ -101,13 +101,12 @@
           - ../common/include-agl-local-conf-DISTROFEATURES-AGLCI.sh
           - ../common/include-agl-local-conf-vmdk.sh
           - ../common/include-agl-local-conf-rpi3-imagetype.sh
+          - ../common/include-agl-export-eula.sh
           - ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-bitbake-sdk.sh
-      - shell:
-          !include-raw-escape: include-release-jjb-dab-snapshot-rsync.sh
-      - shell:
-          !include-raw-escape:
           - ../common/include-agl-run-test-prepare.sh
           - ../common/include-agl-run-test-rsync-release.sh
           - ../common/include-agl-lava-labs-prepare.sh
           - ../common/include-agl-run-test-short-release.sh
+      - shell:
+          !include-raw-escape: include-release-jjb-dab-snapshot-rsync.sh
