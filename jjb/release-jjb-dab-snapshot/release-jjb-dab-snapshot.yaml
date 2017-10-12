@@ -92,6 +92,7 @@
           - ../common/include-agl-header.sh
           - ../common/include-agl-repo.sh
           - ../common/include-agl-select.sh
+          - ../common/include-agl-export-eula.sh
           - ../common/include-agl-source-aglsetup.sh
           - ../common/include-agl-auto-conf.sh
           - ../common/include-agl-limit-parallelism.sh
@@ -101,7 +102,6 @@
           - ../common/include-agl-local-conf-DISTROFEATURES-AGLCI.sh
           - ../common/include-agl-local-conf-vmdk.sh
           - ../common/include-agl-local-conf-rpi3-imagetype.sh
-          - ../common/include-agl-export-eula.sh
           - ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-bitbake-sdk.sh
           - ../common/include-agl-run-test-prepare.sh
