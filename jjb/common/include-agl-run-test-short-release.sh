@@ -14,7 +14,7 @@ cd $REPODIR
 cat <<EOF > testjob.yaml
 # Your first LAVA JOB definition for a $MACHINE board
 device_type: @REPLACE_DEVICE_TYPE@
-job_name: AGL-short-smoke
+job_name: AGL-${RELEASE_VERSION}-build-${BUILD_NUMBER}
 
 protocols:
   lava-xnbd:
@@ -58,7 +58,23 @@ actions:
     auto_login:
       login_prompt: "login:"
       username: root
-
+    transfer_overlay:
+      download_command: wget
+      unpack_command: tar -C / -xvpf
+- test:
+    definitions:
+    - repository: https://git.automotivelinux.org/src/qa-testdefinitions
+      from: git
+      path: test-suites/short-smoke/busybox.yaml
+      name: busybox
+    - repository: https://git.automotivelinux.org/src/qa-testdefinitions
+      from: git
+      path: test-suites/short-smoke/smoke-tests-basic.yaml
+      name: smoke-tests-basic
+    - repository: https://git.automotivelinux.org/src/qa-testdefinitions
+      from: git
+      path: test-suites/short-smoke/service-check.yaml
+      name: service-check
 EOF
 
 CHID=${RELEASE_BRANCH}/${RELEASE_VERSION}/${MACHINE}
