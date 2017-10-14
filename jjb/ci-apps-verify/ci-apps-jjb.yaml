@@ -21,6 +21,7 @@
       - agl-service-gps
       - agl-service-gstreamer
       - agl-service-homescreen-2017
+      - agl-service-mediaplayer
       - agl-service-mediascanner
       - agl-service-radio
       - agl-service-soundmanager-2017
