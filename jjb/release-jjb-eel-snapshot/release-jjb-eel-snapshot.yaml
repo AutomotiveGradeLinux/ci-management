@@ -102,6 +102,7 @@
           - ../common/include-agl-local-conf-DISTROFEATURES-AGLCI.sh
           - ../common/include-agl-local-conf-vmdk.sh
           - ../common/include-agl-local-conf-rpi3-imagetype.sh
+          - include-release-eel-fix-task-depends.sh
           - ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-bitbake-sdk.sh
           - ../common/include-agl-run-test-prepare.sh
