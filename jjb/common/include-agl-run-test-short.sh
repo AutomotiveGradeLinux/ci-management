@@ -15,6 +15,7 @@ cd $REPODIR
 __MACHINE=${MACHINE%-nogfx} # releng doesn't care
 if [ ! -z $RELENG ] && \
        [[ x$__MACHINE == x"qemux86-64" || \
+       [[ x$__MACHINE == x"raspberrypi3" || \
 	  x$__MACHINE == x"m3ulcb" ]]; then
     # releng-scripts depends on jinja2 >= 2.9
     echo "## Check version of python-jinja2: "
@@ -22,7 +23,6 @@ if [ ! -z $RELENG ] && \
     CREATE_ARGS=""
     [[ ! -z $GERRIT_CHANGE_NUMBER ]] && CREATE_ARGS+="-j $GERRIT_CHANGE_NUMBER "
     [[ ! -z $GERRIT_PATCHSET_NUMBER ]] && CREATE_ARGS+="-i $GERRIT_PATCHSET_NUMBER "
-    [[ ! -z $TARGETIMAGE ]] && CREATE_ARGS+="--rootfs-img ${TARGETIMAGE}-${__MACHINE}.ext4.xz "
     BUILD_VERSION="AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
     [[ -e output/repo-manifest-r.txt.sha1 ]] && BUILD_VERSION+="-$(cat output/repo-manifest-r.txt.sha1)"
     CREATE_ARGS+="--name AGL-gerrit "
