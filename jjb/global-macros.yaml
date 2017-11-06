@@ -257,7 +257,7 @@
           trigger-on:
             - change-merged-event
             - comment-added-contains-event:
-                comment-contains-value: 'remerge'
+                comment-contains-value: 'remerge$'
           projects:
             - project-compare-type: 'ANT'
               project-pattern: '{name}'
@@ -273,7 +273,7 @@
           trigger-on:
             - change-abandoned-event
             - comment-added-contains-event:
-                comment-contains-value: 'remove-artifacts'
+                comment-contains-value: 'remove-artifacts$'
           projects:
             - project-compare-type: 'ANT'
               project-pattern: '{name}'
@@ -328,7 +328,7 @@
           trigger-on:
             - change-merged-event
             - comment-added-contains-event:
-                comment-contains-value: 'remerge'
+                comment-contains-value: 'remerge$'
           projects:
             - project-compare-type: 'ANT'
               project-pattern: '{name}'
@@ -346,9 +346,9 @@
             - change-merged-event
             - change-abandoned-event
             - comment-added-contains-event:
-                comment-contains-value: 'remove-artifacts'
+                comment-contains-value: 'remove-artifacts$'
             - comment-added-contains-event:
-                comment-contains-value: 'remerge'
+                comment-contains-value: 'remerge$'
           projects:
             - project-compare-type: 'ANT'
               project-pattern: '{name}'
