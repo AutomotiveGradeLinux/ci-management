@@ -15,8 +15,8 @@ cd $REPODIR
 __MACHINE=${MACHINE%-nogfx} # releng doesn't care
 if [ ! -z $RELENG ] && \
        [[ x$__MACHINE == x"qemux86-64" || \
-       [[ x$__MACHINE == x"raspberrypi3" || \
-	  x$__MACHINE == x"m3ulcb" ]]; then
+    x$__MACHINE == x"raspberrypi3" || \
+    x$__MACHINE == x"m3ulcb" ]]; then
     # releng-scripts depends on jinja2 >= 2.9
     echo "## Check version of python-jinja2: "
     pip show jinja2
