@@ -31,7 +31,7 @@ if [ ! -z $RELENG ] && \
     CREATE_ARGS+="--build-version $BUILD_VERSION "
     CREATE_ARGS+="--callback lab-baylibre-legacy "
     CREATE_ARGS+="--test all"
-    $RELENG/utils/create-jobs.py ${CREATE_ARGS} ${__MACHINE} > testjob.yaml
+    $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
     cat testjob.yaml
 else
 
