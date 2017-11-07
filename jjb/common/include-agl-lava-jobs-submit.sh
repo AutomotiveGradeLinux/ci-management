@@ -26,13 +26,11 @@ device_types=$__device_type
 device_types+=" "
 device_types+=${dt_aliases[$__device_type]}
 
-# iterate over available labs
-for lab in "${!labs[@]}"; do
-  for device_type in $device_types; do
-    val=${labs[$lab]}
+for device_type in $device_types; do
+    val=${labs[$LAVA_LAB]}
     OFS=${IFS}
     IFS=';'
-    arr=(${labs[$lab]})
+    arr=(${labs[$LAVA_LAB]})
     IFS=${OFS}
 
     url=${arr[0]}
@@ -44,8 +42,8 @@ for lab in "${!labs[@]}"; do
     echo -n "Checking for $device_type at $full_url... "
     line=$(lava-tool devices-list $full_url |grep $device_type | tr -d '[:space:]')
     if [ -z "$line" ]; then
-	echo "not found."
-	continue
+    echo "not found."
+    continue
     fi
     IFS='|'
     arr=($line)
@@ -55,26 +53,26 @@ for lab in "${!labs[@]}"; do
     # device is only available if "idle" or "running"
     device_available=0
     if [ x"$device_status" = x"idle" ]; then
-	device_available=1
+    device_available=1
     elif [ x"$device_status" = x"running" ]; then
-	device_available=1;
+    device_available=1;
     fi
 
     if [ $device_available = 0 ]; then
-	echo " Not Available.  Status: $device_status"
-	continue
+    echo " Not Available.  Status: $device_status"
+    continue
     else
-	echo " Found and available.  Status: $device_status"
+    echo " Found and available.  Status: $device_status"
     fi
-    
+
     # Need to hack the real device-type name in the job file
-    JOB_FILE_NEW="${JOB_BASE}_${lab}.yaml"
+    JOB_FILE_NEW="${JOB_BASE}_${LAVA_LAB}.yaml"
     cat $JOB_FILE | sed "s/device_type: $__device_type/device_type: $device_type/" > $JOB_FILE_NEW
 
     #
     # LAVA job submit, get job ID and status from lava-tool output
     #
-    JOB_STATUS="${JOB_BASE}_${lab}.status"
+    JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
     lava-tool submit-job --block $full_url $JOB_FILE_NEW |tee $JOB_STATUS
 
     IFS=':'
@@ -103,13 +101,13 @@ for lab in "${!labs[@]}"; do
 
     # after one successful submit, we're done
     if [ x"$status" = x"Complete" ]; then
-	exit 0
+    exit 0
     else
-	continue
+    continue
     fi
-  done
 done
 
-# if we get here, none of the labs had a successful completion
+# If we get here there was an issue in submitting the job to the lab
+# Most probably the device got retired, offlined, reserved in the lab
 exit 1
 

@@ -5,10 +5,19 @@
 ## Run SHORT CI test
 ################################################################################
 
-
 set -x
 
+#
+# LAVA lab names for releng-scripts
+#
+declare -A lava_labs
+lava_labs=(
+    [agl]="lab-agl-core"
+    [baylibre]="lab-baylibre-legacy"
+    )
+
 echo "## ${MACHINE} ##"
+echo "# ${lava_labs[$LAVA_LAB]} #"
 cd $REPODIR
 
 # WIP: use $RELENG for subset of boards
@@ -29,7 +38,7 @@ if [ ! -z $RELENG ] && \
     [[ -e output/repo-manifest-r.txt.sha1 ]] && BUILD_VERSION+="-$(cat output/repo-manifest-r.txt.sha1)"
     CREATE_ARGS+="--name AGL-gerrit "
     CREATE_ARGS+="--build-version $BUILD_VERSION "
-    CREATE_ARGS+="--callback lab-baylibre-legacy "
+    CREATE_ARGS+="--callback ${lava_labs[$LAVA_LAB]} "
     CREATE_ARGS+="--test all"
     $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
     cat testjob.yaml

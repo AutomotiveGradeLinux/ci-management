@@ -13,6 +13,9 @@ labs=(
 #    [baylibre_seattle]="http://lava.ished.com/;$LAB_BAYLIBRE_SEATTLE_USER;$LAB_BAYLIBRE_SEATTLE_TOKEN"
     )
 
+echo "## ${MACHINE} ##"
+__MACHINE=${MACHINE%-nogfx}
+
 #
 # Ensure python_keyring is set to plaintext.  Required for
 # non-interactive use
@@ -48,7 +51,7 @@ for lab in "${!labs[@]}"; do
     # LAVA URL with username
     full_url=${url/:\/\//:\/\/${user}\@}
     echo "LAVA auth-add for lab: $lab, URL: $full_url"
-    
+
     # LAVA auth using token
     echo ${token} > $token_file
     lava-tool auth-add --token $token_file $full_url
@@ -56,4 +59,32 @@ for lab in "${!labs[@]}"; do
 	echo "ERROR: Lab ${lab}: lava-tool auth-add failed."
     fi
     rm -f $token_file
+
+    # Find the LAVA Lab that has the device available to run the job
+    echo -n "Checking for $__MACHINE at $full_url... "
+    line=$(lava-tool devices-list $full_url |grep $__MACHINE | tr -d '[:space:]')
+    if [ -z "$line" ]; then
+    echo "not found."
+    continue
+    fi
+    IFS='|'
+    arr=($line)
+    device_status=${arr[2]}
+    IFS=${OFS}
+
+    # device is only available if "idle" or "running"
+    device_available=0
+    if [ x"$device_status" = x"idle" ]; then
+    device_available=1
+    elif [ x"$device_status" = x"running" ]; then
+    device_available=1;
+    fi
+
+    if [ $device_available = 0 ]; then
+    echo " Not Available.  Status: $device_status"
+    continue
+    else
+    echo " Found and available.  Status: $device_status"
+    export LAVA_LAB=$lab
+    fi
 done
