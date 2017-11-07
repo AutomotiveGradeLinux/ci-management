@@ -19,7 +19,8 @@ echo "Found device_type $__device_type in LAVA job $JOB_FILE"
 
 declare -A dt_aliases
 dt_aliases=(
-    [raspberrypi3-uboot]="bcm2837-rpi-3-b"
+    [raspberrypi3-uboot]="bcm2837-rpi-3-b-32b"
+    [bcm2837-rpi-3-b-32b]="raspberrypi3-uboot"
 )
 device_types=$__device_type
 device_types+=" "
