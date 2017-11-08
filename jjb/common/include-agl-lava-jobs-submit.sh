@@ -42,8 +42,8 @@ for device_type in $device_types; do
     echo -n "Checking for $device_type at $full_url... "
     line=$(lava-tool devices-list $full_url |grep $device_type | tr -d '[:space:]')
     if [ -z "$line" ]; then
-    echo "not found."
-    continue
+        echo "not found."
+        continue
     fi
     IFS='|'
     arr=($line)
@@ -53,16 +53,16 @@ for device_type in $device_types; do
     # device is only available if "idle" or "running"
     device_available=0
     if [ x"$device_status" = x"idle" ]; then
-    device_available=1
+        device_available=1
     elif [ x"$device_status" = x"running" ]; then
-    device_available=1;
+        device_available=1;
     fi
 
     if [ $device_available = 0 ]; then
-    echo " Not Available.  Status: $device_status"
-    continue
+        echo " Not Available.  Status: $device_status"
+        continue
     else
-    echo " Found and available.  Status: $device_status"
+        echo " Found and available.  Status: $device_status"
     fi
 
     # Need to hack the real device-type name in the job file
@@ -101,9 +101,9 @@ for device_type in $device_types; do
 
     # after one successful submit, we're done
     if [ x"$status" = x"Complete" ]; then
-    exit 0
+        exit 0
     else
-    continue
+        continue
     fi
 done
 

@@ -7,25 +7,16 @@
 
 set -x
 
-#
-# LAVA lab names for releng-scripts
-#
-declare -A lava_labs
-lava_labs=(
-    [agl]="lab-agl-core"
-    [baylibre]="lab-baylibre-legacy"
-    )
-
 echo "## ${MACHINE} ##"
-echo "# ${lava_labs[$LAVA_LAB]} #"
 cd $REPODIR
 
 # WIP: use $RELENG for subset of boards
 __MACHINE=${MACHINE%-nogfx} # releng doesn't care
 if [ ! -z $RELENG ] && \
        [[ x$__MACHINE == x"qemux86-64" || \
-    x$__MACHINE == x"raspberrypi3" || \
-    x$__MACHINE == x"m3ulcb" ]]; then
+          x$__MACHINE == x"raspberrypi3" || \
+          x$__MACHINE == x"m3ulcb" ]]; then
+    echo "# LAVA lab target: ${LAVA_LAB} #"
     # releng-scripts depends on jinja2 >= 2.9
     echo "## Check version of python-jinja2: "
     pip show jinja2
@@ -38,7 +29,7 @@ if [ ! -z $RELENG ] && \
     [[ -e output/repo-manifest-r.txt.sha1 ]] && BUILD_VERSION+="-$(cat output/repo-manifest-r.txt.sha1)"
     CREATE_ARGS+="--name AGL-gerrit "
     CREATE_ARGS+="--build-version $BUILD_VERSION "
-    CREATE_ARGS+="--callback ${lava_labs[$LAVA_LAB]} "
+    CREATE_ARGS+="--callback ${LAVA_LAB} "
     CREATE_ARGS+="--test all"
     $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
     cat testjob.yaml

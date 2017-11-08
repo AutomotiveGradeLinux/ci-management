@@ -6,12 +6,16 @@
 #
 # Uses user/token pairs from Jenkins secrets
 #
+# And macthing LAVA lab names for releng-scripts
+#
+# Strucuture: [JENKINS_LAB_NAME]="LAB_URL;JENKINS_LAB_USER;JENKINS_LAB_TOKEN;RELENG_LAB_NAME"
+#
 declare -A labs
 labs=(
-    [agl]="https://lava.automotivelinux.org/;$LAB_AGL_USER;$LAB_AGL_TOKEN"
-    [baylibre]="http://lava.baylibre.com:10080/;$LAB_BAYLIBRE_USER;$LAB_BAYLIBRE_TOKEN"
+      [agl]="https://lava.automotivelinux.org/;$LAB_AGL_USER;$LAB_AGL_TOKEN;lab-agl-core"
+      [baylibre]="http://lava.baylibre.com:10080/;$LAB_BAYLIBRE_USER;$LAB_BAYLIBRE_TOKEN;lab-baylibre-legacy"
 #    [baylibre_seattle]="http://lava.ished.com/;$LAB_BAYLIBRE_SEATTLE_USER;$LAB_BAYLIBRE_SEATTLE_TOKEN"
-    )
+)
 
 echo "## ${MACHINE} ##"
 __MACHINE=${MACHINE%-nogfx}
@@ -37,15 +41,16 @@ for lab in "${!labs[@]}"; do
     url=${arr[0]}
     user=${arr[1]}
     token=${arr[2]}
+    lava_lab=${arr[3]}
     token_file=$HOME/.local/lab-$lab-token
 
     if [ -z ${user} ]; then
-	echo "WARNING: Lab ${lab}: missing user. Ignoring."
-	continue
+        echo "WARNING: Lab ${lab}: missing user. Ignoring."
+        continue
     fi
     if [ -z ${token} ]; then
-	echo "WARNING: Lab ${lab}: missing token. Ignoring."
-	continue
+        echo "WARNING: Lab ${lab}: missing token. Ignoring."
+        continue
     fi
 
     # LAVA URL with username
@@ -56,7 +61,7 @@ for lab in "${!labs[@]}"; do
     echo ${token} > $token_file
     lava-tool auth-add --token $token_file $full_url
     if [ $? != 0 ]; then
-	echo "ERROR: Lab ${lab}: lava-tool auth-add failed."
+        echo "ERROR: Lab ${lab}: lava-tool auth-add failed."
     fi
     rm -f $token_file
 
@@ -64,8 +69,8 @@ for lab in "${!labs[@]}"; do
     echo -n "Checking for $__MACHINE at $full_url... "
     line=$(lava-tool devices-list $full_url |grep $__MACHINE | tr -d '[:space:]')
     if [ -z "$line" ]; then
-    echo "not found."
-    continue
+        echo "not found."
+        continue
     fi
     IFS='|'
     arr=($line)
@@ -75,16 +80,17 @@ for lab in "${!labs[@]}"; do
     # device is only available if "idle" or "running"
     device_available=0
     if [ x"$device_status" = x"idle" ]; then
-    device_available=1
+        device_available=1
     elif [ x"$device_status" = x"running" ]; then
-    device_available=1;
+        device_available=1;
     fi
 
     if [ $device_available = 0 ]; then
-    echo " Not Available.  Status: $device_status"
-    continue
+        echo " Not Available.  Status: $device_status"
+        continue
     else
-    echo " Found and available.  Status: $device_status"
-    export LAVA_LAB=$lab
+        echo " Found and available.  Status: $device_status"
+        export LAVA_LAB=$lava_lab
+        break
     fi
 done
