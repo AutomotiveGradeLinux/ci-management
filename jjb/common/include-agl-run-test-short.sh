@@ -29,7 +29,7 @@ if [ ! -z $RELENG ] && \
     [[ -e output/repo-manifest-r.txt.sha1 ]] && BUILD_VERSION+="-$(cat output/repo-manifest-r.txt.sha1)"
     CREATE_ARGS+="--name AGL-gerrit "
     CREATE_ARGS+="--build-version $BUILD_VERSION "
-    CREATE_ARGS+="--callback ${LAVA_LAB} "
+    CREATE_ARGS+="--callback-from ${LAVA_LAB} "
     CREATE_ARGS+="--test all"
     $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
     cat testjob.yaml
