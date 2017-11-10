@@ -3,6 +3,9 @@
 
 set -x
 
+sudo su -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
+sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553
+
 cat /etc/apt/sources.list
 
 # Make sure that we aren't using the vexxhost mirrors as they have issues
@@ -19,8 +22,9 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        libtool libglib2.0-dev libarchive-dev python-git git python python-minimal repo \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet npm mkdocs nodejs \
-                       lava-tool python-pip
+                       python-pip
 
+DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
