@@ -27,18 +27,6 @@ device_types+=" "
 device_types+=${dt_aliases[$__device_type]}
 
 for device_type in $device_types; do
-    val=${labs[$LAVA_LAB]}
-    OFS=${IFS}
-    IFS=';'
-    arr=(${labs[$LAVA_LAB]})
-    IFS=${OFS}
-
-    url=${arr[0]}
-    user=${arr[1]}
-
-    # LAVA URL with username
-    full_url=${url/:\/\//:\/\/${user}\@}
-
     echo -n "Checking for $device_type at $full_url... "
     line=$(lava-tool devices-list $full_url |grep $device_type | tr -d '[:space:]')
     if [ -z "$line" ]; then
