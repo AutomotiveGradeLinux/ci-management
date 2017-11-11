@@ -22,7 +22,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        libtool libglib2.0-dev libarchive-dev python-git git python python-minimal repo \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet npm mkdocs nodejs \
-                       python-pip
+                       python-pip python-simplejson
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
 
