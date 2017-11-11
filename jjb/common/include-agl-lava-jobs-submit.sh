@@ -27,47 +27,31 @@ device_types+=" "
 device_types+=${dt_aliases[$__device_type]}
 
 for device_type in $device_types; do
-    echo -n "Checking for $device_type at $full_url... "
-    line=$(lava-tool devices-list $full_url |grep $device_type | tr -d '[:space:]')
-    if [ -z "$line" ]; then
-        echo "not found."
-        continue
-    fi
-    IFS='|'
-    arr=($line)
-    device_status=${arr[2]}
-    IFS=${OFS}
-
-    # device is only available if "idle" or "running"
-    device_available=0
-    if [ x"$device_status" = x"idle" ]; then
-        device_available=1
-    elif [ x"$device_status" = x"running" ]; then
-        device_available=1;
-    fi
-
-    if [ $device_available = 0 ]; then
-        echo " Not Available.  Status: $device_status"
-        continue
-    else
-        echo " Found and available.  Status: $device_status"
-    fi
-
     # Need to hack the real device-type name in the job file
     JOB_FILE_NEW="${JOB_BASE}_${LAVA_LAB}.yaml"
     cat $JOB_FILE | sed "s/device_type: $__device_type/device_type: $device_type/" > $JOB_FILE_NEW
 
     #
-    # LAVA job submit, get job ID and status from lava-tool output
+    # LAVA job submit, get job ID from lava-tool output
     #
     JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
-    lava-tool submit-job --block $full_url $JOB_FILE_NEW |tee $JOB_STATUS
+    lava-tool submit-job $full_url $JOB_FILE_NEW |tee $JOB_STATUS
+    # Printing the job URL in the log
+    grep "submitted as job:" $JOB_STATUS
+    job_id=$(grep "submitted as job:" $JOB_STATUS | sed 's/.*\/\([0-9]*$\)/\1/')
+
+    #
+    # LAVA wait job events, wait for job to finish or timeout (300 seconds)
+    #
+    lava-tool wait-job-events --job-id $job_id --timeout 300 $full_url
+
+    #
+    # LAVA job details, get job status from lava-tool output
+    #
+    lava-tool job-details $full_url $job_id | tee $JOB_STATUS
 
     IFS=':'
-    line=$(grep "job id" $JOB_STATUS | tr -d '[:space:]')
-    arr=($line)
-    job_id=${arr[1]}
-    line=$(grep "Job Status:" $JOB_STATUS | tr -d '[:space:]')
+    line=$(grep "^status:" $JOB_STATUS | tr -d '[:space:]')
     arr=($line)
     status=${arr[1]}
     IFS=${OFS}
@@ -95,7 +79,4 @@ for device_type in $device_types; do
     fi
 done
 
-# If we get here there was an issue in submitting the job to the lab
-# Most probably the device got retired, offlined, reserved in the lab
 exit 1
-
