@@ -46,6 +46,7 @@ lava_device=${arr[0]}
 releng_device=${arr[1]}
 # And agl_device=${MACHINE}
 
+device_available=0
 for lab in "${!labs[@]}"; do
     val=${labs[$lab]}
     OFS=${IFS}
@@ -110,3 +111,9 @@ for lab in "${!labs[@]}"; do
         break
     fi
 done
+
+if [ "$device_available" -eq 0 ]; then
+    echo ""
+    echo "ERROR: device not found in any available lab."
+    exit 1
+fi
