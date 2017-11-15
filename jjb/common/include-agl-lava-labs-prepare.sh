@@ -31,6 +31,21 @@ cat <<EOF >  ~/.local/share/python_keyring/keyringrc.cfg
 default-keyring=keyring.backends.file.PlaintextKeyring
 EOF
 
+declare -A agl_lava_releng_aliases
+agl_lava_releng_aliases=(
+    [raspberrypi3]="raspberrypi3-uboot;raspberrypi3"
+    [qemux86-64]="qemu;qemux86-64"
+    [m3ulcb-nogfx]="r8a7796-m3ulcb;m3ulcb"
+)
+
+OFS=${IFS}
+IFS=';'
+arr=(${agl_lava_releng_aliases[$MACHINE]})
+IFS=${OFS}
+lava_device=${arr[0]}
+releng_device=${arr[1]}
+# And agl_device=${MACHINE}
+
 for lab in "${!labs[@]}"; do
     val=${labs[$lab]}
     OFS=${IFS}
@@ -67,8 +82,8 @@ for lab in "${!labs[@]}"; do
     rm -f $token_file
 
     # Find the LAVA Lab that has the device available to run the job
-    echo -n "Checking for $__MACHINE at $full_url... "
-    line=$(lava-tool devices-list $full_url |grep $__MACHINE | tr -d '[:space:]')
+    echo -n "Checking for $lava_device at $full_url... "
+    line=$(lava-tool devices-list $full_url |grep $lava_device | tr -d '[:space:]')
     if [ -z "$line" ]; then
         echo "not found."
         continue

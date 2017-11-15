@@ -21,7 +21,7 @@ if [ ! -z $RELENG ] && \
     echo "## Check version of python-jinja2: "
     pip show jinja2
     CREATE_ARGS=""
-    CREATE_ARGS+="--machine ${__MACHINE} "
+    CREATE_ARGS+="--machine ${releng_device} "
     CREATE_ARGS+="--url ci "
     [[ ! -z $GERRIT_CHANGE_NUMBER ]] && CREATE_ARGS+="--changeid $GERRIT_CHANGE_NUMBER "
     [[ ! -z $GERRIT_PATCHSET_NUMBER ]] && CREATE_ARGS+="--patchset $GERRIT_PATCHSET_NUMBER "

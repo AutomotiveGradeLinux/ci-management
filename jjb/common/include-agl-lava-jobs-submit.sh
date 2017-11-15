@@ -12,71 +12,53 @@ if [ ! -e $JOB_FILE ]; then
 fi
 JOB_BASE=$(basename $JOB_FILE .yaml)
 
-# find device_type from job file
-line=$(grep ^device_type: $JOB_FILE | tr -d '[:space:]')
-__device_type=${line/device_type:/}
-echo "Found device_type $__device_type in LAVA job $JOB_FILE"
+# Need to hack the LAVA device-type name in the job file
+JOB_FILE_NEW="${JOB_BASE}_${LAVA_LAB}.yaml"
+cat $JOB_FILE | sed "s/device_type: $releng_device/device_type: $lava_device/" > $JOB_FILE_NEW
 
-declare -A dt_aliases
-dt_aliases=(
-    [raspberrypi3-uboot]="bcm2837-rpi-3-b-32b"
-    [bcm2837-rpi-3-b-32b]="raspberrypi3-uboot"
-)
-device_types=$__device_type
-device_types+=" "
-device_types+=${dt_aliases[$__device_type]}
+#
+# LAVA job submit, get job ID from lava-tool output
+#
+JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
+lava-tool submit-job $full_url $JOB_FILE_NEW |tee $JOB_STATUS
+# Printing the job URL in the log
+grep "submitted as job:" $JOB_STATUS
+job_id=$(grep "submitted as job:" $JOB_STATUS | sed 's/.*\/\([0-9]*$\)/\1/')
 
-for device_type in $device_types; do
-    # Need to hack the real device-type name in the job file
-    JOB_FILE_NEW="${JOB_BASE}_${LAVA_LAB}.yaml"
-    cat $JOB_FILE | sed "s/device_type: $__device_type/device_type: $device_type/" > $JOB_FILE_NEW
+#
+# LAVA wait job events, wait for job to finish
+#
+lava-tool wait-job-events --job-id $job_id $full_url
 
-    #
-    # LAVA job submit, get job ID from lava-tool output
-    #
-    JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
-    lava-tool submit-job $full_url $JOB_FILE_NEW |tee $JOB_STATUS
-    # Printing the job URL in the log
-    grep "submitted as job:" $JOB_STATUS
-    job_id=$(grep "submitted as job:" $JOB_STATUS | sed 's/.*\/\([0-9]*$\)/\1/')
+#
+# LAVA job details, get job status from lava-tool output
+#
+lava-tool job-details $full_url $job_id | tee $JOB_STATUS
 
-    #
-    # LAVA wait job events, wait for job to finish
-    #
-    lava-tool wait-job-events --job-id $job_id $full_url
+IFS=':'
+line=$(grep "^status:" $JOB_STATUS | tr -d '[:space:]')
+arr=($line)
+status=${arr[1]}
+IFS=${OFS}
 
-    #
-    # LAVA job details, get job status from lava-tool output
-    #
-    lava-tool job-details $full_url $job_id | tee $JOB_STATUS
+echo "LAVA job $job_id completed with status: $status"
 
-    IFS=':'
-    line=$(grep "^status:" $JOB_STATUS | tr -d '[:space:]')
-    arr=($line)
-    status=${arr[1]}
-    IFS=${OFS}
+echo "####"
+echo "#### Start: Output from LAVA job $job_id ####"
+echo "####"
 
-    echo "LAVA job $job_id completed with status: $status"
+JOB_OUTPUT="${JOB_BASE}_output.yaml"
+JOB_LOG="${JOB_BASE}_output.log"
+curl -s -o $JOB_OUTPUT $full_url/scheduler/job/$job_id/log_file/plain
+cat $JOB_OUTPUT | grep '"target",' | sed -e 's#- {"dt".*"lvl".*"msg":."##g' -e 's#"}$##g' | tee $JOB_LOG
 
-    echo "####"
-    echo "#### Start: Output from LAVA job $job_id ####"
-    echo "####"
+echo "####"
+echo "#### End: Output from LAVA job $job_id ####"
+echo "####"
 
-    JOB_OUTPUT="${JOB_BASE}_output.yaml"
-    JOB_LOG="${JOB_BASE}_output.log"
-    curl -s -o $JOB_OUTPUT $full_url/scheduler/job/$job_id/log_file/plain
-    cat $JOB_OUTPUT | grep '"target",' | sed -e 's#- {"dt".*"lvl".*"msg":."##g' -e 's#"}$##g' | tee $JOB_LOG
-
-    echo "####"
-    echo "#### End: Output from LAVA job $job_id ####"
-    echo "####"
-
-    # after one successful submit, we're done
-    if [ x"$status" = x"Complete" ]; then
-        exit 0
-    else
-        continue
-    fi
-done
+# after one successful submit, we're done
+if [ x"$status" = x"Complete" ]; then
+    exit 0
+fi
 
 exit 1
