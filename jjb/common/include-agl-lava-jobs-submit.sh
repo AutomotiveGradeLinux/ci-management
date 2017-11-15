@@ -20,15 +20,10 @@ cat $JOB_FILE | sed "s/device_type: $releng_device/device_type: $lava_device/" >
 # LAVA job submit, get job ID from lava-tool output
 #
 JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
-lava-tool submit-job $full_url $JOB_FILE_NEW |tee $JOB_STATUS
+lava-tool submit-job --block $full_url $JOB_FILE_NEW |tee $JOB_STATUS
 # Printing the job URL in the log
 grep "submitted as job:" $JOB_STATUS
 job_id=$(grep "submitted as job:" $JOB_STATUS | sed 's/.*\/\([0-9]*$\)/\1/')
-
-#
-# LAVA wait job events, wait for job to finish
-#
-lava-tool wait-job-events --job-id $job_id $full_url
 
 #
 # LAVA job details, get job status from lava-tool output
