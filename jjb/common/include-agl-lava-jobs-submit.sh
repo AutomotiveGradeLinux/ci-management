@@ -41,9 +41,9 @@ for device_type in $device_types; do
     job_id=$(grep "submitted as job:" $JOB_STATUS | sed 's/.*\/\([0-9]*$\)/\1/')
 
     #
-    # LAVA wait job events, wait for job to finish or timeout (300 seconds)
+    # LAVA wait job events, wait for job to finish
     #
-    lava-tool wait-job-events --job-id $job_id --timeout 300 $full_url
+    lava-tool wait-job-events --job-id $job_id $full_url
 
     #
     # LAVA job details, get job status from lava-tool output
