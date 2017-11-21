@@ -2,7 +2,7 @@
 - project:
     name: ci-platform-AGL
     machine:
-      - porter-nogfx
+      - cyclone5
       - raspberrypi3
       - intel-corei7-64
       - dra7xx-evm
