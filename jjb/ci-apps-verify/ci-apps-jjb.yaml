@@ -15,6 +15,8 @@
         #= raspberrypi3
         #= dra7xx-evm
     project:
+      - agl-service-audio-4a
+      - agl-service-audio-mpcd
       - agl-service-bluetooth
       - agl-service-geoclue
       - agl-service-geofence
@@ -26,6 +28,7 @@
       - agl-service-radio
       - agl-service-soundmanager-2017
       - agl-service-steering-wheel
+      - agl-service-unicens
       - agl-service-wifi
       - agl-service-windowmanager-2017
       - als-meter-demo
@@ -36,6 +39,8 @@
       - low-level-can-service
       - mediaplayer
       - mixer
+      - navigation
+      - onscreenapp
       - phone
       - radio
       - settings
