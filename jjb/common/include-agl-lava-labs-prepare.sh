@@ -37,7 +37,7 @@ agl_lava_releng_aliases=(
     [qemux86-64]="qemu;qemux86-64"
     [m3ulcb-nogfx]="r8a7796-m3ulcb;m3ulcb"
     [porter-nogfx]="renesas-porter;renesas-porter"
-    [dra7xx-evm]="ti-vayu-uboot;ti-vayu-uboot"
+    [dra7xx-evm]="dra7-evm;dra7xx-evm"
 )
 
 OFS=${IFS}
