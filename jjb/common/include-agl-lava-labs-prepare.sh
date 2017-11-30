@@ -81,6 +81,7 @@ for lab in "${!labs[@]}"; do
     lava-tool auth-add --token $token_file $full_url
     if [ $? != 0 ]; then
         echo "ERROR: Lab ${lab}: lava-tool auth-add failed."
+        continue
     fi
     rm -f $token_file
 
@@ -117,5 +118,5 @@ done
 if [ "$device_available" -eq 0 ]; then
     echo ""
     echo "ERROR: device not found in any available lab."
-    exit 1
+    exit 0
 fi
