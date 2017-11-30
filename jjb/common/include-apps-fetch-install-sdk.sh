@@ -36,8 +36,9 @@ export TARGETSDKNAME=$(curl -s "$SDKBASEURL" | grep -e "crosssdk.*\.sh<" | sed -
 
 if test x"" = x"${TARGETSDKNAME}" ; then
     echo "Could not retrieve TARGETSDKNAME from download.automotivelinux.org"
-    echo "Abort."
-    exit 1
+    echo "Abort gracefully."
+    exit 0
+    #exit 1
 fi
 
 if test ! -f ${TARGETSDKNAME} ; then
