@@ -12,10 +12,7 @@ cd $REPODIR
 
 # WIP: use $RELENG for subset of boards
 __MACHINE=${MACHINE%-nogfx} # releng doesn't care
-if [ ! -z $RELENG ] && \
-       [[ x$__MACHINE == x"qemux86-64" || \
-          x$__MACHINE == x"raspberrypi3" || \
-          x$__MACHINE == x"m3ulcb" ]]; then
+if [ ! -z $RELENG ]; then
     echo "# LAVA lab target: ${LAVA_LAB} #"
     # releng-scripts depends on jinja2 >= 2.9
     echo "## Check version of python-jinja2: "
