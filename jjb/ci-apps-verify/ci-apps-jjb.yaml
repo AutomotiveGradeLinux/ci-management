@@ -3,6 +3,7 @@
     name: ci-apps-AGL
     aglbranch:
       - master
+      - eel
       - dab
     architecture:
       - aarch64
@@ -14,6 +15,7 @@
         #= porter-nogfx
         #= raspberrypi3
         #= dra7xx-evm
+        # ####### REPLACE WITH generic-aarch64, generic-x86-64, generic-arm
     project:
       - agl-service-audio-4a
       - agl-service-audio-mpcd

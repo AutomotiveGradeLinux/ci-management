@@ -8,10 +8,10 @@ echo "#########################################"
 echo -e "\n\n\n"
 #                             project branch buildid-changesetnr(latest)
 export RSYNCDST="/srv/download/AGL/apps/"
-export RSYNCSRC=$(pwd)/UPLOAD/
+export RSYNCSRC=$(pwd)/UPLOAD/*
 LANG=C tree $RSYNCSRC
 
 #set
 #exit 0
 ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 mkdir -p ${RSYNCDST}
-rsync -avr -l --copy-unsafe-links -e "ssh -o StrictHostKeyChecking=no" $RSYNCSRC jenkins-slave@10.30.72.8:$RSYNCDST
+rsync -avr -l --inplace --copy-unsafe-links -e "ssh -o StrictHostKeyChecking=no" $RSYNCSRC jenkins-slave@10.30.72.8:$RSYNCDST
