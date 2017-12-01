@@ -24,63 +24,22 @@ if [ -e releng-scripts/utils ]; then
     RELENG=$PWD/releng-scripts
 fi
 
-ls -alhR meta-agl/templates/machine/${MACHINE}
+CREATE_ARGS=""
+CREATE_ARGS+="--machine ${MACHINE} "
 
-#### Find out if machine can be tested.
-#### We keep a stamp file in meta-agl/templates/machine/$MACHINE/test
-if [ ! -d meta-agl/templates/machine/${MACHINE}/test ]; then
-  echo "No HW test templates for ${MACHINE} configured."
-  echo "Add meta-agl/templates/machine/${MACHINE}/test/ and its contents to enable"
-  exit 0
+# If ii's a release build
+if [[ ! -z $RELEASE_BRANCH ]] && [[ ! -z $RELEASE_VERSION ]]; then
+    CREATE_ARGS+="--build-type {release,$RELEASE_BRANCH,$RELEASE_VERSION} "
+fi
+# If it's a CI build
+if [[ ! -z $GERRIT_CHANGE_NUMBER ]] && [[ ! -z $GERRIT_PATCHSET_NUMBER ]]; then
+    CREATE_ARGS+="--build-type {ci,$GERRIT_CHANGE_NUMBER,$GERRIT_PATCHSET_NUMBER} "
 fi
 
-if [ ! -f meta-agl/templates/machine/${MACHINE}/test/hwtest.enable ] ; then 
-  echo "No HW test for ${MACHINE} configured."
-  echo "Add meta-agl/templates/machine/${MACHINE}/test/hwtest.enable to enable"
-  exit 0
-fi
-
-if [ ! -f meta-agl/templates/machine/${MACHINE}/test/hwtest.short.enable ] ; then
-  echo "No short HW test for ${MACHINE} configured."
-  echo "Add meta-agl/templates/machine/${MACHINE}/test/hwtest.enable.short to enable"
-else
-  eval export ENVFILE=meta-agl/templates/machine/${MACHINE}/test/hwtest.short.environment
-fi
-
-if [ ! -f $ENVFILE ] ; then
-  echo "No short HW test environment file available for ${MACHINE}."
-  echo "Add ${ENVFILE} to enable."
-  exit 1
-fi
-
-# some defaults
-#export DEVICE_ARCH=arm
-#export DEVICE_TYPE=raspberrypi3-uboot
-#export DEVICE_NAME=raspberrypi3
-#export DEVICE_DTB=uImage-bcm2710-rpi-3-b.dtb
-#export DEVICE_KERNEL=uImage
-#export DEVICE_INITRAMFS=initramfs-netboot-image-raspberrypi3.ext4
-#export DEVICE_INITRAMFS_COMPRESSION=false
-#export DEVICE_NBDROOT=agl-demo-platform-raspberrypi3.ext4
-#export DEVICE_NBDROOT_COMPRESSION=false
-#export DEVICE_BOOT_METHOD=u-boot
-#export DEVICE_BOOT_TYPE=bootm
-export DEVICE_URL_PREFIX='https://download.automotivelinux.org/AGL/upload/ci/'
-
-
-# import device defaults. Format 'a=b'
-for i in DEVICE_ARCH DEVICE_TYPE DEVICE_NAME DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_INITRAMFS_COMPRESSION DEVICE_NBDROOT DEVICE_NBDROOT_COMPRESSION DEVICE_BOOT_METHOD DEVICE_BOOT_TYPE DEVICE_URL_PREFIX DEVICE_QEMU_ARGS DEVICE_KERNEL_CMDLINE; do
-    if grep -q ^$i $ENVFILE ; then
-        X=$(grep $i $ENVFILE | sed -e "s#${i}=##g" -e "s#;.*##g")
-        eval export ${i}=${X}
-    else
-        echo "Variable ${i} missing in environment file $ENVFILE"
-    fi
-done
-
-echo "Resulting values:"
-set | grep DEVICE_
-
+export DEVICE_DTB=`$RELENG/utils/job-prereq.py ${CREATE_ARGS} --dtb`
+export DEVICE_KERNEL=`$RELENG/utils/job-prereq.py ${CREATE_ARGS} --kernel`
+export DEVICE_INITRAMFS=`$RELENG/utils/job-prereq.py ${CREATE_ARGS} --initrd`
+export DEVICE_NBDROOT=`$RELENG/utils/job-prereq.py ${CREATE_ARGS} --nbdroot`
 
 # echo NEXT is rsync
 #exit 0
