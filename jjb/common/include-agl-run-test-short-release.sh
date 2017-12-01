@@ -5,118 +5,32 @@
 ## Run SHORT CI test
 ################################################################################
 
-
-#set -x
+set -x
 
 echo "## ${MACHINE} ##"
 cd $REPODIR
 
-cat <<EOF > testjob.yaml
-# Your first LAVA JOB definition for a $MACHINE board
-device_type: @REPLACE_DEVICE_TYPE@
-job_name: AGL-${RELEASE_VERSION}-build-${BUILD_NUMBER}
+__MACHINE=${MACHINE%-nogfx} # releng doesn't care
+echo "# LAVA lab target: ${LAVA_LAB} #"
+# releng-scripts depends on jinja2 >= 2.9
+echo "## Check version of python-jinja2: "
+pip show jinja2
+CREATE_ARGS=""
+CREATE_ARGS+="--machine ${releng_device} "
+CREATE_ARGS+="--url ci "
+[[ ! -z $RELEASE_BRANCH ]] && CREATE_ARGS+="--branch $RELEASE_BRANCH "
+[[ ! -z $RELEASE_VERSION ]] && CREATE_ARGS+="--version $RELEASE_VERSION "
+BUILD_VERSION="AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION"
+[[ -e output/repo-manifest-r.txt.sha1 ]] && BUILD_VERSION+="-$(cat output/repo-manifest-r.txt.sha1)"
+CREATE_ARGS+="--name AGL-gerrit "
+CREATE_ARGS+="--build-version $BUILD_VERSION "
+CREATE_ARGS+="--callback-from ${LAVA_LAB} "
+CREATE_ARGS+="--test all"
+$RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
 
-protocols:
-  lava-xnbd:
-    port: auto
-
-timeouts:
-  job:
-    minutes: 30
-  action:
-    minutes: 15
-  connection:
-    minutes: 5
-priority: medium
-visibility: public
-
-# ACTION_BLOCK
-actions:
-- deploy:
-    timeout:
-      minutes: 15
-    to: nbd
-    dtb:
-      url: '@REPLACE_URL_PREFIX@/@REPLACE_DTB@'
-    kernel:
-      url: '@REPLACE_URL_PREFIX@/@REPLACE_KERNEL@'
-    initrd:
-      url: '@REPLACE_URL_PREFIX@/@REPLACE_INITRAMFS@'
-      allow_modify: false
-    nbdroot:
-      url: '@REPLACE_URL_PREFIX@/@REPLACE_NBDROOT@'
-      compression: @REPLACE_NBDROOT_COMPRESSION@
-    os: debian
-    failure_retry: 2
-
-# BOOT_BLOCK
-- boot:
-    method: @REPLACE_BOOT_METHOD@
-    commands: nbd
-    type: @REPLACE_BOOT_TYPE@
-    prompts: ["root@@REPLACE_MACHINE@:~"]
-    auto_login:
-      login_prompt: "login:"
-      username: root
-    transfer_overlay:
-      download_command: wget
-      unpack_command: tar -C / -xvpf
-- test:
-    definitions:
-    - repository: https://git.automotivelinux.org/src/qa-testdefinitions
-      from: git
-      path: test-suites/short-smoke/busybox.yaml
-      name: busybox
-    - repository: https://git.automotivelinux.org/src/qa-testdefinitions
-      from: git
-      path: test-suites/short-smoke/smoke-tests-basic.yaml
-      name: smoke-tests-basic
-    - repository: https://git.automotivelinux.org/src/qa-testdefinitions
-      from: git
-      path: test-suites/short-smoke/service-check.yaml
-      name: service-check
-EOF
-
-CHID=${RELEASE_BRANCH}/${RELEASE_VERSION}/${MACHINE}
-# REPLACE_DEVICE_TYPE
-sed -i -e "s#@REPLACE_DEVICE_TYPE@#${DEVICE_TYPE}#g" testjob.yaml
-sed -i -e "s#@REPLACE_DTB@#${CHID}/${DEVICE_DTB}#g" testjob.yaml
-sed -i -e "s#@REPLACE_KERNEL@#${CHID}/${DEVICE_KERNEL}#g" testjob.yaml
-sed -i -e "s#@REPLACE_INITRAMFS@#${CHID}/${DEVICE_INITRAMFS}#g" testjob.yaml
-sed -i -e "s#@REPLACE_NBDROOT@#${CHID}/${DEVICE_NBDROOT}#g" testjob.yaml
-sed -i -e "s#@REPLACE_NBDROOT_COMPRESSION@#${DEVICE_NBDROOT_COMPRESSION}#g" testjob.yaml
-sed -i -e "s#@REPLACE_BOOT_METHOD@#${DEVICE_BOOT_METHOD}#g" testjob.yaml
-sed -i -e "s#@REPLACE_BOOT_TYPE@#${DEVICE_BOOT_TYPE}#g" testjob.yaml
-sed -i -e "s#@REPLACE_MACHINE@#${DEVICE_NAME}#g" testjob.yaml
-sed -i -e "s#@REPLACE_URL_PREFIX@#${DEVICE_URL_PREFIX}#g" testjob.yaml
-
-cat testjob.yaml
-
-lava-tool submit-job --block https://agl-jenkins-user@lava.automotivelinux.org testjob.yaml | tee .myjob
-
-MYJOB=`cat .myjob | grep "submitted as job" | sed -e "s#submitted as job id: ##g"`
-
-echo "#### JOBID: $MYJOB #####"
-
-( lava-tool job-status https://agl-jenkins-user@lava.automotivelinux.org $MYJOB | tee .status ) || true
-STATUS=`grep "Job Status:" .status | sed -e "s#Job Status: ##g"`
-
-if [ x"Complete" = x"$STATUS"  ] ; then
-    echo "YAY! $STATUS"
-    curl -o plain_output.yaml https://lava.automotivelinux.org/scheduler/job/$MYJOB/log_file/plain
-    cat plain_output.yaml | grep '"target",' | sed -e 's#- {"dt".*"lvl".*"msg":."##g' -e 's#"}$##g'
-
-    # cleanup
-    #ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 rm -rf /srv/download/AGL/upload/ci/${CHID}/
-
+if [ $? != 0 ]; then
+    echo "ERROR: Machine ${$__MACHINE}: LAVA job creation failed."
     exit 0
 else
-    echo "Nooooooooo! $STATUS"
-    curl -o plain_output.yaml https://lava.automotivelinux.org/scheduler/job/$MYJOB/log_file/plain
-    cat plain_output.yaml | grep '"target",' | sed -e 's#- {"dt".*"lvl".*"msg":."##g' -e 's#"}$##g'
-
-    # cleanup
-    #ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 rm -rf /srv/download/AGL/upload/ci/${CHID}/
-    # exit 1
-    exit 0
+    cat testjob.yaml
 fi
