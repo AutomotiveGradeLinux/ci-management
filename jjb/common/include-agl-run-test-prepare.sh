@@ -24,8 +24,25 @@ if [ -e releng-scripts/utils ]; then
     RELENG=$PWD/releng-scripts
 fi
 
+declare -A agl_lava_releng_aliases
+agl_lava_releng_aliases=(
+    [raspberrypi3]="raspberrypi3-uboot;raspberrypi3"
+    [qemux86-64]="qemu;qemux86-64"
+    [m3ulcb-nogfx]="r8a7796-m3ulcb;m3ulcb"
+    [porter-nogfx]="renesas-porter;renesas-porter"
+    [dra7xx-evm]="dra7-evm;dra7xx-evm"
+)
+
+OFS=${IFS}
+IFS=';'
+arr=(${agl_lava_releng_aliases[$MACHINE]})
+IFS=${OFS}
+lava_device=${arr[0]}
+releng_device=${arr[1]}
+# And agl_device=${MACHINE}
+
 CREATE_ARGS=""
-CREATE_ARGS+="--machine ${MACHINE} "
+CREATE_ARGS+="--machine ${releng_device} "
 
 # If it's a release build
 if [[ $RELEASE_BRANCH ]] && [[ $RELEASE_VERSION ]]; then

@@ -17,9 +17,6 @@ labs=(
 #    [baylibre_seattle]="http://lava.ished.com/;$LAB_BAYLIBRE_SEATTLE_USER;$LAB_BAYLIBRE_SEATTLE_TOKEN"
 )
 
-echo "## ${MACHINE} ##"
-__MACHINE=${MACHINE%-nogfx}
-
 #
 # Ensure python_keyring is set to plaintext.  Required for
 # non-interactive use
@@ -30,23 +27,6 @@ cat <<EOF >  ~/.local/share/python_keyring/keyringrc.cfg
 [backend]
 default-keyring=keyring.backends.file.PlaintextKeyring
 EOF
-
-declare -A agl_lava_releng_aliases
-agl_lava_releng_aliases=(
-    [raspberrypi3]="raspberrypi3-uboot;raspberrypi3"
-    [qemux86-64]="qemu;qemux86-64"
-    [m3ulcb-nogfx]="r8a7796-m3ulcb;m3ulcb"
-    [porter-nogfx]="renesas-porter;renesas-porter"
-    [dra7xx-evm]="dra7-evm;dra7xx-evm"
-)
-
-OFS=${IFS}
-IFS=';'
-arr=(${agl_lava_releng_aliases[$MACHINE]})
-IFS=${OFS}
-lava_device=${arr[0]}
-releng_device=${arr[1]}
-# And agl_device=${MACHINE}
 
 device_available=0
 for lab in "${!labs[@]}"; do

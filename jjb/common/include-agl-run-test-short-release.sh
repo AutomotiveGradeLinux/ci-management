@@ -7,10 +7,8 @@
 
 set -x
 
-echo "## ${MACHINE} ##"
 cd $REPODIR
 
-__MACHINE=${MACHINE%-nogfx} # releng doesn't care
 echo "# LAVA lab target: ${LAVA_LAB} #"
 # releng-scripts depends on jinja2 >= 2.9
 echo "## Check version of python-jinja2: "
@@ -29,7 +27,7 @@ CREATE_ARGS+="--test all"
 $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
 
 if [ $? != 0 ]; then
-    echo "ERROR: Machine ${$__MACHINE}: LAVA job creation failed."
+    echo "ERROR: Machine ${releng_device}: LAVA job creation failed."
     exit 0
 else
     cat testjob.yaml
