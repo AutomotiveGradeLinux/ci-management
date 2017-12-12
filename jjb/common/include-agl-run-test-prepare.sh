@@ -41,6 +41,11 @@ lava_device=${arr[0]}
 releng_device=${arr[1]}
 # And agl_device=${MACHINE}
 
+if [ -z "${lava_device}" -o -z "${releng_device}" ]; then
+    echo "Board not supported: $MACHINE"
+    exit 0
+fi
+
 CREATE_ARGS=""
 CREATE_ARGS+="--machine ${releng_device} "
 
