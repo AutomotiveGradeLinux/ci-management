@@ -44,7 +44,7 @@ echo "####"
 
 JOB_OUTPUT="${JOB_BASE}_output.yaml"
 JOB_LOG="${JOB_BASE}_output.log"
-curl -s -o $JOB_OUTPUT $full_url/scheduler/job/$job_id/log_file/plain
+curl -s -o $JOB_OUTPUT $lava_url/scheduler/job/$job_id/log_file/plain
 cat $JOB_OUTPUT | grep '"target",' | sed -e 's#- {"dt".*"lvl".*"msg":."##g' -e 's#"}$##g' | tee $JOB_LOG
 
 echo "####"

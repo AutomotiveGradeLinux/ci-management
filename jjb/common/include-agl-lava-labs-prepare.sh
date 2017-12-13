@@ -52,7 +52,8 @@ for lab in "${!labs[@]}"; do
     fi
 
     # LAVA URL with username
-    full_url=${url/:\/\//:\/\/${user}\@}
+    lava_url=${url/:\/\//:\/\/${user}\@}
+    full_url=${lava_url}
     full_url+="RPC2/" # entry point for XML-RPC API
     echo "LAVA auth-add for lab: $lab, URL: $full_url"
 
