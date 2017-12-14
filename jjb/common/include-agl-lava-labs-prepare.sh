@@ -68,7 +68,9 @@ for lab in "${!labs[@]}"; do
 
     # Find the LAVA Lab that has the device available to run the job
     echo -n "Checking for $lava_device at $full_url... "
-    line=$(lava-tool devices-list $full_url |grep $lava_device | tr -d '[:space:]')
+    line=$(lava-tool devices-list $full_url | grep $lava_device)
+    line=$(echo "$line" | tr -d '[:space:]')
+
     if [ -z "$line" ]; then
         echo "not found."
         continue

@@ -31,7 +31,8 @@ job_id=$(grep "submitted as job:" $JOB_STATUS | sed 's/.*\/\([0-9]*$\)/\1/')
 lava-tool job-details $full_url $job_id | tee $JOB_STATUS
 
 IFS=':'
-line=$(grep "^status:" $JOB_STATUS | tr -d '[:space:]')
+line=$(grep "^status:" $JOB_STATUS)
+line=$(echo "$line" | tr -d '[:space:]')
 arr=($line)
 status=${arr[1]}
 IFS=${OFS}
