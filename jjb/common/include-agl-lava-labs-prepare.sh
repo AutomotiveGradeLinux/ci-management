@@ -10,6 +10,10 @@
 #
 # Strucuture: [JENKINS_LAB_NAME]="LAB_URL;JENKINS_LAB_USER;JENKINS_LAB_TOKEN;RELENG_LAB_NAME"
 #
+
+# Let the script handle errors nicely
+set +e
+
 declare -A labs
 labs=(
       [agl]="https://lava.automotivelinux.org/;$LAB_AGL_USER;$LAB_AGL_TOKEN;lab-agl-core"
@@ -103,3 +107,6 @@ if [ "$device_available" -eq 0 ]; then
     echo "ERROR: device not found in any available lab."
     exit 0
 fi
+
+# Re-enable error detection
+set -e
