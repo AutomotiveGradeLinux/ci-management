@@ -32,9 +32,13 @@ fi
 # construct upload folder
 #mv UPLOAD UPLOAD2 || true
 rm -rf UPLOAD/* || true
-mkdir -p UPLOAD/${MYPROJECT}/${AGLBRANCH}/changeset-${GERRIT_CHANGE_NUMBER}/${TARGETARCH}
-ln -sf changeset-${GERRIT_CHANGE_NUMBER} UPLOAD/${MYPROJECT}/${AGLBRANCH}/latest
-export DEST=$(pwd)/UPLOAD/${MYPROJECT}/${AGLBRANCH}/changeset-${GERRIT_CHANGE_NUMBER}/${TARGETARCH}
+
+PROJECTDIR="${AGLBRANCH}/${MYPROJECT}/${TARGETARCH}/"
+PROJECTPATTERN="${PROJECTDIR}/changeset-${GERRIT_CHANGE_NUMBER}"
+
+mkdir -p UPLOAD/${PROJECTPATTERN}
+ln -sf changeset-${GERRIT_CHANGE_NUMBER} UPLOAD/${PROJECTDIR}/latest
+export DEST=$(pwd)/UPLOAD/${PROJECTPATTERN}
 
 # copy the wgt to the upload folder
 pushd ${MYPROJECT}
