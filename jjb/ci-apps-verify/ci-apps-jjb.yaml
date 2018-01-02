@@ -20,20 +20,28 @@
       - agl-service-audio-4a
       - agl-service-audio-mpcd
       - agl-service-bluetooth
+      - agl-service-data-persistence
       - agl-service-geoclue
       - agl-service-geofence
       - agl-service-gps
       - agl-service-gstreamer
       - agl-service-homescreen-2017
+      - agl-service-identity-agent
       - agl-service-mediaplayer
       - agl-service-mediascanner
+      - agl-service-nfc
       - agl-service-radio
+      - agl-service-signal-composer
       - agl-service-soundmanager-2017
       - agl-service-steering-wheel
       - agl-service-unicens
       - agl-service-wifi
       - agl-service-windowmanager-2017
       - als-meter-demo
+      #- app-afb-helpers-submodule
+      #- app-controller-submodule
+      #- app-templates
+      #- chromium
       - controls
       - dashboard
       - homescreen
@@ -48,6 +56,7 @@
       - settings
       - settings-bluetooth
       - settings-wifi
+      - videoplayer
     jobs:
       - ci-apps-{project}-verify-{aglbranch}
       - ci-apps-{project}-verify-{aglbranch}-CIB-{architecture}
