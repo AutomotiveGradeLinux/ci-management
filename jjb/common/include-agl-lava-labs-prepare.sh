@@ -96,6 +96,22 @@ for lab in "${!labs[@]}"; do
     do
         # device is only available if "idle" or "running"
         device_available=0
+        if [ x"$device_status" = x"reserved" ]; then
+            sleep 60s
+            # Look if the status of the board has changed from reserved in the lab
+            echo -n "Checking for $lava_device at $full_url... "
+            line=$(lava-tool devices-list $full_url | grep $lava_device)
+            line=$(echo "$line" | tr -d '[:space:]')
+
+            if [ -z "$line" ]; then
+                echo "not found."
+                continue
+            fi
+            IFS='|'
+            arr=($line)
+            device_status=${arr[2]}
+            IFS=${OFS}
+        fi
         if [ x"$device_status" = x"idle" ]; then
             device_available=1
             break
@@ -103,20 +119,6 @@ for lab in "${!labs[@]}"; do
             device_available=1;
             break
         fi
-        sleep 60s
-        # Find the LAVA Lab that has the device available to run the job
-        echo -n "Checking for $lava_device at $full_url... "
-        line=$(lava-tool devices-list $full_url | grep $lava_device)
-        line=$(echo "$line" | tr -d '[:space:]')
-
-        if [ -z "$line" ]; then
-            echo "not found."
-            continue
-        fi
-        IFS='|'
-        arr=($line)
-        device_status=${arr[2]}
-        IFS=${OFS}
     done
 
     if [ $device_available = 0 ]; then
