@@ -21,11 +21,11 @@
           description: "branch to build"
       - string:
           name: GERRIT_REFSPEC
-          default: refs/tags/eel_4.99.1
+          default: refs/tags/eel_5.0.0
           description: "refspec to build"
       - string:
           name: RELEASE_VERSION
-          default: 4.99.1
+          default: 5.0.0
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH
@@ -41,7 +41,7 @@
           name: MACHINE
           values:
             - qemux86-64
-            - porter-nogfx
+            - cyclone5
             - intel-corei7-64
             - raspberrypi3
             - dra7xx-evm
@@ -103,11 +103,11 @@
           - ../common/include-agl-local-conf-vmdk.sh
           - ../common/include-agl-local-conf-rpi3-imagetype.sh
           - include-release-eel-fix-task-depends.sh
-          - ../common/include-agl-bitbake-image.sh
+          #- ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-bitbake-sdk.sh
-          - ../common/include-agl-run-test-prepare.sh
-          - ../common/include-agl-run-test-rsync-release.sh
-          - ../common/include-agl-lava-labs-prepare.sh
-          - ../common/include-agl-run-test-short-release.sh
+          #- ../common/include-agl-run-test-prepare.sh
+          #- ../common/include-agl-run-test-rsync-release.sh
+          #- ../common/include-agl-lava-labs-prepare.sh
+          #- ../common/include-agl-run-test-short-release.sh
       - shell:
           !include-raw-escape: include-release-jjb-eel-snapshot-rsync.sh
