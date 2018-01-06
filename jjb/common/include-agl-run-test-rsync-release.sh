@@ -22,8 +22,8 @@ cd $REPODIR
 
 cd output
 
-pwd
-ls -alhR tmp/deploy/images
+#pwd
+#ls -alhR tmp/deploy/images
 
 # copy files to $DEST
 for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do

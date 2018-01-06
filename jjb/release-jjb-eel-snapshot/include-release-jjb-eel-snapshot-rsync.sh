@@ -49,6 +49,7 @@ ls -alhR $DEST
 echo "would do rsync -avr -e \"ssh -o StrictHostKeyChecking=no\" $RSYNCSRC $RSYNCDST "
 
 if test x"yes" = x"$UPLOAD" ; then
+   ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 rm -rf ${REMOTEDST}
    ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 mkdir -p ${REMOTEDST}
    rsync --delete -avr -e "ssh -o StrictHostKeyChecking=no" $RSYNCSRC/* $RSYNCDST
 fi
