@@ -17,8 +17,9 @@ ls
 
 echo "###########################"
 
-mkdir ../container
+mkdir -p ../container
 mv docker_agl_worker*.tar.xz ../container/
+ln -s $(basename ../container/docker_agl_worker*.tar.xz) ../container/docker_agl_worker-latest.tar.xz
 
 ls ../container
 
