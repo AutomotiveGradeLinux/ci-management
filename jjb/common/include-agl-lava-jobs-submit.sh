@@ -14,7 +14,7 @@ JOB_BASE=$(basename $JOB_FILE .yaml)
 
 # Need to hack the LAVA device-type name in the job file
 JOB_FILE_NEW="${JOB_BASE}_${LAVA_LAB}.yaml"
-cat $JOB_FILE | sed "s/device_type: $releng_device/device_type: $lava_device/" > $JOB_FILE_NEW
+cat $JOB_FILE | sed "s/device_type: $releng_device$/device_type: $lava_device/" > $JOB_FILE_NEW
 
 #
 # LAVA job submit, get job ID from lava-tool output
