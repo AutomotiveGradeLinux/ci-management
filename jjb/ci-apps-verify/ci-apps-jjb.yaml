@@ -35,6 +35,7 @@
       - agl-service-soundmanager-2017
       - agl-service-steering-wheel
       - agl-service-unicens
+      - agl-service-weather
       - agl-service-wifi
       - agl-service-windowmanager-2017
       - als-meter-demo
