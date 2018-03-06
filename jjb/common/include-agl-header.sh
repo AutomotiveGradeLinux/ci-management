@@ -29,12 +29,12 @@ export TARGETPROJECT="AGL/AGL-repo"
 export TARGETBRANCH="master"
 export TARGETREFSPEC="refs/heads/master"
 
-export TARGETFEATURESnogfx="agl-appfw-smack agl-netboot agl-devel"
-export TARGETFEATURES="agl-demo ${TARGETFEATURESnogfx}"
+export TARGETFEATURESnogfx="agl-ci-change-features-nogfx"
+export TARGETFEATURES="agl-ci-change-features"
 
 export TARGETQA=""
 export TARGETIMAGE="agl-demo-platform\${TARGETQA}"
-export TARGETIMAGEnogfx="core-image-minimal"
+export TARGETIMAGEnogfx="agl-image-ivi-crosssdk"
 
 export TARGETSDKIMAGE="agl-demo-platform-crosssdk"
 
