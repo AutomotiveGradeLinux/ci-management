@@ -26,7 +26,7 @@ fi
 
 declare -A agl_lava_releng_aliases
 agl_lava_releng_aliases=(
-    [raspberrypi3]="raspberrypi3-uboot;raspberrypi3"
+    [raspberrypi3]="bcm2837-rpi-3-b-32;raspberrypi3"
     [qemux86-64]="qemu;qemux86-64"
     [m3ulcb-nogfx]="r8a7796-m3ulcb;m3ulcb"
     [porter-nogfx]="renesas-porter;porter"
