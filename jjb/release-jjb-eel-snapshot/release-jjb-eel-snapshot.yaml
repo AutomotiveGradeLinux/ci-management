@@ -17,15 +17,15 @@
           description: "Project to build"
       - string:
           name: GERRIT_BRANCH
-          default: master
+          default: eel
           description: "branch to build"
       - string:
           name: GERRIT_REFSPEC
-          default: refs/tags/eel_5.0.0
+          default: refs/tags/eel_5.0.2
           description: "refspec to build"
       - string:
           name: RELEASE_VERSION
-          default: 5.0.0
+          default: 5.0.2
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH
