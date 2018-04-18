@@ -113,7 +113,7 @@ sudo pip show jinja2
 # install go for xds build
 
 source /etc/os-release
-wget -O "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x52B59B1571A79DBC054901C0F6BC817356A3D45E" | sudo apt-key add -
+wget -O - "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x52B59B1571A79DBC054901C0F6BC817356A3D45E" | sudo apt-key add -
 sudo bash -c "cat >> /etc/apt/sources.list.d/golang.list <<EOF
 deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu ${VERSION_CODENAME} main
 EOF"
