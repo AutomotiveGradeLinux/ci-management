@@ -22,7 +22,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        libtool libglib2.0-dev libarchive-dev python-git git python python-minimal repo \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet npm mkdocs nodejs \
-                       python-pip python-simplejson g++-multilib
+                       python-pip python-simplejson g++-multilib make zip unzip
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
 
@@ -106,5 +106,15 @@ sudo pip install --upgrade jinja2
 python -c "import sys; print sys.path"
 
 sudo pip show jinja2
+
+# install go for xds build
+
+source /etc/os-release
+wget -O "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x52B59B1571A79DBC054901C0F6BC817356A3D45E" | sudo apt-key add -
+sudo bash -c "cat >> /etc/apt/sources.list.d/golang.list <<EOF
+deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu ${VERSION_CODENAME} main
+EOF"
+sudo apt-get update
+sudo apt-get install golang-go
 
 exit 0
