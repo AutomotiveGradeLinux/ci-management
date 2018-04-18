@@ -6,6 +6,9 @@ set -x
 sudo su -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
 sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553
 
+# go 
+sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com F6BC817356A3D45E
+
 cat /etc/apt/sources.list
 
 # Make sure that we aren't using the vexxhost mirrors as they have issues
