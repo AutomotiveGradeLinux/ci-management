@@ -1,0 +1,467 @@
+---
+- project:
+    name: ci-xds-AGL
+    aglbranch:
+      - master
+    project:
+      - xds-server
+    jobs:
+      - ci-xds-{project}-verify-{aglbranch}
+      - ci-xds-{project}-verify-{aglbranch}-CIB
+      - ci-xds-{project}-verify-{aglbranch}-CIB-finish-success
+      - ci-xds-{project}-remove-artifacts
+      - ci-xds-{project}-merge
+      - ci-xds-{project}-merge-finish-success
+
+
+################################################################################################################################################################
+################################################################################################################################################################
+
+################# VERIFY #################
+
+################################################################################
+# ci-xds-{project}-verify  =  trigger from gerrit and control job
+################################################################################
+- job-template:
+    name: 'ci-xds-{project}-verify-{aglbranch}'
+    project-type: multijob
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'src/xds/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: 'refs/heads/{aglbranch}'
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    triggers:
+      - gerrit-trigger-patch-submitted-manual-verified:
+          name: 'src/xds/{project}'
+          branch: '{aglbranch}'
+          silent: 'true'
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - shell: |
+          set
+          export TRIGGERURL=$(echo ${{BUILD_URL}} | sed -e 's,-CIB-start.*,,')
+          echo \$TRIGGERURL
+          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message="CI-cycle\ started.\ URL:\ ${{BUILD_URL}}" || true
+      - multijob:
+          name: CIB-{project}
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-xds-{project}-verify-{aglbranch}-CIB'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH={aglbranch}
+      - multijob:
+          name: CIB-finish-success
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-xds-{project}-verify-{aglbranch}-CIB-finish-success'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+
+
+
+#      - ci-xds-{project}-verify-{aglbranch}-CIB
+################################################################################
+################################################################################
+- job-template:
+    name: 'ci-xds-{project}-verify-{aglbranch}-CIB'
+    project-type: freestyle
+    concurrent: true
+    node: agl-test-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'src/xds/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: refs/heads/{aglbranch}
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: ""
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: ""
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+      - string:
+          name: PROJECT_TO_BUILD
+          default: '{project}'
+          description: 'plain project name'
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+      - openstack:
+          single-use: true
+
+    builders:
+      - shell:
+          # including from ../common
+          !include-raw-escape:
+          - ../common/include-xds-header.sh
+          - ../common/include-xds-build-common.sh
+          - ../common/include-xds-prepare-upload-folder.sh
+          - ../common/include-xds-rsync-download-changeid.sh
+
+    publishers:
+      - naginator:
+          rerun-unstable-builds: true
+          progressive-delay-increment: 5
+          progressive-delay-maximum: 15
+          max-failed-builds: 2
+          #regular-expression: "Unexpected termination of the channel"
+
+
+#      - ci-xds-{project}-verify-{aglbranch}-CIB-finish-success
+################################################################################
+################################################################################
+- job-template:
+    name: 'ci-xds-{project}-verify-{aglbranch}-CIB-finish-success'
+    project-type: freestyle
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'src/xds/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: 'refs/heads/{aglbranch}'
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - shell: |
+          set
+          echo "#### CIB +1 #### Verified +1 ####"
+          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="CI-Image-Build\ finished,\ CIB+1,\ Verified+1.\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/upload/ci/${{GERRIT_CHANGE_NUMBER}}/${{GERRIT_PATCHSET_NUMBER}}/\ ." || true
+
+
+#      - ci-xds-{project}-verify-{aglbranch}-failure
+################################################################################
+################################################################################
+
+#      - ci-xds-{project}-merge
+################################################################################
+################################################################################
+- job-template:
+    name: 'ci-xds-{project}-merge'
+    project-type: multijob
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'src/xds/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: 'refs/heads/{aglbranch}'
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+      - string:
+          name: PROJECT_TO_BUILD
+          default: '{project}'
+          description: 'plain project name to build'
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    triggers:
+      - gerrit-trigger-silent-patch-merged:
+          name: 'src/xds/{project}'
+          branch: '{aglbranch}'
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - multijob:
+          name: CI-merge-{project}
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-xds-{project}-merge-{aglbranch}'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH={aglbranch}
+      - multijob:
+          name: CIB-{project}-{aglbranch}-finish-success
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-xds-{project}-merge-finish-success'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+
+#      - ci-xds-{project}-merge-{aglbranch}
+################################################################################
+################################################################################
+- job-template:
+    name: 'ci-xds-{project}-merge-{aglbranch}'
+    project-type: freestyle
+    concurrent: true
+    node: agl-test-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'src/xds/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: refs/heads/{aglbranch}
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: ""
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: ""
+          description: "patchset # to build"
+      - string:
+          name: TARGETARCH
+          default: '{architecture}'
+          description: "Machine to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+      - string:
+          name: PROJECT_TO_BUILD
+          default: '{project}'
+          description: 'plain project name'
+
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+      - openstack:
+          single-use: true
+
+    builders:
+      - shell:
+          # including from ../common
+          !include-raw-escape:
+          - ../common/include-xds-header.sh
+          - ../common/include-xds-build-common.sh
+          - ../common/include-xds-prepare-upload-folder-merged.sh
+          - ../common/include-xds-rsync-download-xds.sh
+
+
+    publishers:
+      - naginator:
+          rerun-unstable-builds: true
+          progressive-delay-increment: 5
+          progressive-delay-maximum: 15
+          max-failed-builds: 2
+          #regular-expression: "Unexpected termination of the channel"
+
+
+#      - ci-xds-{project}-merge-finish-success
+################################################################################
+################################################################################
+- job-template:
+    name: 'ci-xds-{project}-merge-finish-success'
+    project-type: freestyle
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'src/xds/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: 'refs/heads/{aglbranch}'
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - shell: |
+          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="Merge\ finished,\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/xds/{project}/\ ." || true
+
+
+#      - ci-xds-{project}-remove-artifacts
+################################################################################
+################################################################################
+- job-template:
+    name: 'ci-xds-{project}-remove-artifacts'
+    project-type: freestyle
+    concurrent: true
+    node: control-slave
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'src/xds/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: refs/heads/{aglbranch}
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "9551"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+      - openstack:
+          single-use: false
+    triggers:
+      - gerrit-trigger-silent-patch-merged-abandoned:
+          name: 'src/xds/{project}'
+          branch: 'refs/heads/{aglbranch}'
+    builders:
+      - shell:
+          !include-raw-escape:
+          - ../common/include-agl-remove-artifacts-changeid.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
