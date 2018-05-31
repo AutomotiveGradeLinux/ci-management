@@ -5,6 +5,9 @@
       - master
     project:
       - xds-server
+      - xds-agent
+      - xds-gdb
+      - xds-cli
     jobs:
       - ci-xds-{project}-verify-{aglbranch}
       - ci-xds-{project}-verify-{aglbranch}-CIB
