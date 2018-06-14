@@ -20,6 +20,7 @@
       - agl-service-audio-4a
       - agl-service-audio-mpcd
       - agl-service-bluetooth
+      - agl-service-bluetooth-pbap
       - agl-service-data-persistence
       - agl-service-geoclue
       - agl-service-geofence
