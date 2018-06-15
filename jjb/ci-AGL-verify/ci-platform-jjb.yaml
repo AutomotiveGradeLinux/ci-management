@@ -472,6 +472,9 @@
           build-timeout: '{build-timeout}'
       - openstack:
           single-use: false
+      - ssh-agent-credentials:
+          users:
+              - storagebox
       - credentials-binding:
           - username-password-separated:
               credential-id: agl_main_lava_instance

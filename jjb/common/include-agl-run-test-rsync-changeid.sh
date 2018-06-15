@@ -10,6 +10,7 @@ echo "\n\n\n"
 
 export RSYNCDST="/srv/download/AGL/upload/ci/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}"
 export RSYNCSRC=$(pwd)/UPLOAD/
+export RSYNCSRC-storage=$(pwd)/UPLOAD-storage/
 
 # construct upload folder
 mv UPLOAD UPLOAD2 || true
@@ -17,6 +18,8 @@ rm -rf UPLOAD2 || true
 mkdir -p UPLOAD/${MACHINE}
 export DEST=$(pwd)/UPLOAD/${MACHINE}
 
+export DEST2=$(pwd)/UPLOAD-storage/AGL/upload/ci/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/
+mkdir -p ${DEST2}
 
 cd $REPODIR
 
@@ -30,6 +33,7 @@ for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
     FILE=$(eval echo \$${i})
     if [ -n "$FILE" ]; then
       cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST}/
+      cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST2}/
     fi
 done
 
@@ -39,3 +43,9 @@ ls -alhR $DEST
 ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 mkdir -p ${RSYNCDST}
 
 rsync -avr -L -e "ssh -o StrictHostKeyChecking=no" $RSYNCSRC jenkins-slave@10.30.72.8:$RSYNCDST
+
+
+
+#storagebox:
+rsync -avr --progress -e "ssh -p23 -o StrictHostKeyChecking=no" ${RSYNCSRC-storage}/ u180031-sub2@u180031-sub2.your-storagebox.de:./
+
