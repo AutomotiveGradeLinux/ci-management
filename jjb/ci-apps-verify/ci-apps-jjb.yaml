@@ -21,6 +21,7 @@
       - agl-service-audio-mpcd
       - agl-service-bluetooth
       - agl-service-bluetooth-pbap
+      - agl-service-can-low-level
       - agl-service-data-persistence
       - agl-service-geoclue
       - agl-service-geofence
@@ -28,6 +29,7 @@
       - agl-service-gstreamer
       - agl-service-homescreen-2017
       - agl-service-identity-agent
+      - agl-service-iiodevices
       - agl-service-mediaplayer
       - agl-service-mediascanner
       - agl-service-nfc
@@ -48,7 +50,7 @@
       - dashboard
       - homescreen
       - hvac
-      - low-level-can-service
+      - launcher
       - mediaplayer
       - mixer
       - navigation
