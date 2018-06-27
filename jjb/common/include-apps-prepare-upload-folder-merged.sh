@@ -42,9 +42,15 @@ export DEST=$(pwd)/UPLOAD/${PROJECTPATTERN}
 
 # copy the wgt to the upload folder
 pushd ${MYPROJECT}
-  pwd
-  ls -alh || true
+pwd
+if test -d build/package ; then
+  # use cmake build/package folder for wgt's ...
+  ls build/package/ || true
+  cp build/package/*.wgt $DEST
+else
+  # use just ./package/ for wgt's
   ls package || true
   cp package/*.wgt $DEST
-  ls -alh $DEST
+fi
 popd
+

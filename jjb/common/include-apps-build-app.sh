@@ -80,9 +80,13 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
             export DONE=1
         fi
         if test x"0" = x"$DONE" -a -f CMakeLists.txt; then
-            cmake .
+            rm -rf build || true
+            mkdir build
+            pushd build
+            cmake ../
             make
             make package || true
+            popd
             export DONE=1
         fi
         if test x"0" = x"$DONE" -a -f Makefile ; then
