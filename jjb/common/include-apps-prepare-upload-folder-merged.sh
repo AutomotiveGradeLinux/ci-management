@@ -43,14 +43,37 @@ export DEST=$(pwd)/UPLOAD/${PROJECTPATTERN}
 # copy the wgt to the upload folder
 pushd ${MYPROJECT}
 pwd
-if test -d build/package ; then
+
+if test x"$isCMAKE" = x"1" ; then
+  echo "isCMAKE"
   # use cmake build/package folder for wgt's ...
   ls build/package/ || true
   cp build/package/*.wgt $DEST
-else
-  # use just ./package/ for wgt's
-  ls package || true
-  cp package/*.wgt $DEST
 fi
+if test x"$isAUTOBUILD" = x"1" ; then
+  echo "isAUTOBUILD"
+  if [ "$(ls -l package/*.wgt | wc -l)" = "1" ] ; then
+    # use just ./package/ for wgt's
+    ls package || true
+    cp package/*.wgt $DEST
+  elif [ "$(ls -l build/package/*.wgt | wc -l)" = "1" ] ; then
+    # use just ./build/package/ for wgt's
+    ls build/package || true
+    cp build/package/*.wgt $DEST
+  fi
+fi
+if test x"$isMAKE" = x"1" ; then
+    echo "isMAKE"
+    # use just ./package/ for wgt's
+    ls package || true
+    cp package/*.wgt $DEST
+fi
+if test x"$isQMAKE" = x"1" ; then
+    echo "isQMAKE"
+    # use just ./package/ for wgt's
+    ls package || true
+    cp package/*.wgt $DEST
+fi
+
 popd
 
