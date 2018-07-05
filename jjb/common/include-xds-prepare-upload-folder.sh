@@ -15,14 +15,7 @@ rm -rf UPLOAD/${AGLBRANCH} || true
 mkdir -p UPLOAD/${AGLBRANCH}/
 export DEST=$(pwd)/UPLOAD/${AGLBRANCH}/
 
-pushd ${MYPROJECT}
-pwd
-
 ls -alh
-
-ls
-
-ls package || true
 
 cp  src/gerrit.automotivelinux.org/gerrit/${GERRIT_PROJECT}/*.zip $DEST
 

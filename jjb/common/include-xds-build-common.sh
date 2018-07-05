@@ -14,5 +14,4 @@ export V=1
 make package-all
 
 cd $ROOTDIR
-tree
-
+tree -I "vendor|node_modules" || true
