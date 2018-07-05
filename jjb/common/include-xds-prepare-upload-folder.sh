@@ -20,5 +20,3 @@ ls -alh
 cp  src/gerrit.automotivelinux.org/gerrit/${GERRIT_PROJECT}/*.zip $DEST
 
 ls -alh $DEST
-
-popd
