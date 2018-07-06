@@ -32,20 +32,20 @@
       - agl-service-iiodevices
       - agl-service-mediaplayer
       - agl-service-mediascanner
+      - agl-service-navigation
+      - agl-service-network
       - agl-service-nfc
       - agl-service-radio
       - agl-service-signal-composer
+      - agl-service-soundmanager
       - agl-service-soundmanager-2017
       - agl-service-steering-wheel
       - agl-service-unicens
       - agl-service-weather
       - agl-service-wifi
+      - agl-service-windowmanager
       - agl-service-windowmanager-2017
       - als-meter-demo
-      #- app-afb-helpers-submodule
-      #- app-controller-submodule
-      #- app-templates
-      #- chromium
       - controls
       - dashboard
       - homescreen
