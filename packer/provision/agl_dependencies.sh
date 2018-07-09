@@ -24,7 +24,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        libsdl1.2-dev xterm make xsltproc docbook-utils fop dblatex xmlto autoconf automake \
                        libtool libglib2.0-dev libarchive-dev python-git git python python-minimal repo \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
-                       ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet npm mkdocs nodejs \
+                       ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
                        python-pip python-simplejson g++-multilib make zip unzip
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
@@ -63,15 +63,13 @@ vm.dirty_writeback_centisecs = 0
 
 EOFSYSCTL
 
-### webdocs
+### webdocs + xds
 # taken from container setup script. not documented in readme.
-# install node.js and tools (npm, gulp, bower) if needed
+# install node.js and tools (npm, gulp, bower)
 #
-if [[ -z $(which node) ]]; then
-    curl -sL https://deb.nodesource.com/setup_6.x | bash -
-    apt-get install -y nodejs
-    npm install --global gulp bower
-fi
+curl -v --connect-timeout 60 --retry 3 -sL https://deb.nodesource.com/setup_8.x | bash -
+apt-get install -y nodejs npm
+npm install --global gulp bower
 
 # tools used to generate developer website (https://github.com/automotive-grade-linux/docs-agl)
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
