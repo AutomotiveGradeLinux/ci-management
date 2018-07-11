@@ -27,6 +27,7 @@
       - agl-service-geofence
       - agl-service-gps
       - agl-service-gstreamer
+      - agl-service-harvester
       - agl-service-homescreen-2017
       - agl-service-identity-agent
       - agl-service-iiodevices
@@ -45,12 +46,15 @@
       - agl-service-wifi
       - agl-service-windowmanager
       - agl-service-windowmanager-2017
+      - agl-service-xds-monitoring
       - als-meter-demo
+      - app-afb-test
       - controls
       - dashboard
       - homescreen
       - hvac
       - launcher
+      - low-level-can-service
       - mediaplayer
       - mixer
       - navigation
@@ -65,6 +69,7 @@
       - ci-apps-{project}-verify-{aglbranch}
       - ci-apps-{project}-verify-{aglbranch}-CIB-{architecture}
       - ci-apps-{project}-verify-{aglbranch}-CIB-finish-success
+      - ci-apps-{project}-verify-{aglbranch}-signal-gracetime
       - ci-apps-{project}-verify-{aglbranch}-failure
       - ci-apps-{project}-remove-{aglbranch}-artifacts
       - ci-apps-{project}-merge-{aglbranch}
@@ -165,6 +170,14 @@
           condition: SUCCESSFUL
           projects:
             - name: 'ci-apps-{project}-verify-{aglbranch}-CIB-finish-success'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+      - multijob:
+          name: ci-apps-{project}-verify-{aglbranch}-gracetime
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-apps-{project}-verify-{aglbranch}-signal-gracetime'
               current-parameters: true
               abort-all-job: true
               kill-phase-on: FAILURE
@@ -283,6 +296,59 @@
           set
           echo "#### CIB +1 #### Verified +1 ####"
           ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="CI-Image-Build\ finished,\ CIB+1,\ Verified+1.\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/upload/ci/${{GERRIT_CHANGE_NUMBER}}/${{GERRIT_PATCHSET_NUMBER}}/\ ." || true
+
+
+################################################################################
+# ci-apps-{project}-gracetime  =  24h grace msg to gerrit
+################################################################################
+- job-template:
+    name: 'ci-apps-{project}-verify-{aglbranch}-signal-gracetime'
+    project-type: freestyle
+    concurrent: true
+    node: control-slave
+    quiet-period: 3600
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'apps/{project}'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: '{aglbranch}'
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: 'refs/heads/{aglbranch}'
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+      - string:
+          name: AGLBRANCH
+          default: '{aglbranch}'
+          description: "AGL release branch to use"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - shell: |
+          set
+          echo "#### CIB +1 #### Verified +1 ####"
+          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-gracetime=+1 --label ci-image-build=+1 -n NONE --message="24h gracetime over. Ready to merge." || true
+
+
+
+
+################# Unused templates ##################
 
 
 ################################################################################
