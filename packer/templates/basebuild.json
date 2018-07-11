@@ -13,7 +13,7 @@
   "builders": [
     {
       "type": "openstack",
-      "identity_endpoint": "https://auth.vexxhost.net/v2.0/",
+      "identity_endpoint": "https://auth.vexxhost.net/v3/",
       "tenant_name": "{{user `stack_tenant`}}",
       "username": "{{user `stack_user`}}",
       "password": "{{user `stack_pass`}}",
