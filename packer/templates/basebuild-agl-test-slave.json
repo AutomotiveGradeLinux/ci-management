@@ -12,21 +12,26 @@
   },
   "builders": [
     {
-      "type": "openstack",
-      "identity_endpoint": "https://auth.vexxhost.net/v2.0/",
-      "tenant_name": "{{user `stack_tenant`}}",
-      "username": "{{user `stack_user`}}",
-      "password": "{{user `stack_pass`}}",
-      "region": "ca-ymq-1",
-      "ssh_username": "{{user `cloud_user`}}",
+      "name": "vexxhost",
       "image_name": "{{user `distro`}} - basebuild-agl-test-slave - {{isotime \"20060102-1504\"}}",
       "source_image_name": "{{user `base_image`}}",
-      "flavor": "v1-standard-16",
+      "type": "openstack",
+      "identity_endpoint": "https://auth.vexxhost.net/v3/",
+      "username": "{{user `stack_user`}}",
+      "password": "{{user `stack_pass`}}",
+      "tenant_name": "{{user `stack_tenant`}}",
+      "domain_name": "Default",
+      "region": "ca-ymq-1",
       "availability_zone": "ca-ymq-2",
       "networks": [
         "{{user `stack_network`}}"
       ],
-      "user_data_file": "{{user `cloud_user_data`}}"
+      "user_data_file": "{{user `cloud_user_data`}}",
+      "ssh_username": "{{user `cloud_user`}}",
+      "flavor": "v1-standard-16",
+      "metadata": {
+        "ci_managed": "yes"
+      }
     }
   ],
   "provisioners": [
