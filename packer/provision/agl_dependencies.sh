@@ -68,7 +68,9 @@ EOFSYSCTL
 # install node.js and tools (npm, gulp, bower)
 #
 curl -v --connect-timeout 60 --retry 3 -sL https://deb.nodesource.com/setup_8.x | bash -
-DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs npm
+DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
+which -a npm
+dpkg -L nodejs
 npm install --global gulp bower
 
 # tools used to generate developer website (https://github.com/automotive-grade-linux/docs-agl)
