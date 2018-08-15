@@ -41,6 +41,7 @@
       - agl-service-soundmanager
       - agl-service-soundmanager-2017
       - agl-service-steering-wheel
+      - agl-service-taskmanager
       - agl-service-unicens
       - agl-service-weather
       - agl-service-wifi
@@ -64,6 +65,7 @@
       - settings
       - settings-bluetooth
       - settings-wifi
+      - taskmanager
       - videoplayer
     jobs:
       - ci-apps-{project}-verify-{aglbranch}
