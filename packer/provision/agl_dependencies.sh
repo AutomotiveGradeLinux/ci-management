@@ -60,6 +60,8 @@ vm.dirty_bytes = 0
 vm.dirty_ratio = 80
 vm.dirty_writeback_centisecs = 0
 
+# disable ipv6
+net.ipv6.conf.all.disable_ipv6 = 1
 
 EOFSYSCTL
 
