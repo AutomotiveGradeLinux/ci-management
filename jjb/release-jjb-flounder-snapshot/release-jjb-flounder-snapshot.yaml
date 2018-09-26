@@ -21,11 +21,11 @@
           description: "branch to build"
       - string:
           name: GERRIT_REFSPEC
-          default: refs/tags/flounder_5.99.1
+          default: refs/tags/flounder_6.0.0
           description: "refspec to build"
       - string:
           name: RELEASE_VERSION
-          default: 5.99.1
+          default: 6.0.0
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH
@@ -41,7 +41,8 @@
           name: MACHINE
           values:
             - qemux86-64
-            - #cyclone5
+            - qemuarm
+            - qemuarm64
             - intel-corei7-64
             - raspberrypi3
             - dra7xx-evm
@@ -99,14 +100,18 @@
           - ../common/include-agl-cat-auto-conf.sh
           - ../common/include-agl-local-conf-archiver.sh
           #- ../common/include-agl-local-conf-isafw.sh
+          - ../common/include-agl-local-conf-include-ptest.sh
           - ../common/include-agl-local-conf-DISTROFEATURES-AGLCI.sh
           - ../common/include-agl-local-conf-vmdk.sh
           - ../common/include-agl-local-conf-rpi3-imagetype.sh
           #- ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-bitbake-sdk.sh
-          #- ../common/include-agl-run-test-prepare.sh
-          #- ../common/include-agl-run-test-rsync-release.sh
-          #- ../common/include-agl-lava-labs-prepare.sh
-          #- ../common/include-agl-run-test-short-release.sh
       - shell:
           !include-raw-escape: include-release-jjb-flounder-snapshot-rsync.sh
+      - shell:
+          !include-raw-escape:
+          - ../common/include-agl-run-test-prepare.sh
+          #- ../common/include-agl-run-test-rsync-release.sh
+          - ../common/include-agl-lava-labs-prepare.sh
+          - ../common/include-agl-run-test-short-flounder.sh
+          - ../common/include-agl-lava-jobs-submit-only.sh
