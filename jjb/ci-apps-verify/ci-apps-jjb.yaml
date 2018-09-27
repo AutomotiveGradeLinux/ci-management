@@ -3,6 +3,7 @@
     name: ci-apps-AGL
     aglbranch:
       - master
+      - flounder
       - eel
       - dab
     architecture:
@@ -28,7 +29,9 @@
       - agl-service-gps
       - agl-service-gstreamer
       - agl-service-harvester
+      - agl-service-homescreen
       - agl-service-homescreen-2017
+      - agl-service-hvac
       - agl-service-identity-agent
       - agl-service-iiodevices
       - agl-service-mediaplayer
@@ -40,8 +43,10 @@
       - agl-service-signal-composer
       - agl-service-soundmanager
       - agl-service-soundmanager-2017
+      - agl-service-speech
       - agl-service-steering-wheel
       - agl-service-taskmanager
+      - agl-service-telephony
       - agl-service-unicens
       - agl-service-weather
       - agl-service-wifi
@@ -49,7 +54,6 @@
       - agl-service-windowmanager-2017
       - agl-service-xds-monitoring
       - als-meter-demo
-      - app-afb-test
       - controls
       - dashboard
       - homescreen
