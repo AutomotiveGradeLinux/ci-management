@@ -22,7 +22,7 @@
     name: ci-management-verify-jjb
 
     project-type: freestyle
-    node: master
+    node: agl-test-slave
     concurrent: true
 
     parameters:
@@ -56,7 +56,7 @@
     name: 'ci-management-merge'
 
     project-type: freestyle
-    node: master
+    node: agl-test-slave
 
     build-discarder:
       days-to-keep: 30
