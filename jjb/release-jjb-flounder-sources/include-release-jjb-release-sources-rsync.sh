@@ -28,9 +28,12 @@ mkdir -p ../UPLOAD/
 cp -ar agl-${RELEASE_BRANCH}-${RELEASE_VERSION}.* ../UPLOAD/
 
 export RSYNCSRC=$(pwd)/../UPLOAD
-export RSYNCDST="jenkins-slave@10.30.72.8:/srv/download/AGL/release/${RELEASE_BRANCH}/"
+export RSYNCDST="/srv/download/AGL/release/${RELEASE_BRANCH}/"
 
 if test x"yes" = x"${UPLOAD}" ; then
+   set +x
    ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 "mkdir -p ${RSYNCDST}"
-   rsync -avr -e "ssh -o StrictHostKeyChecking=no" ${RSYNCSRC}/* ${RSYNCDST}
+   rsync -avr -e "ssh -o StrictHostKeyChecking=no" ${RSYNCSRC}/* jenkins-slave@10.30.72.8:${RSYNCDST}
+   ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 "rm -rf ${RSYNCDST}/latest" 
+   ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 "ln -sf ${RELEASE_VERSION} ${RSYNCDST}/latest"
 fi

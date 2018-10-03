@@ -592,7 +592,7 @@
           - ../common/include-apps-fetch-install-sdk.sh
           - ../common/include-apps-build-app.sh
           - ../common/include-apps-prepare-upload-folder-merged.sh
-          - ../common/include-apps-rsync-download-apprepo.sh
+          #- ../common/include-apps-rsync-download-apprepo.sh
 
     publishers:
       - naginator:
