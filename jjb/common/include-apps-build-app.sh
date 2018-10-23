@@ -90,7 +90,12 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
             pushd build
             cmake ../
             make
-            make package || true
+            if test x"0" = x"$DONE" -a -f ../conf.d/autobuild/agl/autobuild ; then
+                ../conf.d/autobuild/agl/autobuild package DEST=$(pwd)/package
+                export isAUTOBUILD=1
+	    else
+                make package || true
+	    fi
             popd
             export isCMAKE=1
             export DONE=1
