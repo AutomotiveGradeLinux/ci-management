@@ -21,6 +21,7 @@
       - agl-service-audio-4a
       - agl-service-audio-mpcd
       - agl-service-bluetooth
+      - agl-service-bluetooth-avrcp
       - agl-service-bluetooth-pbap
       - agl-service-can-low-level
       - agl-service-data-persistence
@@ -30,7 +31,6 @@
       - agl-service-gstreamer
       - agl-service-harvester
       - agl-service-homescreen
-      - agl-service-homescreen-2017
       - agl-service-hvac
       - agl-service-identity-agent
       - agl-service-iiodevices
@@ -42,7 +42,6 @@
       - agl-service-radio
       - agl-service-signal-composer
       - agl-service-soundmanager
-      - agl-service-soundmanager-2017
       - agl-service-speech
       - agl-service-steering-wheel
       - agl-service-taskmanager
@@ -53,7 +52,8 @@
       - agl-service-windowmanager
       - agl-service-windowmanager-2017
       - agl-service-xds-monitoring
-      - als-meter-demo
+      - app-afb-test
+      - chromium
       - controls
       - dashboard
       - homescreen
@@ -71,6 +71,7 @@
       - settings-wifi
       - taskmanager
       - videoplayer
+
     jobs:
       - ci-apps-{project}-verify-{aglbranch}
       - ci-apps-{project}-verify-{aglbranch}-CIB-{architecture}
