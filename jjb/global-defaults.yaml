@@ -10,7 +10,7 @@
     build-artifact-num-to-keep: 10
     # Timeout in minutes
     build-timeout: 600
-    ssh-credentials: 'agl-jobbuilder'
+    ssh-credentials: 'd28b1f3b-3603-49bc-b837-bb0a2e85d4b8'
 
     # AGL branch defaults
     branch: master
