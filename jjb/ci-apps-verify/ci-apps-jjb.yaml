@@ -47,6 +47,7 @@
       - agl-service-taskmanager
       - agl-service-telephony
       - agl-service-unicens
+      - agl-service-voice-high
       - agl-service-weather
       - agl-service-wifi
       - agl-service-windowmanager
