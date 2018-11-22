@@ -25,12 +25,6 @@ pushd ${MYPROJECT}
 pwd
 ls -alh
 
-if test x"$isCMAKE" = x"1" ; then
-  echo "isCMAKE"
-  # use cmake build/package folder for wgt's ...
-  ls build/package/ || true
-  cp build/package/*.wgt $DEST
-fi
 if test x"$isAUTOBUILD" = x"1" ; then
   if [ "$(ls -l package/*.wgt | wc -l)" = "1" ] ; then
     echo "isAUTOBUILD"
@@ -42,6 +36,16 @@ if test x"$isAUTOBUILD" = x"1" ; then
     ls build/package || true
     cp build/package/*.wgt $DEST
   fi
+fi
+######################################################################
+# /!\/!\/!\   DEPRECATED FALLBACK WAY TO BUILD AGL APPS /!\/!\/!\    #
+######################################################################
+
+if test x"$isCMAKE" = x"1" ; then
+  echo "isCMAKE"
+  # use cmake build/package folder for wgt's ...
+  ls build/package/ || true
+  cp build/package/*.wgt $DEST
 fi
 if test x"$isMAKE" = x"1" ; then
     echo "isMAKE"
