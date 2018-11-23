@@ -39,6 +39,7 @@
       - agl-service-navigation
       - agl-service-network
       - agl-service-nfc
+      - agl-service-platform-info
       - agl-service-radio
       - agl-service-signal-composer
       - agl-service-soundmanager
