@@ -75,6 +75,7 @@ which -a npm
 dpkg -L nodejs
 npm install --global gulp bower
 
+################### SDX181207 { - obsolete: section until closing brace should be removed after migration to next docsite
 # tools used to generate developer website (https://github.com/automotive-grade-linux/docs-agl)
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
     && curl -sSL https://get.rvm.io | bash -s stable --ruby --gems=jekyll
@@ -97,6 +98,7 @@ npm install
 #gem install --no-user-install -V --version 1.13.1 kramdown
 
 ### hope that is enough
+################### SDX181207 } - (closing brace)
 
 # ruby markdown linter
 sudo gem install mdl

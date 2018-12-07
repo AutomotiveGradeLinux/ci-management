@@ -1,0 +1,32 @@
+---
+- project:
+    name: daily-jjb-doc-multiversion
+    jobs:
+      - daily-jjb-doc-multiversion-update
+
+- job-template:
+    name: 'daily-jjb-doc-multiversion-update'
+    project-type: freestyle
+    concurrent: false
+    node: agl-test-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
+
+    build-discarder:
+      days-to-keep: 30
+      num-to-keep: 40
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+
+    triggers:
+      - timed: '@daily'
+
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell:
+          !include-raw-escape: include-doc-multiversion-update.sh
+      - shell:
+          !include-raw-escape: include-doc-multiversion-upload.sh
