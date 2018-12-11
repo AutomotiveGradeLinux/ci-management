@@ -7,11 +7,13 @@ TMPDIR=${TMPDIR:-$WORKSPACE/upload-gh}
 
 # publish the docs
 
+ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+
 mkdir -p $TMPDIR
 git clone -b gh-pages git@github.com:automotive-grade-linux/docs-gh-pages.git $TMPDIR/upload-gh-pages
 cp -ar $HTDOCS/* $TMPDIR/upload-gh-pages/
 pushd $TMPDIR/upload-gh-pages
-	git config user.name build.automotivelinux.org
+    git config user.name build.automotivelinux.org
     git config user.email jenkins@automotivelinux.org
     git diff
     git add .
