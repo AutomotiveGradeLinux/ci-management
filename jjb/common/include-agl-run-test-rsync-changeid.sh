@@ -44,8 +44,3 @@ ssh -o StrictHostKeyChecking=no jenkins-slave@10.30.72.8 mkdir -p ${RSYNCDST}
 
 rsync -avr -L -e "ssh -o StrictHostKeyChecking=no" $RSYNCSRC jenkins-slave@10.30.72.8:$RSYNCDST
 
-
-
-#storagebox:
-( rsync -avr --progress -e "ssh -p23 -o StrictHostKeyChecking=no" ${RSYNCSRCstorage}/ u180031-sub2@u180031-sub2.your-storagebox.de:./ ) || true
-
