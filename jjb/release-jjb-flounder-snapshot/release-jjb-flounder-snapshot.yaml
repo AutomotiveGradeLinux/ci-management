@@ -110,6 +110,7 @@
           !include-raw-escape: include-release-jjb-flounder-snapshot-rsync.sh
       - shell:
           !include-raw-escape:
+          - ../common/include-agl-header.sh
           - ../common/include-agl-run-test-prepare.sh
           #- ../common/include-agl-run-test-rsync-release.sh
           - ../common/include-agl-lava-labs-prepare.sh
