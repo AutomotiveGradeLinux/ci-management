@@ -16,6 +16,8 @@ trap "rm -rf $WORKSPACE/setupdocs.sh $TMPDIR" STOP INT QUIT EXIT
 
 # setupdocs is already imported from automotive-grade-linux/docs-webtemplate
 #wget -O $WORKSPACE/setupdocs.sh https://raw.githubusercontent.com/automotive-grade-linux/docs-webtemplate/master/setupdocs.sh
+wget -O $WORKSPACE/setupdocs.sh https://git.automotivelinux.org/ci-management/plain/jjb/daily-jjb-doc-multiversion-update/setupdocs.sh
+
 chmod +x $WORKSPACE/setupdocs.sh
 
 function gensite() {
