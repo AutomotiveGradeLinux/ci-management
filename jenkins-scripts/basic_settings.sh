@@ -51,6 +51,10 @@ Host vex-yul-agl-download.ci.codeaurora.org
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 
+Host github.com
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+
 EOSSH
 
 cat <<EOKNOWN >  /etc/ssh/ssh_known_hosts
