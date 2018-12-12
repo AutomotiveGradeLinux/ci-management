@@ -35,6 +35,10 @@
           name: UPLOAD
           default: yes_or_no
           description: "Upload?"
+      - string:
+          name: BUILDONLY
+          default: ignore
+          description: "build only specified machine"
     axes:
       - axis:
           type: user-defined
