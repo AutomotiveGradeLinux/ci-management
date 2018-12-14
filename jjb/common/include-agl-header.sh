@@ -122,6 +122,16 @@ eval TARGETIMAGEnogfx="$TARGETIMAGEnogfx"
 # The 'real' machine name
 export TARGETMACHINE=${MACHINE}
 
+# bail out if we're not the 'BUILDONLY' machine
+if test -n "${BUILDONLY}" ; then
+    if test x"ignore" != x"${BUILDONLY}" ; then
+	if test x"${MACHINE}" != x"${BUILDONLY}" ; then
+	    echo "Skipping ${MACHINE} as BUILDONLY is ${BUILDONLY}."
+	    exit 1
+	fi
+    fi
+fi
+
 # The exceptions
 if $NOGFX; then
     export TARGETIMAGE=${TARGETIMAGEnogfx}
