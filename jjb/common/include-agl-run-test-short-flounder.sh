@@ -24,7 +24,6 @@ BUILD_VERSION="AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION"
 CREATE_ARGS+="--name AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION "
 CREATE_ARGS+="--build-version $BUILD_VERSION "
 CREATE_ARGS+="--callback-from ${LAVA_LAB} "
-CREATE_ARGS+="--test all"
 $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
 
 if [ $? != 0 ]; then
