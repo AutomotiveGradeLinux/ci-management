@@ -69,6 +69,33 @@ for lab in "${!labs[@]}"; do
     fi
     rm -f $token_file
 
+    # lavacli auth using token
+    lavacli identities add --token ${token} --uri $full_url --username $user $lab
+
+    # lavacli: Find the LAVA lab that has the device available to run the job
+    echo -n "lavacli: Checking for $lava_device at $full_url... "
+    lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | head -1)
+    lavacli_line=$(echo "$lavacli_line" | tr -d '[:space:]')
+
+    if [ -z "$lavacli_line" ]; then
+        echo "not found."
+        continue
+    fi
+    IFS=':'
+    arr=($lavacli_line)
+    device_status=${arr[1]}
+    IFS=${OFS}
+
+    if [ x"$device_status" = x"Idle,Good" ]; then
+	echo "lavacli: found a device available: $lavacli_line"
+	lavacli_dev=$(echo ${arr[0]} | sed 's/\*\([^(]*\).*/\1/')
+	lavacli_tags=$(lavacli -i $lab devices tags list $lavacli_dev | grep \*)
+	lavacli_tags=$(echo $lavacli_tags | sed 's/\* \(\)/\1/')
+	echo "Tags for $lavacli_dev: $lavacli_tags"
+    else
+	echo "lavacli: did not find any device available: $lavacli_line"
+    fi
+
     # Find the LAVA Lab that has the device available to run the job
     echo -n "Checking for $lava_device at $full_url... "
     line=$(lava-tool devices-list $full_url | grep $lava_device)
