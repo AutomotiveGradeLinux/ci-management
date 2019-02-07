@@ -25,9 +25,15 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        libtool libglib2.0-dev libarchive-dev python-git git python python-minimal repo \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
-                       python-pip python-simplejson g++-multilib make zip unzip iperf3
+                       python-pip python-simplejson g++-multilib make zip unzip iperf3 \
+		       debian-keyring debian-archive-keyring
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
+
+# Adding stretch-backports for lavacli
+echo "deb http://deb.debian.org/debian/ stretch-backports main" >> /etc/apt/sources.list
+
+DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
