@@ -23,7 +23,11 @@ BUILD_VERSION="AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 CREATE_ARGS+="--name AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER "
 CREATE_ARGS+="--build-version $BUILD_VERSION "
 CREATE_ARGS+="--callback-from ${LAVA_LAB} "
-[[ ! -z $lavacli_tags ]] && CREATE_ARGS+="--device-tags ${lavacli_tags} "
+if [[ ! -z $lavacli_tags ]] && [[ $MACHINE =~ "-nogfx" ]]; then
+	CREATE_ARGS+="--device-tags ${lavacli_tags} "
+else
+	CREATE_ARGS+="--device-tags ${lavacli_tags} "weston" "
+fi
 $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
 
 if [ $? != 0 ]; then
