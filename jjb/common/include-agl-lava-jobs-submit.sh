@@ -53,6 +53,23 @@ echo "####"
 echo "#### End: Output from LAVA job $job_id ####"
 echo "####"
 
+# ask for email report
+
+if [ -z "$KCI_EMAIL_AUTH_TOKEN" ]; then
+	KCI_API='https://kernelci.dev.baylibre.com:8081'
+	TREE_NAME=$(grep kernel.tree: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)
+	BRANCH=$(grep git.branch: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)
+	GIT_DESCRIBE="$(grep kernel.version: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)"
+	lavacli --uri $LAVA_MASTER_URI results $job_id | grep '* [0-9]' |cut -d_ -f2- |cut -d. -f1 | sort | uniq > test_plans
+	if [ $? -eq 0 ] && [ -s test_plans ]; then
+		for plan in $(<test_plans); do
+			curl -X POST -H "Authorization: $KCI_EMAIL_AUTH_TOKEN" -H "Content-Type: application/json" -d '{"job": "'$TREE_NAME'", "kernel": "'$GIT_DESCRIBE'", "git_branch": "'$BRANCH'", "report_type": "test", "plan": "'$plan'", "send_to": [" automotive-testreports@lists.linuxfoundation.org"], "format": ["txt"], "delay": 3600}' ${KCI_API}/send
+			echo "The test email reportS will be sent with a delay of 1 hour "
+		done
+	else
+		echo "There is no test plan identified"
+	fi
+fi
 # after one successful submit, we're done
 if [ x"$status" = x"Complete" ]; then
     exit 0
