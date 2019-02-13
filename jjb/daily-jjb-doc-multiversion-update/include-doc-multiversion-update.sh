@@ -48,6 +48,10 @@ function gensite() {
             navbarColor="darkslategray"
             typeDocStr="Flounder release"
         fi
+        if [ "$branch" == "guppy" ] ; then
+            navbarColor="#054458"
+            typeDocStr="Guppy release"
+        fi
 
 	git apply <<EOF
 diff --git a/site/_includes/header.html b/site/_includes/header.html
@@ -90,6 +94,7 @@ EOF
 
 gensite master
 gensite flounder
+gensite guppy
 
 # front page
 echo "Generating front page in $HTDOCS/index.html"
@@ -172,6 +177,7 @@ cat <<EOF >$HTDOCS/index.html
          <div class="hero_buttons">
             <a href="/master" class="col-xs-12 col-sm-5 btn btn-lg btn-primary" style="margin: auto;">Master (Development)</a>
             <a href="/flounder" class="col-xs-12 col-sm-5 btn btn-lg btn-primary">Flounder (AGL 6.x)</a>
+            <a href="/guppy" class="col-xs-12 col-sm-5 btn btn-lg btn-primary">Guppy (AGL 7.x)</a>
          </div>
       </div>
    </div>
