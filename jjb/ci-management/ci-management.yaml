@@ -77,7 +77,7 @@
 
     wrappers:
         - agl-infra-wrappers:
-          build-timeout: '{build-timeout}'
+          build-timeout: '180'
 
     triggers:
       - gerrit-trigger-patch-merged:
@@ -115,7 +115,7 @@
     wrappers:
       - timeout:
           type: absolute
-          timeout: '{build-timeout}'
+          timeout: '180'
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
       - ssh-agent-credentials:
@@ -164,7 +164,7 @@
     wrappers:
       - timeout:
           type: absolute
-          timeout: '{build-timeout}'
+          timeout: '180'
           timeout-var: 'BUILD_TIMEOUT'
           fail: true
       - ssh-agent-credentials:
