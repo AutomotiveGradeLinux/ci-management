@@ -3,9 +3,8 @@
     name: ci-apps-AGL
     aglbranch:
       - master
+      - guppy
       - flounder
-      - eel
-      - dab
     architecture:
       - aarch64
         #= dragonboard-410c (disabled for dab atm)
@@ -18,10 +17,10 @@
         #= dra7xx-evm
         # ####### REPLACE WITH generic-aarch64, generic-x86-64, generic-arm
     project:
+      - agl-cluster-demo-dashboard
+      - agl-cluster-demo-receiver
       - agl-service-audio-4a
-      - agl-service-audio-mpcd
       - agl-service-bluetooth
-      - agl-service-bluetooth-avrcp
       - agl-service-bluetooth-pbap
       - agl-service-can-low-level
       - agl-service-data-persistence
@@ -30,6 +29,7 @@
       - agl-service-gps
       - agl-service-gstreamer
       - agl-service-harvester
+      - agl-service-helloworld
       - agl-service-homescreen
       - agl-service-hvac
       - agl-service-identity-agent
@@ -52,8 +52,8 @@
       - agl-service-weather
       - agl-service-wifi
       - agl-service-windowmanager
-      - agl-service-windowmanager-2017
       - agl-service-xds-monitoring
+      - als-meter-demo
       - app-afb-test
       - chromium
       - controls
