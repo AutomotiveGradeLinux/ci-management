@@ -273,7 +273,7 @@
           trigger-on:
             - change-abandoned-event
             - comment-added-contains-event:
-                comment-contains-value: 'remove-artifacts$'
+                comment-contains-value: 'remove-the-artifacts$'
           projects:
             - project-compare-type: 'ANT'
               project-pattern: '{name}'
@@ -346,7 +346,7 @@
             - change-merged-event
             - change-abandoned-event
             - comment-added-contains-event:
-                comment-contains-value: 'remove-artifacts$'
+                comment-contains-value: 'remove-the-artifacts$'
             - comment-added-contains-event:
                 comment-contains-value: 'remerge$'
           projects:
