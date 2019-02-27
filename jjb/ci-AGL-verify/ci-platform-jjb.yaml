@@ -2,12 +2,13 @@
 - project:
     name: ci-platform-AGL
     machine:
-      - cyclone5
       - raspberrypi3
       - intel-corei7-64
       - dra7xx-evm
       - m3ulcb-nogfx
       - qemux86-64
+      - qemuarm
+      - qemuarm64
     project:
       - meta-agl
       - meta-agl-demo
@@ -90,10 +91,6 @@
           name: CIB-{project}
           condition: SUCCESSFUL
           projects:
-            - name: 'ci-platform-{project}-verify-CIB-porter-nogfx'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-intel-corei7-64'
               current-parameters: true
               #abort-all-job: true
@@ -107,6 +104,14 @@
               #abort-all-job: true
               kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-qemux86-64'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIB-qemuarm'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIB-qemuarm64'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
@@ -134,10 +139,6 @@
           name: CIBT-{project}
           condition: SUCCESSFUL
           projects:
-            - name: 'ci-platform-{project}-verify-CIBT-porter-nogfx'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIBT-intel-corei7-64'
               current-parameters: true
               #abort-all-job: true
