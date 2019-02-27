@@ -22,6 +22,7 @@ CREATE_ARGS+="--build-type release "
 CREATE_ARGS+="--url https://download.automotivelinux.org/AGL/upload/ci/${RELEASE_BRANCH}/${RELEASE_VERSION}/${MACHINE}/deploy/images/${TARGETMACHINE}/ "
 CREATE_ARGS+="--name AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION "
 [[ ! -z $DIST_BB_DISTRO_VERSION ]] && CREATE_ARGS+="--build-version $DIST_BB_DISTRO_VERSION "
+[[ ! -z $DIST_BUILD_HASH ]] && CREATE_ARGS+="--commit $DIST_BUILD_HASH "
 CREATE_ARGS+="--callback-from ${LAVA_LAB} "
 $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
 
