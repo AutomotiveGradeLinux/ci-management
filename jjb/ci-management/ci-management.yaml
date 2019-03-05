@@ -39,7 +39,7 @@
     wrappers:
       - ssh-agent-credentials:
           users:
-            - '{ssh-credentials}'
+            - 'd28b1f3b-3603-49bc-b837-bb0a2e85d4b8'
 
     triggers:
       - gerrit-trigger-patch-submitted:
@@ -76,8 +76,8 @@
           choosing-strategy: 'default'
 
     wrappers:
-        - agl-infra-wrappers:
-          build-timeout: '180'
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
 
     triggers:
       - gerrit-trigger-patch-merged:
