@@ -10,6 +10,7 @@ set -x
 cd $REPODIR
 #cat build-info
 cat tmp/deploy/images/${TARGETMACHINE}/build-info
+source tmp/deploy/images/${TARGETMACHINE}/build-info
 
 echo "# LAVA lab target: ${LAVA_LAB} #"
 # releng-scripts depends on jinja2 >= 2.9
