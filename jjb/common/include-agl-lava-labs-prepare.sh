@@ -70,7 +70,7 @@ for lab in "${!labs[@]}"; do
     rm -f $token_file
 
     # lavacli auth using token
-    mkdir -p ~/.config && touch ~/.config/lavacli.yaml
+    mkdir -p ~/.config
     lavacli identities add --token ${token} --uri $full_url --username $user $lab
 
     # lavacli: Find the LAVA lab that has the device available to run the job
