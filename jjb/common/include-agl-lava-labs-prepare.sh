@@ -80,7 +80,6 @@ for lab in "${!labs[@]}"; do
 
     if [ -z "$lavacli_line" ]; then
         echo "not found."
-        continue
     fi
     IFS=':'
     arr=($lavacli_line)
