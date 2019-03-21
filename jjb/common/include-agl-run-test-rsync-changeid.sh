@@ -28,8 +28,9 @@ cd output
 pwd
 ls -alhR tmp/deploy/images
 
+BUILD_INFO=build-info
 # copy files to $DEST (only if variable is non-empty)
-for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
+for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT BUILD_INFO; do
     FILE=$(eval echo \$${i})
     if [ -n "$FILE" ]; then
       cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST}/
