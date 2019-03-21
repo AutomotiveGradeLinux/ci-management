@@ -72,7 +72,7 @@
           set
           export TRIGGERURL=$(echo ${{BUILD_URL}} | sed -e 's,-CIB-start.*,,')
           echo \$TRIGGERURL
-          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message="CI-cycle\ started.\ URL:\ ${{BUILD_URL}}" || true
+          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message="CI-cycle\ started.\ URL:\ ${{BUILD_URL}}" || true
       - multijob:
           name: CIB-{project}
           condition: SUCCESSFUL
@@ -203,7 +203,7 @@
       - shell: |
           set
           echo "#### CIB +1 #### Verified +1 ####"
-          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="CI-Image-Build\ finished,\ CIB+1,\ Verified+1.\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/upload/ci/${{GERRIT_CHANGE_NUMBER}}/${{GERRIT_PATCHSET_NUMBER}}/\ ." || true
+          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="CI-Image-Build\ finished,\ CIB+1,\ Verified+1.\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/upload/ci/${{GERRIT_CHANGE_NUMBER}}/${{GERRIT_PATCHSET_NUMBER}}/\ ." || true
 
 
 #      - ci-xds-{project}-verify-{aglbranch}-failure
@@ -391,7 +391,7 @@
           build-timeout: '{build-timeout}'
     builders:
       - shell: |
-          ssh -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="Merge\ finished,\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/xds/{project}/\ ." || true
+          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-build=+1 -n NONE --message="Merge\ finished,\ Artifacts\ available\ at\ https://download.automotivelinux.org/AGL/xds/{project}/\ ." || true
 
 
 #      - ci-xds-{project}-remove-artifacts
