@@ -7,8 +7,16 @@
 
 set -x
 
+UPLOAD_URL_BASE=https://download.automotivelinux.org/AGL/upload/ci
+UPLOAD_URL=${UPLOAD_URL_BASE}/${RELEASE_BRANCH}/${RELEASE_VERSION}/${MACHINE}/deploy/images/${TARGETMACHINE}
+
 cd $REPODIR
-source tmp/deploy/images/${TARGETMACHINE}/build-info
+
+wget -q ${UPLOAD_URL}/build-info
+if [ -e build-info ]; then
+	cat build-info
+	source build-info
+fi
 
 echo "# LAVA lab target: ${LAVA_LAB} #"
 # releng-scripts depends on jinja2 >= 2.9

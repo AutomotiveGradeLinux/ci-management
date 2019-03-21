@@ -7,11 +7,15 @@
 
 set -x
 
+UPLOAD_URL_BASE=https://download.automotivelinux.org/AGL/upload/ci
+UPLOAD_URL=${UPLOAD_URL_BASE}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}
+
 cd $REPODIR
-#cat build-info
-if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ]; then
-	cat tmp/deploy/images/${TARGETMACHINE}/build-info
-	source tmp/deploy/images/${TARGETMACHINE}/build-info
+
+wget -q ${UPLOAD_URL}/build-info
+if [ -e build-info ]; then
+	cat build-info
+	source build-info
 fi
 
 echo "# LAVA lab target: ${LAVA_LAB} #"
