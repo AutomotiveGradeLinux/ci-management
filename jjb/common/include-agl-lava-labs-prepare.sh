@@ -71,7 +71,7 @@ for lab in "${!labs[@]}"; do
 
     # lavacli auth using token
     mkdir -p ~/.config
-    lavacli identities add --token ${token} --uri $url --username $user $lab
+    lavacli identities add --token ${token} --uri ${url}/RPC2 --username $user $lab
 
     # lavacli: Find the LAVA lab that has the device available to run the job
     echo -n "lavacli: Checking for $lava_device at $full_url... "
