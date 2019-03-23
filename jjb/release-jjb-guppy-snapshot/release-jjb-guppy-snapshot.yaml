@@ -39,6 +39,10 @@
           name: BUILDONLY
           default: ignore
           description: "build only specified machine"
+      - string:
+          name: DISABLE_SSTATE_MIRROR
+          default: ignore
+          description: "Set to YES to disable sstate-mirror"
     axes:
       - axis:
           type: user-defined
@@ -68,7 +72,7 @@
     triggers:
       - gerrit-trigger-patch-submitted-silent:
           name: 'AGL/AGL-repo'
-          branch: 'tags/guppy/**'
+          branch: 'regs/tags/guppy/**'
 
     wrappers:
       - agl-infra-wrappers:

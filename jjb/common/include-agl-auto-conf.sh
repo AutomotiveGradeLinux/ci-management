@@ -11,10 +11,6 @@ if test x"" = x"${GERRIT_BRANCH}"; then
 else
     export DISTROBRANCH="${GERRIT_BRANCH}"
 fi
-#if test ! x"" = x"${RELEASE_BRANCH}"; then
-#    export DISTROBRANCH="$RELEASE_BRANCH"
-#fi
-#limit parallel number of bitbake jobs and parallel jobs in make
 cat << EOF >> conf/auto.conf
 PREMIRRORS = "\
 git://.*/.* ${DLHOST}/AGL/mirror/   \n \
@@ -23,6 +19,11 @@ http://.*/.* ${DLHOST}/AGL/mirror/  \n \
 https://.*/.* ${DLHOST}/AGL/mirror/ \n \
              "
 
+EOF
+             "
+if test x"YES" != x"${DISABLE_SSTATE_MIRROR}" ; then
+
+cat << EOF >> conf/auto.conf
 SSTATE_MIRRORS = " \
   file://.* ${DLHOST}/sstate-mirror/${DISTROBRANCH}/\${DEFAULTTUNE}/PATH \n \
                  "
@@ -33,3 +34,5 @@ SSTATE_MIRRORS = " \
 IMAGE_FSTYPES_remove = "ext3"
 SSTATE_DIR = "\${TOPDIR}/sstate-cache/\${MACHINE}/"
 EOF
+
+fi
