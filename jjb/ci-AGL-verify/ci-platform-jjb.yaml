@@ -27,6 +27,8 @@
       - ci-platform-{project}-verify-CIBT-{machine}
       - ci-platform-{project}-verify-CIBT-finish-success
       - ci-platform-{project}-remove-artifacts
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
 
 
 ################################################################################################################################################################
@@ -41,6 +43,8 @@
     project-type: multijob
     concurrent: true
     node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -127,14 +131,22 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
-              # - multijob:
-              #     name: 'CIBT-{project}-start'
-              #     condition: SUCCESSFUL
-              #     projects:
-              #       - name: 'ci-platform-{project}-verify-CIBT-start'
-              #         current-parameters: true
-              #         abort-all-job: true
-              #         kill-phase-on: FAILURE
+      - multijob:
+          name: CIB-{project}-verify-failure
+          condition: FAILURE
+          projects:
+            - name: 'ci-platform-{project}-verify-failure'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+      # - multijob:
+      #     name: 'CIBT-{project}-start'
+      #     condition: SUCCESSFUL
+      #     projects:
+      #       - name: 'ci-platform-{project}-verify-CIBT-start'
+      #         current-parameters: true
+      #         abort-all-job: true
+      #         kill-phase-on: FAILURE
       - multijob:
           name: CIBT-{project}
           condition: SUCCESSFUL
@@ -187,6 +199,8 @@
     project-type: freestyle
     concurrent: true
     node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -234,6 +248,8 @@
     project-type: freestyle
     concurrent: true
     node: agl-test-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -301,6 +317,8 @@
     project-type: freestyle
     concurrent: true
     node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -345,6 +363,8 @@
     project-type: freestyle
     concurrent: true
     node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -393,6 +413,8 @@
     project-type: freestyle
     concurrent: true
     node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -439,6 +461,8 @@
     project-type: freestyle
     concurrent: true
     node: hwtest-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -518,6 +542,8 @@
     project-type: freestyle
     concurrent: true
     node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
@@ -567,6 +593,8 @@
     project-type: freestyle
     concurrent: true
     node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
     parameters:
       - string:
           name: GERRIT_PROJECT
