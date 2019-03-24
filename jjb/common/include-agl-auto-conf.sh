@@ -20,7 +20,7 @@ https://.*/.* ${DLHOST}/AGL/mirror/ \n \
              "
 
 EOF
-             "
+
 if test x"YES" != x"${DISABLE_SSTATE_MIRROR}" ; then
 
 cat << EOF >> conf/auto.conf
