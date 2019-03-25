@@ -17,62 +17,7 @@
         #= dra7xx-evm
         # ####### REPLACE WITH generic-aarch64, generic-x86-64, generic-arm
     project:
-      - agl-cluster-demo-dashboard
-      - agl-cluster-demo-receiver
-      - agl-service-audio-4a
-      - agl-service-bluetooth
-      - agl-service-bluetooth-pbap
-      - agl-service-can-low-level
-      - agl-service-data-persistence
-      - agl-service-geoclue
-      - agl-service-geofence
-      - agl-service-gps
-      - agl-service-gstreamer
-      - agl-service-harvester
-      - agl-service-helloworld
-      - agl-service-homescreen
-      - agl-service-hvac
-      - agl-service-identity-agent
-      - agl-service-iiodevices
-      - agl-service-mediaplayer
-      - agl-service-mediascanner
-      - agl-service-navigation
-      - agl-service-network
-      - agl-service-nfc
-      - agl-service-platform-info
-      - agl-service-radio
-      - agl-service-signal-composer
-      - agl-service-soundmanager
-      - agl-service-speech
-      - agl-service-steering-wheel
-      - agl-service-taskmanager
-      - agl-service-telephony
-      - agl-service-unicens
-      - agl-service-voice-high
-      - agl-service-weather
-      - agl-service-wifi
-      - agl-service-windowmanager
-      - agl-service-xds-monitoring
-      - als-meter-demo
-      - app-afb-test
-      - chromium
-      - controls
-      - dashboard
-      - homescreen
-      - hvac
-      - launcher
-      - low-level-can-service
-      - mediaplayer
-      - mixer
-      - navigation
-      - onscreenapp
-      - phone
-      - radio
-      - settings
-      - settings-bluetooth
-      - settings-wifi
-      - taskmanager
-      - videoplayer
+      !include: app-projects.yaml.inc
 
     jobs:
       - ci-apps-{project}-verify-{aglbranch}
