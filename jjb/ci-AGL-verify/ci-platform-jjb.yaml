@@ -131,14 +131,14 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
-      - multijob:
-          name: CIB-{project}-verify-failure
-          condition: FAILURE
-          projects:
-            - name: 'ci-platform-{project}-verify-failure'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
+      #- multijob:
+      #    name: CIB-{project}-verify-failure
+      #    condition: FAILURE
+      #    projects:
+      #      - name: 'ci-platform-{project}-verify-failure'
+      #        current-parameters: true
+      #        #abort-all-job: true
+      #        kill-phase-on: FAILURE
       # - multijob:
       #     name: 'CIBT-{project}-start'
       #     condition: SUCCESSFUL
@@ -179,12 +179,12 @@
               current-parameters: true
               abort-all-job: true
               kill-phase-on: FAILURE
-#    publishers:
-#      - trigger-parameterized-builds:
-#        - project:
-#          - ci-platform-{project}-verify-failure
-#          condition: FAILED
-#          current-parameters: true
+    publishers:
+      - trigger-parameterized-builds:
+        - project:
+          - ci-platform-{project}-verify-failure
+          condition: FAILED
+          current-parameters: true
 
 
 ################################################################################################################################################################
