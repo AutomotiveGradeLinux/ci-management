@@ -15,11 +15,11 @@ SDKHOSTDIR="~/agl-sdk"
 if test x"" = x"$AGLBRANCH"; then echo "AGLBRANCH not set, quitting" ; exit 1 ; fi
 
 # default to release
-SDKBASEURL="https://download.automotivelinux.org/AGL/release/${AGLBRANCH}/latest/${TARGETSDKMACHINE}/deploy/sdk/"
+SDKBASEURL="http://download.automotivelinux.org/AGL/release/${AGLBRANCH}/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 
 # but master uses snapshot
 if test x"master" = x"$AGLBRANCH" ; then
-  SDKBASEURL="https://download.automotivelinux.org/AGL/snapshots/master/latest/${TARGETSDKMACHINE}/deploy/sdk/"
+  SDKBASEURL="http://download.automotivelinux.org/AGL/snapshots/master/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 fi
 # special case for dab
 if test x"dab" = x"$AGLBRANCH" ; then
@@ -27,7 +27,7 @@ if test x"dab" = x"$AGLBRANCH" ; then
       echo "Skipping dragonboard-410c/aarch64 .... "
       exit 0
   fi
-  SDKBASEURL="https://download.automotivelinux.org/AGL/release/dab/latest/${TARGETSDKMACHINE}/deploy/sdk/"
+  SDKBASEURL="http://download.automotivelinux.org/AGL/release/dab/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 fi
 
 

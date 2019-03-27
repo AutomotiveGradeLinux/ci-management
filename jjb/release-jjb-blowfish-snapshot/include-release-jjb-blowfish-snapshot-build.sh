@@ -7,7 +7,7 @@ set -e
 
 # VARIABLES
 OPTIND=1
-export DLHOST="https://download.automotivelinux.org/"
+export DLHOST="http://download.automotivelinux.org/"
 export NOGFX=false
 export VERBOSE=false
 export DEBUG=false
