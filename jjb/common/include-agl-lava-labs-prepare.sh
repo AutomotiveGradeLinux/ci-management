@@ -75,7 +75,7 @@ for lab in "${!labs[@]}"; do
 
     # lavacli: Find the LAVA lab that has the device available to run the job
     echo -n "lavacli: Checking for $lava_device at $full_url... "
-    lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | head -1)
+    lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | grep Idle,Good | head -1)
     lavacli_line=$(echo "$lavacli_line" | tr -d '[:space:]')
 
     if [ -z "$lavacli_line" ]; then
