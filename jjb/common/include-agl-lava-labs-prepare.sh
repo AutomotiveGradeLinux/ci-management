@@ -75,7 +75,7 @@ for lab in "${!labs[@]}"; do
 
     # lavacli: Find the LAVA lab that has the device available to run the job
     echo -n "lavacli: Checking for $lava_device at $full_url... "
-    lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | grep Idle,Good | head -1)
+    lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | grep Good | head -1)
     lavacli_line=$(echo "$lavacli_line" | tr -d '[:space:]')
 
     if [ -z "$lavacli_line" ]; then
@@ -105,12 +105,8 @@ for lab in "${!labs[@]}"; do
         echo "not found."
         continue
     fi
-    IFS='|'
-    arr=($line)
-    device_status=${arr[2]}
-    IFS=${OFS}
 
-    if [ x"$device_status" = x"reserved" ]; then
+    if [ x"$device_status" = x"Reserved,Good" ]; then
         retries=10
     else
         retries=1
@@ -122,26 +118,26 @@ for lab in "${!labs[@]}"; do
     do
         # device is only available if "idle" or "running"
         device_available=0
-        if [ x"$device_status" = x"reserved" ]; then
+        if [ x"$device_status" = x"Reserved,Good" ]; then
             sleep 60s
             # Look if the status of the board has changed from reserved in the lab
             echo -n "Checking for $lava_device at $full_url... "
-            line=$(lava-tool devices-list $full_url | grep $lava_device)
-            line=$(echo "$line" | tr -d '[:space:]')
+            lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | grep Good | head -1)
+            lavacli_line=$(echo "$lavacli_line" | tr -d '[:space:]')
 
-            if [ -z "$line" ]; then
+            if [ -z "$lavacli_line" ]; then
                 echo "not found."
                 continue
             fi
-            IFS='|'
-            arr=($line)
-            device_status=${arr[2]}
+            IFS=':'
+            arr=($lavacli_line)
+            device_status=${arr[1]}
             IFS=${OFS}
         fi
-        if [ x"$device_status" = x"idle" ]; then
+        if [ x"$device_status" = x"Idle,Good" ]; then
             device_available=1
             break
-        elif [ x"$device_status" = x"running" ]; then
+        elif [ x"$device_status" = x"Running,Good" ]; then
             device_available=1;
             break
         fi

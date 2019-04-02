@@ -19,8 +19,12 @@ cat $JOB_FILE | sed "s/device_type: $releng_device$/device_type: $lava_device/" 
 #
 # LAVA job submit, get job ID from lava-tool output
 #
-JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
-lava-tool submit-job --block $full_url $JOB_FILE_NEW |tee $JOB_STATUS
+job_id=$(lavacli -i $lab jobs submit $JOB_FILE_NEW)
+if [ $? -ne 0 ]; then
+	echo "ERROR: job submission error"
+	exit 1
+fi
 # Printing the job URL in the log
-grep "submitted as job:" $JOB_STATUS
+JOB_URL="${url}scheduler/job/${job_id}"
+echo "Submitted as job: $JOB_URL"
 

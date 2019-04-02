@@ -20,24 +20,48 @@ cat $JOB_FILE | sed "s/device_type: $releng_device$/device_type: $lava_device/" 
 # LAVA job submit, get job ID from lava-tool output
 #
 JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
-lava-tool submit-job --block $full_url $JOB_FILE_NEW |tee $JOB_STATUS
+
+job_id=$(lavacli -i $lab jobs submit $JOB_FILE_NEW)
+if [ $? -ne 0 ]; then
+	echo "ERROR: job submission error"
+	exit 1
+fi
 # Printing the job URL in the log
-grep "submitted as job:" $JOB_STATUS
-job_id=$(grep "submitted as job:" $JOB_STATUS | sed 's/.*\/\([0-9]*$\)/\1/')
+echo "THe job id is: ${job_id}"
+JOB_URL="${url}scheduler/job/${job_id}"
+echo "Submitted as job: $JOB_URL"
 
 #
-# LAVA job details, get job status from lava-tool output
+# LAVA job details, get job status from lavacli output
 #
-lava-tool job-details $full_url $job_id | tee $JOB_STATUS
+# There is no version of blocking call (--block) for lavacli
+# If the job didn't finish after JOB_TIMEOUT, will exit and display
+# an error message
+# example: lava-slave crash
+if [ -z $JOB_TIMEOUT ]
+	# if the JOB_TIMEOUT is not set, it's 1 hour by default
+	JOB_TIMEOUT=360
+fi
 
-IFS=':'
-line=$(grep "^status:" $JOB_STATUS)
-line=$(echo "$line" | tr -d '[:space:]')
-arr=($line)
-status=${arr[1]}
-IFS=${OFS}
-
-echo "LAVA job $job_id completed with status: $status"
+for i in $(seq 1 $JOB_TIMEOUT); do
+    lavacli -i $lab jobs show $job_id --yaml > $JOB_STATUS
+    if [ $? -ne 0 ];then
+		# be patient in case of a temporary error
+		sleep 10
+		continue
+    fi
+    state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
+    if [ $state == "Finished" ]; then
+		status=$(grep ^Health: $JOB_STATUS| cut -d' ' -f2)
+		echo "LAVA job $job_id completed with status: $status"
+		break
+    fi
+    sleep 10
+done
+if [ $i -ge $JOB_TIMEOUT ];then
+	echo "ERROR: job did not finished before 1 hour"
+	exit 1
+fi
 
 echo "####"
 echo "#### Start: Output from LAVA job $job_id ####"
