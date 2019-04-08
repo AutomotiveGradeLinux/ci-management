@@ -78,6 +78,8 @@
       - ci-apps-{project}-verify-{aglbranch}
       - ci-apps-{project}-verify-{aglbranch}-CIB-{architecture}
       - ci-apps-{project}-verify-{aglbranch}-CIB-finish-success
+      - ci-apps-{project}-verify-{aglbranch}-CIBT-{architecture}
+      - ci-apps-{project}-verify-{aglbranch}-CIBT-finish-success
       - ci-apps-{project}-verify-{aglbranch}-signal-gracetime
       - ci-apps-{project}-verify-{aglbranch}-failure
       - ci-apps-{project}-remove-{aglbranch}-artifacts
@@ -87,8 +89,6 @@
       # currently unused templates
       # - ci-apps-{project}-verify-CIB-start
       # - ci-apps-{project}-verify-CIBT-start
-      #- ci-apps-{project}-verify-CIBT-{architecture}
-      #- ci-apps-{project}-verify-CIBT-finish-success
 
 
 ################################################################################################################################################################
@@ -182,6 +182,24 @@
               current-parameters: true
               abort-all-job: true
               kill-phase-on: FAILURE
+      - multijob:
+          name: CIBT-{project}
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-apps-{project}-verify-{aglbranch}-CIBT-x86-64'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+              predefined-parameters: AGLBRANCH={aglbranch}
+      - multijob:
+          name: CIBT-{project}-finish-success
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-apps-{project}-verify-{aglbranch}-CIBT-finish-success'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+
 
 
 ################################################################################
@@ -719,7 +737,7 @@
 # ###########################
 
 - job-template:
-    name: 'ci-apps-{project}-verify-CIBT-{architecture}'
+    name: 'ci-apps-{project}-verify-{aglbranch}-CIBT-{architecture}'
     project-type: freestyle
     concurrent: true
     node: hwtest-slave
@@ -746,9 +764,9 @@
           default: "2"
           description: "patchset # to build"
       - string:
-          name: MACHINE
+          name: TARGETARCH
           default: '{architecture}'
-          description: "Machine to build"
+          description: "Architecture to build"
 
     build-discarder:
       days-to-keep: 30
@@ -775,7 +793,7 @@
           - ../common/include-agl-select.sh
           - ../common/include-agl-run-test-prepare.sh
           - ../common/include-agl-lava-labs-prepare.sh
-          - ../common/include-agl-run-test-short.sh
+          - ../common/include-agl-app-run-test-short.sh
           - ../common/include-agl-lava-jobs-submit.sh
 
     publishers:
@@ -838,7 +856,7 @@
 # ####################
 
 - job-template:
-    name: 'ci-apps-{project}-verify-CIBT-finish-success'
+    name: 'ci-apps-{project}-verify-{aglbranch}-CIBT-finish-success'
     project-type: freestyle
     concurrent: true
     node: control-slave
