@@ -11,9 +11,9 @@ git config --global user.name build.automotivelinux.org
 git config --global user.email jenkins@automotivelinux.org
 
 rm -rf docs-webtemplate || true
-wget https://raw.githubusercontent.com/automotive-grade-linux/docs-webtemplate/master-next/setupdocs.sh
+wget https://raw.githubusercontent.com/automotive-grade-linux/docs-webtemplate/master/setupdocs.sh
 mkdir docs-webtemplate
-bash -x setupdocs.sh --directory=docs-webtemplate --webtemplate-ref=master-next --doctools-ref=master-next --baseurl=/next
+bash -x setupdocs.sh --directory=docs-webtemplate --webtemplate-ref=master --doctools-ref=master --baseurl=/
 # Todo --baseurl=/upload/ci/20018
 cd docs-webtemplate
 make build
