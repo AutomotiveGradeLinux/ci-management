@@ -60,15 +60,6 @@ for lab in "${!labs[@]}"; do
     full_url+="RPC2/" # entry point for XML-RPC API
     echo "LAVA auth-add for lab: $lab, URL: $full_url"
 
-    # LAVA auth using token
-    echo ${token} > $token_file
-    lava-tool auth-add --token $token_file $full_url
-    if [ $? != 0 ]; then
-        echo "ERROR: Lab ${lab}: lava-tool auth-add failed."
-        continue
-    fi
-    rm -f $token_file
-
     # lavacli auth using token
     mkdir -p ~/.config
     lavacli identities add --token ${token} --uri ${url}/RPC2 --username $user $lab
@@ -94,16 +85,6 @@ for lab in "${!labs[@]}"; do
 	echo "Tags for $lavacli_dev: $lavacli_tags"
     else
 	echo "lavacli: did not find any device available: $lavacli_line"
-    fi
-
-    # Find the LAVA Lab that has the device available to run the job
-    echo -n "Checking for $lava_device at $full_url... "
-    line=$(lava-tool devices-list $full_url | grep $lava_device)
-    line=$(echo "$line" | tr -d '[:space:]')
-
-    if [ -z "$line" ]; then
-        echo "not found."
-        continue
     fi
 
     if [ x"$device_status" = x"Reserved,Good" ]; then
