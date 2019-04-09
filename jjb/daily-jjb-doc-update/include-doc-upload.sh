@@ -11,6 +11,7 @@ TMPDIR=${TMPDIR:-$WORKSPACE/upload-gh}
 
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
+rm -rf $TMPDIR || true
 mkdir -p $TMPDIR
 git clone -b gh-pages git@github.com:automotive-grade-linux/docs-gh-pages.git $TMPDIR/upload-gh-pages
 mkdir -p $TMPDIR/upload-gh-pages/
