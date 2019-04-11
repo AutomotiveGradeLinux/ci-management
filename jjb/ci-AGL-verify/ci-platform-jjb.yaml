@@ -514,6 +514,9 @@
               credential-id: lab_baylibre_seattle_lava_instance
               username: LAB_BAYLIBRE_SEATTLE_USER
               password: LAB_BAYLIBRE_SEATTLE_TOKEN
+          - text:
+              credential-id: KCI_EMAIL_AUTH_TOKEN
+              variable: KCI_EMAIL_AUTH_TOKEN
     builders:
       - shell:
           !include-raw-escape:
