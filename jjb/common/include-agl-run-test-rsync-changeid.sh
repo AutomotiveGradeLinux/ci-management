@@ -28,6 +28,16 @@ cd output
 pwd
 ls -alhR tmp/deploy/images
 
+set -x
+
+echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}"
+echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
+
+# workaround for thud until fixed in templates:
+if [ ! -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB} -a -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} ] ; then
+    cp -avL tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"} tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}
+fi
+
 BUILD_INFO=build-info
 # copy files to $DEST (only if variable is non-empty)
 for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT BUILD_INFO; do
@@ -37,6 +47,7 @@ for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT BUILD_INFO; do
       cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST2}/
     fi
 done
+set +x
 
 tree $DEST
 ls -alhR $DEST
