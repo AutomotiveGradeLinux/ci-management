@@ -35,7 +35,7 @@ echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
 
 # workaround for thud until fixed in templates:
 if [ ! -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB} -a -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} ] ; then
-    cp -avL tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"} tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}
+    cp -avL tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}
 fi
 
 BUILD_INFO=build-info
