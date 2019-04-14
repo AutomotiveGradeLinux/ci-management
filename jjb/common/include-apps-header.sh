@@ -103,7 +103,7 @@ fi
 
 case "$TARGETARCH" in 
 	arm)
-	    export TARGETSDKARCH="armv7vehf-neon-vfpv4"
+	    export TARGETSDKARCH="armv7ve.*hf-neon-vfpv4"
 	    export TARGETSDKMACHINE="raspberrypi3"
 	    ;;
 	x86-64)
