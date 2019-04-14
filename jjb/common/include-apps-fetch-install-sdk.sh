@@ -4,6 +4,7 @@
 #
 # debugging purposes
 set -e
+set -x
 
 SDKHOSTDIR="~/agl-sdk"
 
