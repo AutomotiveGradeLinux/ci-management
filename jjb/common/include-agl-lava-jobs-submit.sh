@@ -90,7 +90,8 @@ echo "####"
 
 # ask for email report
 
-if [ -z "$KCI_EMAIL_AUTH_TOKEN" ]; then
+set -x
+if [ -n "$KCI_EMAIL_AUTH_TOKEN" ]; then
 	KCI_API='https://kernelci.dev.baylibre.com:8081'
 	TREE_NAME=$(grep kernel.tree: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)
 	BRANCH=$(grep git.branch: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)
@@ -110,6 +111,8 @@ if [ -z "$KCI_EMAIL_AUTH_TOKEN" ]; then
 	fi
 	set -e
 fi
+set +x
+
 # after one successful submit, we're done
 if [ x"$status" = x"Complete" ]; then
     exit 0
