@@ -2,6 +2,12 @@
 
 set -x
 
+mkdir -p ~/bin || true
+PATH=~/bin:$PATH
+
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+chmod a+x ~/bin/repo
+
 # Preclone the gerrit repos for speed (use with --reference=/opt/AGL/preclone)
 mkdir -p /opt/AGL/preclone
 cd /opt/AGL/preclone
