@@ -28,7 +28,7 @@
       ],
       "user_data_file": "{{user `cloud_user_data`}}",
       "ssh_username": "{{user `cloud_user`}}",
-      "flavor": "v2-standard-16-iops",
+      "flavor": "v2-standard-1-iops",
       "metadata": {
         "ci_managed": "yes"
       }
