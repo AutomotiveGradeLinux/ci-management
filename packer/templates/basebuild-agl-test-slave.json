@@ -29,6 +29,8 @@
       "user_data_file": "{{user `cloud_user_data`}}",
       "ssh_username": "{{user `cloud_user`}}",
       "flavor": "v2-standard-16-iops",
+      "image_disk_format": "qcow2",
+      "use_blockstorage_volume": true,
       "metadata": {
         "ci_managed": "yes"
       }
