@@ -4,6 +4,7 @@
 set -x
 
 sudo su -c "echo 'deb http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
+sudo su -c "echo 'Acquire::Check-Valid-Until no;' > /etc/apt/apt.conf.d/99no-check-valid-until"
 
 sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553
 
