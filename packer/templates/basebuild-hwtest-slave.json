@@ -31,7 +31,7 @@
       "flavor": "v2-standard-1",
       "image_disk_format": "qcow2",
       "use_blockstorage_volume": true,
-      "volume_size": "5",
+      "volume_size": "10",
       "metadata": {
         "ci_managed": "yes"
       }
