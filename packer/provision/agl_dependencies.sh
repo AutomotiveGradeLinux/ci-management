@@ -3,7 +3,8 @@
 
 set -x
 
-sudo su -c "echo 'deb http://ftp.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
+sudo su -c "echo 'deb http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
+
 sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553
 
 # go
@@ -31,7 +32,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
 DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
 
 # Adding stretch-backports for lavacli
-echo "deb http://deb.debian.org/debian/ stretch-backports main" >> /etc/apt/sources.list
+echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
 
 DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
