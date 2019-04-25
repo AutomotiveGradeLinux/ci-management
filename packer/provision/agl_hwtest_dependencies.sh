@@ -1,0 +1,77 @@
+#!/bin/bash
+# vim: sw=2 ts=2 sts=2 et :
+
+set -x
+
+sudo su -c "echo 'deb http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
+sudo su -c "echo 'Acquire::Check-Valid-Until no;' > /etc/apt/apt.conf.d/99no-check-valid-until"
+
+sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553
+
+# go
+sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com F6BC817356A3D45E
+
+cat /etc/apt/sources.list
+
+# Make sure that we aren't using the vexxhost mirrors as they have issues
+echo "---> Removing Vexxhost Ubuntu mirrors"
+sed -i 's/ubuntu.mirror.vexxhost.com/us.archive.ubuntu.com/g' /etc/apt/sources.list
+
+cat /etc/apt/sources.list
+
+DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y -u dist-upgrade
+
+DEBIAN_FRONTEND=noninteractive apt-get update && \
+    apt-get -y install wget 
+                       python-pip zip unzip iperf3 \
+		       debian-keyring debian-archive-keyring
+
+DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
+
+# Adding stretch-backports for lavacli
+echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+
+DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
+
+# we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
+# systemd: Performing useradd with
+echo "dash dash/sh boolean false" | debconf-set-selections
+DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
+
+#cat <<EOFHOSTS >> /etc/hosts
+# workaround for download
+#10.30.72.8 download.automotivelinux.org
+10.30.72.8 download-internal.automotivelinux.org
+#EOFHOSTS
+
+# install newer version of jjb ... fixes issues with rendering
+sudo pip install --upgrade --force-reinstall -v jenkins-job-builder==1.6.1
+
+cat <<EOFSYSCTL >> /etc/sysctl.conf
+# we have a lot of make jobs, this helps a lot
+kernel.sched_child_runs_first = 1
+# smooth over a lot of I/O requests and do less blocking
+vm.dirty_background_bytes = 0
+vm.dirty_background_ratio = 75
+vm.dirty_expire_centisecs = 4320000
+vm.dirtytime_expire_seconds = 432000
+vm.dirty_bytes = 0
+vm.dirty_ratio = 90
+vm.dirty_writeback_centisecs = 0
+
+# disable ipv6
+net.ipv6.conf.all.disable_ipv6 = 1
+
+EOFSYSCTL
+
+# releng-scripts needs latest (stable v2.9) jinja2
+sudo pip install --force-reinstall --ignore-installed jinja2
+sudo pip install --upgrade jinja2
+
+python -c "import sys; print sys.path"
+
+sudo pip show jinja2
+
+# install go for xds build
+
+exit 0
