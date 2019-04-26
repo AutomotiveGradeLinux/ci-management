@@ -30,5 +30,5 @@ fi
 
 
 # next: repo sync and dump manifest
-repo sync --force-sync --detach --no-clone-bundle
+repo sync --force-broken --force-sync --detach --no-clone-bundle
 
