@@ -189,6 +189,7 @@
           - ci-platform-{project}-verify-failure
           condition: FAILED
           current-parameters: true
+          predefined-parameters: ORIG_BUILD_URL=${{BUILD_URL}}
 
 
 ################################################################################################################################################################
@@ -402,7 +403,7 @@
           set
           echo "#### Verified -1 ####"
           #ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified -1 -n NONE --message="CI-cycle\ failed.\ URL:\ ${{BUILD_URL}}" || true
-          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} -n NONE --message="CI-cycle\ failed.\ URL:\ ${{BUILD_URL}}" || true
+          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified -1 -n NONE --message="CI-cycle\ failed.\ URL:\ ${{ORIG_BUILD_URL}}" || true
 
 
 ################################################################################################################################################################
