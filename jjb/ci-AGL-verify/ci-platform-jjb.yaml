@@ -92,7 +92,23 @@
           #         abort-all-job: true
           #         kill-phase-on: FAILURE
       - multijob:
-          name: CIB-{project}
+          name: CIB-{project}-emulator
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-platform-{project}-verify-CIB-qemux86-64'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIB-qemuarm'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIB-qemuarm64'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+      - multijob:
+          name: CIB-{project}-devboards
           condition: SUCCESSFUL
           projects:
             - name: 'ci-platform-{project}-verify-CIB-intel-corei7-64'
@@ -104,18 +120,6 @@
               #abort-all-job: true
               kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-dra7xx-evm'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-qemux86-64'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-qemuarm'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-qemuarm64'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
