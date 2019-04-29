@@ -19,7 +19,7 @@ case $TARGETARCH in
 arm)
 CREATE_ARGS+="--machine qemuarm "
 ;;
-x86_64)
+x86-64)
 CREATE_ARGS+="--machine qemux86_64 "
 ;;
 aarch64)
