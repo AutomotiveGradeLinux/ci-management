@@ -33,10 +33,11 @@ set -x
 echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}"
 echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
 
+## fixed in releng with --branch
 # workaround for thud until fixed in templates:
-if [ ! -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB} -a -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} ] ; then
-    cp -avL tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}
-fi
+#if [ ! -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB} -a -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} ] ; then
+#    cp -avL tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}
+#fi
 
 BUILD_INFO=build-info
 # copy files to $DEST (only if variable is non-empty)
