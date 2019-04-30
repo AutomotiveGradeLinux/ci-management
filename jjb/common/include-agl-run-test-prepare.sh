@@ -49,6 +49,10 @@ fi
 CREATE_ARGS=""
 CREATE_ARGS+="--machine ${releng_device} "
 
+if [[ $TARGETBRANCH ]] && [[ x"master" != x"$TARGETBRANCH" ]] ; then
+CREATE_ARGS+="--branch $TARGETBRANCH "
+fi
+
 # If it's a release build
 if [[ $RELEASE_BRANCH ]] && [[ $RELEASE_VERSION ]]; then
     CREATE_ARGS+="--build-type release $RELEASE_BRANCH $RELEASE_VERSION "
