@@ -31,6 +31,7 @@ echo "THe job id is: ${job_id}"
 JOB_URL="${url}scheduler/job/${job_id}"
 echo "Submitted as job: $JOB_URL"
 
+set -x
 #
 # LAVA job details, get job status from lavacli output
 #
@@ -43,6 +44,8 @@ if [ -z $JOB_TIMEOUT ]; then
 	JOB_TIMEOUT=360
 fi
 
+# FIXME: this section needs to run under set +e
+set +e
 for i in $(seq 1 $JOB_TIMEOUT); do
     lavacli -i $lab jobs show $job_id --yaml > $JOB_STATUS
     if [ $? -ne 0 ];then
@@ -58,6 +61,9 @@ for i in $(seq 1 $JOB_TIMEOUT); do
     fi
     sleep 10
 done
+set -e
+# enable set -e again
+
 if [ $i -ge $JOB_TIMEOUT ];then
 	echo "ERROR: job did not finished before 1 hour"
 	exit 1
