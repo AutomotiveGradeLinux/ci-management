@@ -207,14 +207,6 @@
           - ../common/include-apps-prepare-upload-folder.sh
           - ../common/include-apps-rsync-download-changeid.sh
 
-    publishers:
-      - naginator:
-          rerun-unstable-builds: true
-          progressive-delay-increment: 5
-          progressive-delay-maximum: 15
-          max-failed-builds: 2
-          #regular-expression: "Unexpected termination of the channel"
-
 
 ################################################################################
 # ci-apps-{project}-verify-CIB-finish-succcess  =  success, msg to gerrit
@@ -561,14 +553,6 @@
           - ../common/include-apps-prepare-upload-folder-merged.sh
           #- ../common/include-apps-rsync-download-apprepo.sh
 
-    publishers:
-      - naginator:
-          rerun-unstable-builds: true
-          progressive-delay-increment: 5
-          progressive-delay-maximum: 15
-          max-failed-builds: 2
-          #regular-expression: "Unexpected termination of the channel"
-
 
 ################################################################################
 # ci-apps-{project}-merge-finish-succcess  =  success, msg to gerrit
@@ -745,11 +729,6 @@
           - ../common/include-agl-lava-labs-prepare.sh
           - ../common/include-agl-app-run-test-short.sh
           - ../common/include-agl-lava-jobs-submit.sh
-
-    publishers:
-      - naginator:
-          max-failed-builds: 2
-
 
 #
 # CIBT-start
