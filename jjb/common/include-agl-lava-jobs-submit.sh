@@ -38,7 +38,7 @@ echo "Submitted as job: $JOB_URL"
 # If the job didn't finish after JOB_TIMEOUT, will exit and display
 # an error message
 # example: lava-slave crash
-if [ -z $JOB_TIMEOUT ]
+if [ -z $JOB_TIMEOUT ]; then
 	# if the JOB_TIMEOUT is not set, it's 1 hour by default
 	JOB_TIMEOUT=360
 fi
