@@ -20,7 +20,7 @@ arm)
 CREATE_ARGS+="--machine qemuarm "
 ;;
 x86-64)
-CREATE_ARGS+="--machine qemux86_64 "
+CREATE_ARGS+="--machine qemux86-64 "
 ;;
 aarch64)
 CREATE_ARGS+="--machine qemuarm64 "
