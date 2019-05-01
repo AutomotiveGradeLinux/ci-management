@@ -55,7 +55,7 @@ for i in $(seq 1 $JOB_TIMEOUT); do
     fi
     state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
     if [ $state == "Finished" ]; then
-		status=$(grep ^Health: $JOB_STATUS| cut -d' ' -f2)
+		status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
 		echo "LAVA job $job_id completed with status: $status"
 		break
     fi
