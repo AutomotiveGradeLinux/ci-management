@@ -4,7 +4,12 @@
 # Submit LAVA YAML job file (default testjob.yaml) to first available LAVA lab
 # with matching device-type
 #
-JOB_FILE=${1:-testjob.yaml}
+#JOB_FILE=${1:-testjob.yaml}
+JOB_FILE=testjob.yaml
+
+if [ ! -e $JOB_FILE ]; then
+    JOB_FILE=$1
+fi
 
 if [ ! -e $JOB_FILE ]; then
     echo "ERROR: LAVA job file $JOB_FILE not present."
