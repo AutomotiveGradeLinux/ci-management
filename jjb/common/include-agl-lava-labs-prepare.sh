@@ -31,6 +31,7 @@ cat <<EOF >  ~/.local/share/python_keyring/keyringrc.cfg
 default-keyring=keyring.backends.file.PlaintextKeyring
 EOF
 
+set -x
 device_available=0
 for lab in "${!labs[@]}"; do
     val=${labs[$lab]}
@@ -87,40 +88,45 @@ for lab in "${!labs[@]}"; do
 	echo "lavacli: did not find any device available: $lavacli_line"
     fi
 
+    # FIXME: encode this better , we might have multiple jobs already queued/running.
+    # We have to wait before we 'flood' the queue. Better here than to timeout later!
+    retries=1
     if [ x"$device_status" = x"Reserved,Good" ]; then
-        retries=10
-    else
-        retries=1
+        retries=30
+    elif [ x"$device_status" = x"Running,Good" ]; then
+        retries=30
     fi
 
     # If the device is reserved poll it's status every minutes.
     # The max polling time is set to $retries * 60 seconds = 10 minutes.
+    device_available=0
     for i in `seq 1 $retries`
     do
         # device is only available if "idle" or "running"
-        device_available=0
-        if [ x"$device_status" = x"Reserved,Good" ]; then
-            sleep 60s
-            # Look if the status of the board has changed from reserved in the lab
-            echo -n "Checking for $lava_device at $full_url... "
-            lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | grep Good | head -1)
-            lavacli_line=$(echo "$lavacli_line" | tr -d '[:space:]')
-
-            if [ -z "$lavacli_line" ]; then
-                echo "not found."
-                continue
-            fi
-            IFS=':'
-            arr=($lavacli_line)
-            device_status=${arr[1]}
-            IFS=${OFS}
+        sleep 60s
+        # Look if the status of the board has changed from reserved in the lab
+        echo -n "Checking for $lava_device at $full_url... "
+        lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | grep Good | head -1)
+        lavacli_line=$(echo "$lavacli_line" | tr -d '[:space:]')
+        if [ -z "$lavacli_line" ]; then
+            echo "not found."
+            continue
         fi
-        if [ x"$device_status" = x"Idle,Good" ]; then
+        IFS=':'
+        arr=($lavacli_line)
+        device_status=${arr[1]}
+        IFS=${OFS}
+
+        if [ x"$device_status" = x"Reserved,Good" ]; then
+            echo "Device still reserved, retries left: $retries ."
+            continue
+        elif [ x"$device_status" = x"Idle,Good" ]; then
+            # IDLE AND GOOD means we can grab it
             device_available=1
             break
         elif [ x"$device_status" = x"Running,Good" ]; then
-            device_available=1;
-            break
+            echo "Device still running (other job), retries left: $retries ."
+            continue
         fi
     done
 
