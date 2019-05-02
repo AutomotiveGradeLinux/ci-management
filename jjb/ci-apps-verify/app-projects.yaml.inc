@@ -2,6 +2,7 @@
 - agl-cluster-demo-receiver
 - agl-service-audio-4a
 - agl-service-bluetooth
+- agl-service-bluetooth-map
 - agl-service-bluetooth-pbap
 - agl-service-can-low-level
 - agl-service-data-persistence
