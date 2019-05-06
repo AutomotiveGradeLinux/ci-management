@@ -92,7 +92,7 @@ echo "####"
 
 set -x
 if [ -n "$KCI_EMAIL_AUTH_TOKEN" ]; then
-	KCI_API='https://kernelci.dev.baylibre.com:8081'
+	KCI_API='http://kernelci.dev.baylibre.com:8081'
 	TREE_NAME=$(grep kernel.tree: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)
 	BRANCH=$(grep git.branch: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)
 	GIT_DESCRIBE="$(grep kernel.version: $JOB_FILE_NEW | sed 's,[[:space:]],,g' | cut -d: -f2)"
