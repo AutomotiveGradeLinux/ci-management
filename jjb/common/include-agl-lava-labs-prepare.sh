@@ -103,14 +103,13 @@ for lab in "${!labs[@]}"; do
     for i in `seq 1 $retries`
     do
         # device is only available if "idle" or "running"
-        sleep 60s
         # Look if the status of the board has changed from reserved in the lab
         echo -n "Checking for $lava_device at $full_url... "
         lavacli_line=$(lavacli -i $lab devices list | grep $lava_device | grep Good | head -1)
         lavacli_line=$(echo "$lavacli_line" | tr -d '[:space:]')
         if [ -z "$lavacli_line" ]; then
             echo "not found."
-            continue
+            break
         fi
         IFS=':'
         arr=($lavacli_line)
@@ -119,15 +118,14 @@ for lab in "${!labs[@]}"; do
 
         if [ x"$device_status" = x"Reserved,Good" ]; then
             echo "Device still reserved, retries left: $retries ."
-            continue
         elif [ x"$device_status" = x"Idle,Good" ]; then
             # IDLE AND GOOD means we can grab it
             device_available=1
             break
         elif [ x"$device_status" = x"Running,Good" ]; then
             echo "Device still running (other job), retries left: $retries ."
-            continue
         fi
+        sleep 60s
     done
 
     if [ $device_available = 0 ]; then
