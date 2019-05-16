@@ -33,6 +33,7 @@ esac
 CREATE_ARGS+="--build-type snapshot --branch master --version latest "
 [[ ! -z $GERRIT_CHANGE_NUMBER ]] && CREATE_ARGS+="--app-changeid $GERRIT_CHANGE_NUMBER "
 [[ ! -z $GERRIT_PATCHSET_NUMBER ]] && CREATE_ARGS+="--app-patchset $GERRIT_PATCHSET_NUMBER "
+[[ ! -z $AGLBRANCH ]] && CREATE_ARGS+="--app-branch $AGLBRANCH "
 BUILD_VERSION="AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 [[ -e output/repo-manifest-r.txt.sha1 ]] && BUILD_VERSION+="-$(cat output/repo-manifest-r.txt.sha1)"
 CREATE_ARGS+="--name AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER "
