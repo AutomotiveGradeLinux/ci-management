@@ -31,6 +31,7 @@ agl_lava_releng_aliases=(
     [m3ulcb-nogfx]="r8a7796-m3ulcb;m3ulcb"
     [porter-nogfx]="renesas-porter;porter"
     [dra7xx-evm]="dra7-evm;dra7xx-evm"
+    [intel-corei7-64]="upsquare;upsquare"
 )
 
 OFS=${IFS}
