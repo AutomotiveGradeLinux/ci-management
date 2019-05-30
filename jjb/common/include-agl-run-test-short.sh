@@ -34,10 +34,8 @@ CREATE_ARGS+="--name AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER "
 [[ ! -z $DIST_BB_AGL_BRANCH ]] && CREATE_ARGS+="--branch $DIST_BB_AGL_BRANCH "
 [[ ! -z $DIST_BB_AGLVERSION ]] && CREATE_ARGS+="--version $DIST_BB_AGLVERSION "
 CREATE_ARGS+="--callback-from ${LAVA_LAB} "
-if [[ ! -z $lavacli_tags ]] && [[ $MACHINE =~ "-nogfx" ]]; then
-	CREATE_ARGS+="--device-tags ${lavacli_tags} "
-else
-	CREATE_ARGS+="--device-tags ${lavacli_tags} "weston" "
+if [[ ! -z $lavacli_tags ]]; then
+    CREATE_ARGS+="--device-tags ${lavacli_tags} "
 fi
 $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
 
