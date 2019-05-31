@@ -39,9 +39,13 @@ echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
 #    cp -avL tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}
 #fi
 
-BUILD_INFO=build-info
+if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ] ; then
+      cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST}/
+      cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST2}/
+fi
+
 # copy files to $DEST (only if variable is non-empty)
-for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT BUILD_INFO; do
+for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
     FILE=$(eval echo \$${i})
     if [ -n "$FILE" ]; then
       cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST}/
