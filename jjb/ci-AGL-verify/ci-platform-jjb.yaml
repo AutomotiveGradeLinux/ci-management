@@ -599,9 +599,7 @@
       - shell:
           !include-raw-escape:
           - ../common/include-agl-header.sh
-          # -
-          # -
-          # TODO: ADD EMAIL QUERY HERE
+          - ../common/include-agl-send-email-report.sh
 
 ################################################################################
 ################################################################################
