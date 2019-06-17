@@ -595,6 +595,10 @@
           build-timeout: '{build-timeout}'
       - openstack:
           single-use: false
+      - credentials-binding:
+          - text:
+              credential-id: KCI_EMAIL_AUTH_TOKEN
+              variable: KCI_EMAIL_AUTH_TOKEN
     builders:
       - shell:
           !include-raw-escape:
