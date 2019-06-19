@@ -104,7 +104,7 @@ fi
 case "$TARGETARCH" in 
 	arm)
 	    export TARGETSDKARCH="armv7ve.*hf-neon-vfpv4"
-	    export TARGETSDKMACHINE="raspberrypi3"
+	    export TARGETSDKMACHINE="qemuarm"
 	    ;;
 	x86-64)
 	    export TARGETSDKARCH="corei7-64"
@@ -112,7 +112,7 @@ case "$TARGETARCH" in
 	    ;;
 	aarch64)
 	    export TARGETSDKARCH="aarch64"
-	    export TARGETSDKMACHINE="dragonboard-410c"
+	    export TARGETSDKMACHINE="qemuarm64"
 	    ;;
 esac
 

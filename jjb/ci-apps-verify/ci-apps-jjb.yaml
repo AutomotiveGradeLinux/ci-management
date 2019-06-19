@@ -7,7 +7,7 @@
       - flounder
     architecture:
       - aarch64
-        #= dragonboard-410c (disabled for dab atm)
+        #= dragonboard-410c (disabled for dab atm) later versions use qemuarm64
       - x86-64
         #= intel-corei7-64
         #= qemux86-64

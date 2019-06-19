@@ -15,6 +15,11 @@ SDKHOSTDIR="~/agl-sdk"
 # should probably switch to release ... or multiple (release/snapshot) fwiw
 if test x"" = x"$AGLBRANCH"; then echo "AGLBRANCH not set, quitting" ; exit 1 ; fi
 
+if test x"albacore" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
+if test x"blowfish" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
+if test x"chinook" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
+if test x"dab" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
+
 # default to release
 SDKBASEURL="http://download.automotivelinux.org/AGL/release/${AGLBRANCH}/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 
@@ -24,8 +29,8 @@ if test x"master" = x"$AGLBRANCH" ; then
 fi
 # special case for dab
 if test x"dab" = x"$AGLBRANCH" ; then
-  if test x"dragonboard-410c" = x"$TARGETSDKMACHINE"; then
-      echo "Skipping dragonboard-410c/aarch64 .... "
+  if test x"qemuarm64" = x"$TARGETSDKMACHINE"; then
+      echo "Skipping aarch64 .... "
       exit 0
   fi
   SDKBASEURL="http://download.automotivelinux.org/AGL/release/dab/latest/${TARGETSDKMACHINE}/deploy/sdk/"
