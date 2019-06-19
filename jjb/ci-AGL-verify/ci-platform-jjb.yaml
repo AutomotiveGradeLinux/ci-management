@@ -172,6 +172,10 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIBT-qemuarm'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIBT-qemuarm64'
               current-parameters: true
               #abort-all-job: true
