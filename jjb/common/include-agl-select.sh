@@ -11,7 +11,11 @@ HANDLED="no"
 ###################
 if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "^AGL/"); then
 
-    MYPROJECT=`echo $TARGETPROJECT | sed -e "s#AGL/##g"`
+    if $(echo "$TARGETPROJECT" | grep -q "meta-renesas") ; then
+	MYPROJECT="bsp/$(echo $TARGETPROJECT | sed -e 's#AGL/##g')"
+    else
+	MYPROJECT=`echo $TARGETPROJECT | sed -e "s#AGL/##g"`
+    fi
 
     if test x"AGL-repo" = x"$MYPROJECT" ; then
         cd .repo/manifests

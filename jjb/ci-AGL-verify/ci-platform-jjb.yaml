@@ -321,13 +321,13 @@
           - ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-run-test-prepare.sh
           - ../common/include-agl-run-test-rsync-changeid.sh
-    publishers:
-      - naginator:
-          rerun-unstable-builds: true
-          progressive-delay-increment: 5
-          progressive-delay-maximum: 15
-          max-failed-builds: 2
-          #regular-expression: "Unexpected termination of the channel"
+#    publishers:
+#      - naginator:
+#          rerun-unstable-builds: true
+#          progressive-delay-increment: 5
+#          progressive-delay-maximum: 15
+#          max-failed-builds: 2
+#          #regular-expression: "Unexpected termination of the channel"
 
 
 ################################################################################
@@ -550,13 +550,13 @@
           - ../common/include-agl-run-test-short.sh
           - ../common/include-agl-lava-jobs-submit.sh
 
-    publishers:
-      - naginator:
-          max-failed-builds: 2
-          rerun-unstable-builds: true
-          progressive-delay-increment: 2
-          progressive-delay-maximum: 6
-          regular-expression: "/.*Timed out waiting for device dev-tty.*/"
+#    publishers:
+#      - naginator:
+#          max-failed-builds: 2
+#          rerun-unstable-builds: true
+#          progressive-delay-increment: 2
+#          progressive-delay-maximum: 6
+#          regular-expression: "/.*Timed out waiting for device dev-tty.*/"
 
 ################################################################################
 ################################################################################
