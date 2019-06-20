@@ -8,12 +8,11 @@
 set -x
 
 UPLOAD_URL_BASE=http://download.automotivelinux.org/AGL/upload/ci
-UPLOAD_URL=${UPLOAD_URL_BASE}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/qemux86-64/deploy/images/qemux86-64
+UPLOAD_URL=${UPLOAD_URL_BASE}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/qemux86-64/
 
-wget -q ${UPLOAD_URL}/build-info
-if [ $? != 0 ]; then
-	exit 0
-fi
+set | grep MACH
+
+wget -q ${UPLOAD_URL}/build-info || exit 0
 
 if [ ! -s build-info ]; then
 	exit 0
