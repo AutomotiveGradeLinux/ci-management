@@ -34,9 +34,13 @@ fi
 # Printing the job URL in the log
 echo "THe job id is: ${job_id}"
 JOB_URL="${url}scheduler/job/${job_id}"
-echo "Submitted as job: $JOB_URL"
 
-set -x
+echo ""
+echo ""
+echo "Submitted as job: $JOB_URL"
+echo ""
+echo "####################################################"
+echo ""
 #
 # LAVA job details, get job status from lavacli output
 #
