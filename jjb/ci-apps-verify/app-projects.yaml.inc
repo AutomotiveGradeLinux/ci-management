@@ -1,6 +1,7 @@
 - agl-cluster-demo-dashboard
 - agl-cluster-demo-receiver
 - agl-service-audio-4a
+- agl-service-audiomixer
 - agl-service-bluetooth
 - agl-service-bluetooth-map
 - agl-service-bluetooth-pbap
@@ -61,6 +62,7 @@
 - launcher
 - low-level-can-service
 - mediaplayer
+- messaging
 - mixer
 - navigation
 - onscreenapp
