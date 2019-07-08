@@ -63,6 +63,11 @@ for i in $(seq 1 $JOB_TIMEOUT); do
 		continue
     fi
     state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
+    if [ $state == "Canceled" ]; then
+		status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
+		echo "LAVA job $job_id completed with status: $status"
+		break
+    fi
     if [ $state == "Finished" ]; then
 		status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
 		echo "LAVA job $job_id completed with status: $status"
