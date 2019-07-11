@@ -24,7 +24,7 @@ if [ -n "$KCI_EMAIL_AUTH_TOKEN" ]; then
 	KCI_API='http://kernelci.dev.baylibre.com:8081'
 	TREE_NAME='AGL-yocto'
 	BRANCH=$DIST_BB_AGL_BRANCH
-	GIT_DESCRIBE=$DIST_BB_DISTRO_VERSION
+	GIT_DESCRIBE=$DIST_LAYERS_MD5
 	PLAN='agl-testplan'
 	curl -X POST -H "Authorization: $KCI_EMAIL_AUTH_TOKEN" -H "Content-Type: application/json" -d '{"job": "'$TREE_NAME'", "kernel": "'$GIT_DESCRIBE'", "git_branch": "'$BRANCH'", "report_type": "test", "plan": "'$PLAN'", "send_to": ["automotive-testreports@lists.linuxfoundation.org"], "format": ["txt"], "delay": 3600}' ${KCI_API}/send
 	echo "The test email reportS will be sent with a delay of 1 hour "
