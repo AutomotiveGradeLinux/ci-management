@@ -33,7 +33,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
 DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
 
 # Adding stretch-backports for lavacli
-echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+echo "deb https://apt.lavasoftware.org/release stretch-backports main" >> /etc/apt/sources.list
 
 DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
