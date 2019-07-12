@@ -41,46 +41,14 @@ echo "Submitted as job: $JOB_URL"
 echo ""
 echo "####################################################"
 echo ""
-#
-# LAVA job details, get job status from lavacli output
-#
-# There is no version of blocking call (--block) for lavacli
-# If the job didn't finish after JOB_TIMEOUT, will exit and display
-# an error message
-# example: lava-slave crash
-if [ -z $JOB_TIMEOUT ]; then
-	# if the JOB_TIMEOUT is not set, it's 1 hour by default
-	JOB_TIMEOUT=360
-fi
 
-# FIXME: this section needs to run under set +e
-set +e
-for i in $(seq 1 $JOB_TIMEOUT); do
-    lavacli -i $lab jobs show $job_id --yaml > $JOB_STATUS
-    if [ $? -ne 0 ];then
-		# be patient in case of a temporary error
-		sleep 10
-		continue
-    fi
-    state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
-    if [ $state == "Canceled" ]; then
-		status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
-		echo "LAVA job $job_id completed with status: $status"
-		break
-    fi
-    if [ $state == "Finished" ]; then
-		status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
-		echo "LAVA job $job_id completed with status: $status"
-		break
-    fi
-    sleep 10
-done
-set -e
-# enable set -e again
-
-if [ $i -ge $JOB_TIMEOUT ];then
-	echo "ERROR: job did not finished before 1 hour"
-	exit 1
+# use lavacli wait job instead of the polling.
+lavacli -i agl jobs wait $job_id --timeout 7200
+lavacli -i agl jobs show $job_id --yaml > $JOB_STATUS
+state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
+if [ "$state" == "Finished" ]; then
+        status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
+        echo "LAVA job $job_id completed with status: $status"
 fi
 
 echo "####"
