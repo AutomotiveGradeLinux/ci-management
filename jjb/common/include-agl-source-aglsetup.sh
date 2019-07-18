@@ -4,9 +4,19 @@
 ################################################################################
 ## Source the aglsetup script
 ################################################################################
+SETUP_OPTS=""
+
+# check aglsetup version
+source meta-agl/scripts/aglsetup.sh --version >/dev/null 2>&1 || AGLSETUP_VERSION=1.0.0
+
+# add setup topic (if new enough version)
+TOPIC_SUPPORT_VER=1.2.0
+if [[ "$(echo -e "$AGLSETUP_VERSION\n$TOPIC_SUPPORT_VER" | sort -V | head -n1)" == $TOPIC_SUPPORT_VER ]]; then
+   SETUP_OPTS="--topic change-${GERRIT_CHANGE_NUMBER}-${GERRIT_PATCHSET_NUMBER}"
+fi
 
 # source the env
-source meta-agl/scripts/aglsetup.sh -m ${MACHINE} -b output ${TARGETFEATURES}
+source meta-agl/scripts/aglsetup.sh ${SETUP_OPTS} -m ${MACHINE} -b output ${TARGETFEATURES}
 
 # link the shared downloads and sstate-cache
 ln -sf ../../downloads
