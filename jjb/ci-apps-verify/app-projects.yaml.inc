@@ -1,4 +1,5 @@
 - agl-cluster-demo-dashboard
+- agl-cluster-demo-gauges
 - agl-cluster-demo-receiver
 - agl-service-audio-4a
 - agl-service-audiomixer
@@ -33,6 +34,7 @@
 - agl-service-taskmanager
 - agl-service-telephony
 - agl-service-unicens
+- agl-service-unicens-controller
 - agl-service-voice-high
 - agl-service-voice-high-capabilities
 - agl-service-weather
@@ -65,6 +67,7 @@
 - messaging
 - mixer
 - navigation
+- ondemandnavi
 - onscreenapp
 - phone
 - radio
