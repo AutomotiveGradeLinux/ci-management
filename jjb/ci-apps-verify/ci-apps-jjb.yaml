@@ -3,6 +3,7 @@
     name: ci-apps-AGL
     aglbranch:
       - master
+      - halibut
       - guppy
       - flounder
     architecture:
