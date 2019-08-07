@@ -33,6 +33,7 @@ CREATE_ARGS+="--name AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER "
 [[ ! -z $DIST_BUILD_ID ]] && CREATE_ARGS+="--build-id $DIST_BUILD_ID "
 [[ ! -z $DIST_BB_AGL_BRANCH ]] && CREATE_ARGS+="--branch $DIST_BB_AGL_BRANCH "
 [[ ! -z $DIST_BB_AGLVERSION ]] && CREATE_ARGS+="--version $DIST_BB_AGLVERSION "
+[[ ! -z $DIST_BB_MACHINE_FEATURES ]] && CREATE_ARGS+="--build-tags $DIST_BB_MACHINE_FEATURES "
 CREATE_ARGS+="--callback-from ${LAVA_LAB} "
 if [[ ! -z $lavacli_tags ]]; then
     CREATE_ARGS+="--device-tags ${lavacli_tags} "
