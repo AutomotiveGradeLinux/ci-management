@@ -19,13 +19,14 @@ if test x"albacore" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
 if test x"blowfish" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
 if test x"chinook" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
 if test x"dab" = x"$AGLBRANCH"; then echo "Unsupported branch"; exit 0; fi
+set +x
 
 # default to release
-SDKBASEURL="http://download.automotivelinux.org/AGL/release/${AGLBRANCH}/latest/${TARGETSDKMACHINE}/deploy/sdk/"
+SDKBASEURL="http://mirror.automotivelinux.org/AGL/release/${AGLBRANCH}/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 
 # but master uses snapshot
 if test x"master" = x"$AGLBRANCH" ; then
-  SDKBASEURL="http://download.automotivelinux.org/AGL/snapshots/master/latest/${TARGETSDKMACHINE}/deploy/sdk/"
+  SDKBASEURL="http://mirror.automotivelinux.org/AGL/snapshots/master/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 fi
 # special case for dab
 if test x"dab" = x"$AGLBRANCH" ; then
@@ -33,7 +34,7 @@ if test x"dab" = x"$AGLBRANCH" ; then
       echo "Skipping aarch64 .... "
       exit 0
   fi
-  SDKBASEURL="http://download.automotivelinux.org/AGL/release/dab/latest/${TARGETSDKMACHINE}/deploy/sdk/"
+  SDKBASEURL="http://mirror.automotivelinux.org/AGL/release/dab/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 fi
 
 
@@ -46,7 +47,7 @@ if test x"" = x"${TARGETSDKNAME}" ; then
     exit 0
     #exit 1
 fi
-
+set -x
 if test ! -f ${TARGETSDKNAME} ; then
   echo "Downloading $TARGETSDKNAME for $MACHINE"
   wget -nd -c "${SDKBASEURL}/${TARGETSDKNAME}"
