@@ -65,6 +65,72 @@ echo "####"
 echo "#### End: Output from LAVA job $job_id ####"
 echo "####"
 
+handle_skiplist() {
+	# detect job type (apps vs non-apps) and get skiplist
+	echo $JOB_NAME | grep -q 'ci-platform'
+	if [ $? -eq 0 ];then
+		git clone https://${GERRIT_HOST}/gerrit/src/qa-testdefinitions.git
+		if [ $? -ne ];then
+			echo "ERROR: fail to get qa-testdefinitions"
+			return 1
+		fi
+		SKIPLIST=qa-testdefinitions/skiplists/common
+		CK_REPO_NAME="qa-testdefinitions"
+	else
+		git clone https://${GERRIT_HOST}/gerrit/${GERRIT_PROJECT}.git
+		if [ $? -ne ];then
+			echo "ERROR: fail to get $GERRIT_PROJECT"
+			return 1
+		fi
+		SKIPLIST=${GERRIT_PROJECT}/.aglci
+		CK_REPO_NAME="${GERRIT_PROJECT}"
+	fi
+
+	if [ -e "$SKIPLIST" ];then
+		echo "DEBUG: $SKIPLIST does not exists"
+		return 0
+	fi
+
+	if [ ! -s "$SKIPLIST" ];then
+		echo "DEBUG: $SKIPLIST is empty"
+		return 0
+	fi
+
+	# example of testline: * lava.lava-test-retry [fail]
+	while read testline
+	do
+		# Check if fail are "normal/accepted"
+		TESTNAME=$(echo $testline | cut -d' ' -f2)
+		grep -q $TESTNAME $SKIPLIST
+		if [ $? -ne 0 ];then
+			echo "DEBUG: $TESNAME not in skiplist"
+			GOODJOB=0
+		else
+			echo "DEBUG: $TESNAME in skiplist"
+		fi
+	done < job-result.fail
+	# clean skiplist
+	rm --one-file-system -rf "${CK_REPO_NAME}"
+	return 0
+}
+
+# Analyze jobs results
+lavacli results $job_id | tee job-result
+# GOODJOB is equal to 0 if any test fail (and not present in a skiplist), 1 if all test are success
+GOODJOB=1
+grep -v '^\* ' | grep '\[fail\]$' > job-result.fail
+if [ -s job-result.fail ];then
+	handle_skiplist
+fi
+
+if [ $GOODJOB -eq 0 ];then
+	# send -1
+	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-boot-test=-1 -n NONE --message='CI-Image-Boot-Test\ fail' || true
+else
+	# send +1
+	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-boot-test=+1 -n NONE --message='CI-Image-Boot-Test\ success' || true
+fi
+
 # after one successful submit, we're done
 if [ x"$status" = x"Complete" ]; then
     exit 0
