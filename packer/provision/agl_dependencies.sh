@@ -35,6 +35,11 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=
 # Adding stretch-backports for lavacli
 echo "deb https://apt.lavasoftware.org/release stretch-backports main" >> /etc/apt/sources.list
 
+wget https://apt.lavasoftware.org/lavasoftware.key.asc
+sudo apt-key add lavasoftware.key.asc
+rm lavasoftware.key.asc
+#sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com A791358F2E49B100
+
 DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
