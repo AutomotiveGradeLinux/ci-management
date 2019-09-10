@@ -66,6 +66,7 @@ echo "#### End: Output from LAVA job $job_id ####"
 echo "####"
 
 handle_skiplist() {
+	SKIPLIST=skiplist
 	# detect job type (apps vs non-apps) and get skiplist
 	echo $JOB_NAME | grep -q 'ci-platform'
 	if [ $? -eq 0 ];then
@@ -74,7 +75,8 @@ handle_skiplist() {
 			echo "ERROR: fail to get qa-testdefinitions"
 			return 1
 		fi
-		SKIPLIST=qa-testdefinitions/skiplists/common
+		SKIPDIR=qa-testdefinitions/skiplists/
+		SKIPFILE=common
 		CK_REPO_NAME="qa-testdefinitions"
 	else
 		git clone https://${GERRIT_HOST}/gerrit/${GERRIT_PROJECT}.git
@@ -82,9 +84,17 @@ handle_skiplist() {
 			echo "ERROR: fail to get $GERRIT_PROJECT"
 			return 1
 		fi
-		SKIPLIST=${GERRIT_PROJECT}/.aglci
+		SKIPDIR=${GERRIT_PROJECT}/skiplists/
+		SKIPFILE=.aglci
 		CK_REPO_NAME="${GERRIT_PROJECT}"
 	fi
+	for skipfile in $SKIPFILE $MACHINE ${GERRIT_PROJECT}
+	do
+		if [ -e $SKIPDIR/$skipfile ];then
+			echo "DEBUG: SKIPLIST: Found $SKIPDIR/$skipfile"
+			cat $SKIPDIR/$skipfile >> $SKIPLIST
+		fi
+	done
 
 	if [ -e "$SKIPLIST" ];then
 		echo "DEBUG: $SKIPLIST does not exists"
