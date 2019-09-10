@@ -159,31 +159,31 @@
             - name: 'ci-platform-{project}-verify-CIBT-intel-corei7-64'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-raspberrypi3'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-dra7xx-evm'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-qemux86-64'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-qemuarm'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-qemuarm64'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-m3ulcb-nogfx'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
       - multijob:
           name: 'CIBT-{project}-complete'
           condition: ALWAYS
@@ -191,7 +191,7 @@
             - name: 'ci-platform-{project}-verify-CIBT-complete'
               current-parameters: true
               abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
       - multijob:
           name: 'CIBT-{project}-finish-success'
           condition: SUCCESSFUL
@@ -199,7 +199,7 @@
             - name: 'ci-platform-{project}-verify-CIBT-finish-success'
               current-parameters: true
               abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
     publishers:
       - trigger-parameterized-builds:
         - project:

@@ -125,10 +125,11 @@ handle_skiplist() {
 }
 
 # Analyze jobs results
-lavacli results $job_id | tee job-result
+lavacli results $job_id | tee job-result | grep -v '^\* ' | grep '\[fail\]$' > job-result.fail 
+
 # GOODJOB is equal to 0 if any test fail (and not present in a skiplist), 1 if all test are success
 GOODJOB=1
-grep -v '^\* ' | grep '\[fail\]$' > job-result.fail
+
 if [ -s job-result.fail ];then
 	handle_skiplist
 fi
