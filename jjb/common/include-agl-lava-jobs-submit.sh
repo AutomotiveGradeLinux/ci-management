@@ -84,7 +84,7 @@ handle_skiplist() {
 			echo "ERROR: fail to get $GERRIT_PROJECT"
 			return 1
 		fi
-		SKIPDIR=${GERRIT_PROJECT}/skiplists/
+		SKIPDIR=${GERRIT_PROJECT}/
 		SKIPFILE=.aglci
 		CK_REPO_NAME="${GERRIT_PROJECT}"
 	fi
@@ -125,10 +125,11 @@ handle_skiplist() {
 }
 
 # Analyze jobs results
-( lavacli results $job_id | tee job-result | grep '\[fail\]$' > job-result.fail ) || true
+lavacli results $job_id | tee job-result
 
 # GOODJOB is equal to 0 if any test fail (and not present in a skiplist), 1 if all test are success
 GOODJOB=1
+grep '\[fail\]$' job-result > job-result.fail || true
 
 if [ -s job-result.fail ];then
 	handle_skiplist
@@ -136,10 +137,10 @@ fi
 
 if [ $GOODJOB -eq 0 ];then
 	# send -1
-	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-boot-test=-1 -n NONE --message='CI-Image-Boot-Test\ fail' || true
+	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --label ci-image-boot-test=-1 -n NONE --message='CI-Image-Boot-Test\ fail' || true
 else
 	# send +1
-	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified +1 --label ci-image-boot-test=+1 -n NONE --message='CI-Image-Boot-Test\ success' || true
+	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --label ci-image-boot-test=+1 -n NONE --message='CI-Image-Boot-Test\ success' || true
 fi
 
 # after one successful submit, we're done
