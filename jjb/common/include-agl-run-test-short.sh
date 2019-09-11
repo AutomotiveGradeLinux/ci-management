@@ -12,7 +12,7 @@ UPLOAD_URL=${UPLOAD_URL_BASE}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/
 
 cd $REPODIR
 
-wget -q ${UPLOAD_URL}/build-info
+wget -q ${UPLOAD_URL}/build-info || echo "ERROR: fail to download ${UPLOAD_URL}/build-info"
 if [ -e build-info ]; then
 	cat build-info
 	source build-info

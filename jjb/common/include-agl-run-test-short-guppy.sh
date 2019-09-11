@@ -12,7 +12,7 @@ UPLOAD_URL=${UPLOAD_URL_BASE}/${RELEASE_BRANCH}/${RELEASE_VERSION}/${MACHINE}/de
 
 cd $REPODIR
 
-wget -q ${UPLOAD_URL}/build-info
+wget -q ${UPLOAD_URL}/build-info || echo "ERROR: fail to download ${UPLOAD_URL}/build-info"
 if [ -e build-info ]; then
 	cat build-info
 	source build-info
