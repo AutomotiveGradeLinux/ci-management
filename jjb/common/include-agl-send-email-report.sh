@@ -12,10 +12,12 @@ UPLOAD_URL=${UPLOAD_URL_BASE}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/
 
 set | grep MACH
 
-wget -q ${UPLOAD_URL}/build-info || exit 0
+send_email_report()
+{
+wget -q ${UPLOAD_URL}/build-info || echo "ERROR: send_email_report: failed to get build-info"
 
 if [ ! -s build-info ]; then
-	exit 0
+	return 0
 fi
 	cat build-info
 	source build-info
@@ -30,6 +32,9 @@ if [ -n "$KCI_EMAIL_AUTH_TOKEN" ]; then
 	    GIT_DESCRIBE=$DIST_BB_DISTRO_VERSION-${DIST_LAYERS_MD5:0:8}
 	fi
 	PLAN='agl-testplan'
-	curl -X POST -H "Authorization: $KCI_EMAIL_AUTH_TOKEN" -H "Content-Type: application/json" -d '{"job": "'$TREE_NAME'", "kernel": "'$GIT_DESCRIBE'", "git_branch": "'$BRANCH'", "report_type": "test", "plan": "'$PLAN'", "send_to": ["automotive-testreports@lists.linuxfoundation.org"], "format": ["txt"], "delay": 3600}' ${KCI_API}/send
+	curl -X POST -H "Authorization: $KCI_EMAIL_AUTH_TOKEN" -H "Content-Type: application/json" -d '{"job": "'$TREE_NAME'", "kernel": "'$GIT_DESCRIBE'", "git_branch": "'$BRANCH'", "report_type": "test", "plan": "'$PLAN'", "send_to": ["automotive-testreports@lists.linuxfoundation.org"], "format": ["txt"], "delay": 3600}' ${KCI_API}/send || echo "ERROR: send_email_report: curl"
 	echo "The test email reportS will be sent with a delay of 1 hour "
 fi
+}
+
+send_email_report
