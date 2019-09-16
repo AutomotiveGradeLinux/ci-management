@@ -68,25 +68,25 @@ echo "####"
 handle_skiplist() {
 	SKIPLIST=skiplist
 	# detect job type (apps vs non-apps) and get skiplist
-	echo $JOB_NAME | grep -q 'ci-platform'
-	if [ $? -eq 0 ];then
-		git clone https://${GERRIT_HOST}/gerrit/src/qa-testdefinitions.git
-		if [ $? -ne ];then
+	if [ ! -z "$(echo $JOB_NAME | grep 'ci-platform')" ];then
+		git clone https://${GERRIT_HOST}/gerrit/src/qa-testdefinitions.git || true
+		if [ ! -e qa-testdefinitions ];then
 			echo "ERROR: fail to get qa-testdefinitions"
-			return 1
+			return 0
 		fi
 		SKIPDIR=qa-testdefinitions/skiplists/
 		SKIPFILE=common
 		CK_REPO_NAME="qa-testdefinitions"
 	else
-		git clone https://${GERRIT_HOST}/gerrit/${GERRIT_PROJECT}.git
-		if [ $? -ne ];then
+		git clone https://${GERRIT_HOST}/gerrit/${GERRIT_PROJECT}.git || true
+		# GERRIT_PROJECT could have a / in it
+		CK_REPO_NAME="$(basename ${GERRIT_PROJECT})"
+		if [ ! -e $CK_REPO_NAME ];then
 			echo "ERROR: fail to get $GERRIT_PROJECT"
-			return 1
+			return 0
 		fi
-		SKIPDIR=${GERRIT_PROJECT}/
+		SKIPDIR=${CK_REPO_NAME}/
 		SKIPFILE=.aglci
-		CK_REPO_NAME="${GERRIT_PROJECT}"
 	fi
 	for skipfile in $SKIPFILE $MACHINE ${GERRIT_PROJECT}
 	do
@@ -111,8 +111,7 @@ handle_skiplist() {
 	do
 		# Check if fail are "normal/accepted"
 		TESTNAME=$(echo $testline | cut -d' ' -f2)
-		grep -q $TESTNAME $SKIPLIST
-		if [ $? -ne 0 ];then
+		if [ -z "$(grep $TESTNAME $SKIPLIST)" ];then
 			echo "DEBUG: $TESNAME not in skiplist"
 			GOODJOB=0
 		else
