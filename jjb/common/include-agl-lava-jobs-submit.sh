@@ -101,7 +101,7 @@ handle_skiplist() {
 		fi
 	done
 
-	if [ -e "$SKIPLIST" ];then
+	if [ ! -e "$SKIPLIST" ];then
 		echo "DEBUG: $SKIPLIST does not exists"
 		return 0
 	fi
