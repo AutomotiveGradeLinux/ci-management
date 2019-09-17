@@ -26,6 +26,11 @@ cat $JOB_FILE | sed "s/device_type: $releng_device$/device_type: $lava_device/" 
 #
 JOB_STATUS="${JOB_BASE}_${LAVA_LAB}.status"
 
+if [ -z "$lab" ];then
+	echo "WARNING: lab is empty fallback to agl lab"
+	lab=agl
+fi
+
 job_id=$(lavacli -i $lab jobs submit $JOB_FILE_NEW)
 if [ $? -ne 0 ]; then
 	echo "ERROR: job submission error"
@@ -43,8 +48,8 @@ echo "####################################################"
 echo ""
 
 # use lavacli wait job instead of the polling.
-lavacli -i agl jobs wait $job_id --timeout 7200
-lavacli -i agl jobs show $job_id --yaml > $JOB_STATUS
+lavacli -i $lab jobs wait $job_id --timeout 7200
+lavacli -i $lab jobs show $job_id --yaml > $JOB_STATUS
 state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
 if [ "$state" == "Finished" ]; then
         status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
@@ -124,7 +129,7 @@ handle_skiplist() {
 }
 
 # Analyze jobs results
-lavacli results $job_id | tee job-result
+lavacli -i $lab results $job_id | tee job-result
 
 # GOODJOB is equal to 0 if any test fail (and not present in a skiplist), 1 if all test are success
 GOODJOB=1
