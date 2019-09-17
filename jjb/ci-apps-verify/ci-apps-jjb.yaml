@@ -8,15 +8,8 @@
       - flounder
     architecture:
       - aarch64
-        #= dragonboard-410c (disabled for dab atm) later versions use qemuarm64
       - x86-64
-        #= intel-corei7-64
-        #= qemux86-64
       - arm
-        #= porter-nogfx
-        #= raspberrypi3
-        #= dra7xx-evm
-        # ####### REPLACE WITH generic-aarch64, generic-x86-64, generic-arm
     project:
       !include: app-projects.yaml.inc
 
@@ -406,7 +399,8 @@
     triggers:
       - gerrit-trigger-silent-patch-merged-abandoned:
           name: 'apps/{project}'
-          branch: 'refs/heads/{aglbranch}'
+          branch: '{aglbranch}'
+          silent: 'true'
     builders:
       - shell:
           !include-raw-escape:
