@@ -115,7 +115,7 @@ handle_skiplist() {
 	while read testline
 	do
 		# Check if fail are "normal/accepted"
-		TESTNAME=$(echo $testline | cut -d' ' -f2)
+		TESTNAME=$(echo "$testline" | cut -d' ' -f2)
 		if [ -z "$(grep $TESTNAME $SKIPLIST)" ];then
 			echo "DEBUG: $TESNAME not in skiplist"
 			GOODJOB=0
