@@ -117,10 +117,10 @@ handle_skiplist() {
 		# Check if fail are "normal/accepted"
 		TESTNAME=$(echo "$testline" | cut -d' ' -f2)
 		if [ -z "$(grep $TESTNAME $SKIPLIST)" ];then
-			echo "DEBUG: $TESNAME not in skiplist"
+			echo "DEBUG: $TESTNAME not in skiplist"
 			GOODJOB=0
 		else
-			echo "DEBUG: $TESNAME in skiplist"
+			echo "DEBUG: $TESTNAME in skiplist"
 		fi
 	done < job-result.fail
 	# clean skiplist
