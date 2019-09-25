@@ -43,11 +43,13 @@
 - agl-service-windowmanager-2017
 - agl-service-xds-monitoring
 - agl-telematics-demo-recorder
+- alexa-demo-ui
 - als-meter-demo
 - app-afb-helpers-submodule
 - app-afb-test
 - app-controller-submodule
 - app-templates
+- aroundview
 - chromium
 - controls
 - dashboard
@@ -60,6 +62,9 @@
 - demo3-tachometer
 - demo3-warehouse
 - homescreen
+- html5-hvac
+- html5-launcher
+- html5-mixer
 - hvac
 - launcher
 - low-level-can-service
@@ -70,6 +75,7 @@
 - ondemandnavi
 - onscreenapp
 - phone
+- poi-yelp
 - radio
 - restriction-screen
 - settings
