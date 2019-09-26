@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-set -x
+#set -x
 
 [[ -z "$WORKSPACE" ]] && WORKSPACE=$(pwd -P)
 HTDOCS=${HTDOCS:-$WORKSPACE/docs-webtemplate/build-dev/}

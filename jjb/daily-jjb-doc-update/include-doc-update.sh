@@ -3,7 +3,7 @@ set -e
 
 #!/bin/bash
 set -e 
-set -x 
+#set -x 
 # we need a name and an email
 #git config --global user.name build.automotivelinux.org
 #git config --global user.email jenkins@automotivelinux.org

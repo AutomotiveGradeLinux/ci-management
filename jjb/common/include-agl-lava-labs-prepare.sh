@@ -31,7 +31,7 @@ cat <<EOF >  ~/.local/share/python_keyring/keyringrc.cfg
 default-keyring=keyring.backends.file.PlaintextKeyring
 EOF
 
-set -x
+#set -x
 device_available=0
 for lab in "${!labs[@]}"; do
     val=${labs[$lab]}

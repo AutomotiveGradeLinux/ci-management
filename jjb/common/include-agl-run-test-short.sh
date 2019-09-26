@@ -5,7 +5,7 @@
 ## Run SHORT CI test
 ################################################################################
 
-set -x
+#set -x
 
 UPLOAD_URL_BASE=http://download.automotivelinux.org/AGL/upload/ci
 UPLOAD_URL=${UPLOAD_URL_BASE}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/${MACHINE}

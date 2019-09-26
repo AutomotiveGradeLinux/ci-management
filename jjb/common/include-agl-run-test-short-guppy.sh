@@ -5,7 +5,7 @@
 ## Run SHORT CI test
 ################################################################################
 
-set -x
+#set -x
 
 UPLOAD_URL_BASE=http://download.automotivelinux.org/AGL/upload/ci
 UPLOAD_URL=${UPLOAD_URL_BASE}/${RELEASE_BRANCH}/${RELEASE_VERSION}/${MACHINE}/deploy/images/${TARGETMACHINE}

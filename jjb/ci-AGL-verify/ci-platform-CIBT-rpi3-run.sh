@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 function usage () {
 
 echo "Usage: $0 ChangeID PatchID"
@@ -29,7 +29,7 @@ else
   echo "you need ~/.lava-cimanagement.cfg"
 fi
 
-set -x
+#set -x
 set -e
 export COMMON="$(pwd)/../common"
 

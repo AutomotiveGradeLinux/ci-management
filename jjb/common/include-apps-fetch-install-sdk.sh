@@ -4,7 +4,7 @@
 #
 # debugging purposes
 set -e
-set -x
+#set -x
 
 SDKHOSTDIR="~/agl-sdk"
 
@@ -47,7 +47,7 @@ if test x"" = x"${TARGETSDKNAME}" ; then
     exit 0
     #exit 1
 fi
-set -x
+#set -x
 if test ! -f ${TARGETSDKNAME} ; then
   echo "Downloading $TARGETSDKNAME for $MACHINE"
   wget -nd -c "${SDKBASEURL}/${TARGETSDKNAME}"

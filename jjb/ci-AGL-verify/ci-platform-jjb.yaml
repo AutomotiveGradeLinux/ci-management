@@ -80,7 +80,7 @@
           build-timeout: '{build-timeout}'
     builders:
       - shell: |
-          set -x
+          #set -x
           export TRIGGERURL=$(echo ${{BUILD_URL}} | sed -e 's,-CIB-start.*,,')
           echo \$TRIGGERURL
           ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message="CI-cycle\ started.\ URL:\ ${{BUILD_URL}}" || true

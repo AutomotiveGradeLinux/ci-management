@@ -72,7 +72,7 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
         git log -1 --pretty=oneline
 
         # Fixme: use aglbuild script
-        set -x
+        #set -x
 
         export DONE=0
         export isAUTOBUILD=0

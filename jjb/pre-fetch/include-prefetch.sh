@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -x
+#set -x
 set +e
 #
 export BOARDS="qemux86-64 raspberrypi3 intel-corei7-64 m3ulcb-nogfx dra7xx-evm qemuarm qemuarm64"

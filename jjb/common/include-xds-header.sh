@@ -3,6 +3,6 @@
 # (c) 2018  Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
 # License: GPLv2
 
-set -x
+#set -x
 set -e
 

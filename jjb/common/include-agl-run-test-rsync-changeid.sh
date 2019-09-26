@@ -28,7 +28,7 @@ cd output
 pwd
 ls -alhR tmp/deploy/images
 
-set -x
+#set -x
 
 echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}"
 echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
