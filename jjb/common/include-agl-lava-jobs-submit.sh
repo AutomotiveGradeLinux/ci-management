@@ -139,7 +139,8 @@ if [ -s job-result.fail ];then
 	handle_skiplist
 fi
 
-BUILD_LOG_MSG="LOGURL: $BUILD_URL/consoleFull"
+set -x
+BUILD_LOG_MSG="LOGURL:\ ${BUILD_URL}consoleFull"
 
 if [ $GOODJOB -eq 0 ];then
 	# send -1
@@ -148,12 +149,12 @@ else
 	# send +1
 	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --label ci-image-boot-test=+1 -n NONE --message="CI-Image-Boot-Test\ success\ on\ ${MACHINE}\ ${BUILD_LOG_MSG}" || true
 fi
+set +x
 
 # after one successful submit, we're done
 if [ x"$status" = x"Complete" ]; then
     exit 0
 fi
-
 #exit 1
 # for now do not fail
 exit 0
