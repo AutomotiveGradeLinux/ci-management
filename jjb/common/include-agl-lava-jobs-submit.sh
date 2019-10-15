@@ -144,14 +144,36 @@ if [ -s job-result.fail ];then
 fi
 
 set -x
-BUILD_LOG_MSG="LOGURL:\ ${BUILD_URL}consoleFull"
+MSG_FAIL="CI-Image-Boot-Test fail on ${MACHINE}"
+MSG_SUCCESS="CI-Image-Boot-Test success on ${MACHINE}"
+MSG_BUILD_LOG="${BUILD_URL}consoleFull"
+MSG_JOBFAIL="Failed jobs:
+$(cat job-result.fail)"
 
 if [ $GOODJOB -eq 0 ];then
+        #construct message
+cat << EOF > .msg
+$MSG_FAIL
+
+Build log available at: $MSG_BUILD_LOG
+
+$MSG_JOBFAIL
+EOF
+        # escape
+        sed -i -e "s/ /\\\ /g" .msg
 	# send -1
-	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --label ci-image-boot-test=-1 -n NONE --message="CI-Image-Boot-Test\ fail\ on\ ${MACHINE}\ ${BUILD_LOG_MSG}" || true
+	eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --label ci-image-boot-test=-1 -n NONE --message='"$(cat .msg)"' || true
 else
+        #construct message
+cat << EOF > .msg
+$MSG_SUCCESS
+
+Build log available at: $MSG_BUILD_LOG
+EOF
+        # escape
+        sed -i -e "s/ /\\\ /g" .msg
 	# send +1
-	ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --label ci-image-boot-test=+1 -n NONE --message="CI-Image-Boot-Test\ success\ on\ ${MACHINE}\ ${BUILD_LOG_MSG}" || true
+	eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} --verified +1 --label ci-image-boot-test=+1 -n NONE --message='"$(cat .msg)"' || true
 fi
 set +x
 
