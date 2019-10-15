@@ -102,7 +102,8 @@ handle_skiplist() {
 	done
 
 	if [ ! -e "$SKIPLIST" ];then
-		echo "DEBUG: $SKIPLIST does not exists"
+		echo "DEBUG: $SKIPLIST does not exist"
+		touch $SKIPLIST
 		return 0
 	fi
 
@@ -110,7 +111,9 @@ handle_skiplist() {
 		echo "DEBUG: $SKIPLIST is empty"
 		return 0
 	fi
+}
 
+handle_result() {
 	# example of testline: * lava.lava-test-retry [fail]
 	while read testline
 	do
@@ -137,6 +140,7 @@ grep '\[fail\]$' job-result > job-result.fail || true
 
 if [ -s job-result.fail ];then
 	handle_skiplist
+	handle_result
 fi
 
 set -x
