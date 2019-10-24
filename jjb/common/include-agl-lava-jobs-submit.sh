@@ -71,6 +71,9 @@ echo "#### End: Output from LAVA job $job_id ####"
 echo "####"
 
 handle_skiplist() {
+	if [ -z "${GERRIT_HOST}" ]; then
+		    export GERRIT_HOST="gerrit.automotivelinux.org"
+	fi
 	SKIPLIST=skiplist
 	# detect job type (apps vs non-apps) and get skiplist
 	if [ ! -z "$(echo $JOB_NAME | grep 'ci-platform')" ];then
