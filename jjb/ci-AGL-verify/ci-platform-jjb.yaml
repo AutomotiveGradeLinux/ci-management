@@ -81,9 +81,13 @@
     builders:
       - shell: |
           #set -x
-          export TRIGGERURL=$(echo ${{BUILD_URL}} | sed -e 's,-CIB-start.*,,')
-          echo \$TRIGGERURL
-          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message="CI-cycle\ started.\ URL:\ ${{BUILD_URL}}" || true
+          cat << EOF > .msg
+CI-cycle started. URL: ${{BUILD_URL}}
+EOF
+          # escape
+          sed -i -e "s/ /\\\ /g" .msg
+          # send -1
+          eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message='"$(cat .msg)"' || true
           # - multijob:
           #     name: CIB-{project}-start
           #     condition: SUCCESSFUL
@@ -256,9 +260,13 @@
     builders:
       - shell: |
           #set
-          export TRIGGERURL=$(echo ${{BUILD_URL}} | sed -e 's,-CIB-start.*,,')
-          # ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 --label ci-image-build=0 --label ci-image-boot-test=0 -n NONE --message="CI-Image-Build\ started.\ URL:\ ${{BUILD_URL}}" || true
-          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message="CI-Image-Build\ started.\ URL:\ \$TRIGGERURL" || true
+          cat << EOF > .msg
+CI-Image-Build started. URL: ${{BUILD_URL}}
+EOF
+          # escape
+          sed -i -e "s/ /\\\ /g" .msg
+          # send -1
+          eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message='"$(cat .msg)"' || true
 
 
 ################################################################################
@@ -419,8 +427,13 @@
       - shell: |
           set
           echo "#### Verified -1 ####"
-          #ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified -1 -n NONE --message="CI-cycle\ failed.\ URL:\ ${{BUILD_URL}}" || true
-          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified -1 -n NONE --message="CI-cycle\ failed.\ URL:\ ${{ORIG_BUILD_URL}}" || true
+          cat << EOF > .msg
+CI-cycle failed. URL: ${{BUILD_URL}}
+EOF
+          # escape
+          sed -i -e "s/ /\\\ /g" .msg
+          # send -1
+          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=-1 -n NONE --message='"$(cat .msg)"' || true
 
 
 ################################################################################################################################################################
