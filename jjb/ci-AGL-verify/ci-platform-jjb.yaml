@@ -6,6 +6,7 @@
       - intel-corei7-64
       #- dra7xx-evm
       - m3ulcb-nogfx
+      - h3ulcb-nogfx
       - qemux86-64
       - qemuarm
       - qemuarm64
@@ -128,6 +129,10 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIB-h3ulcb-nogfx'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
       - multijob:
           name: CIB-{project}-finish-success
           condition: SUCCESSFUL
@@ -181,6 +186,10 @@
               #abort-all-job: true
               kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-m3ulcb-nogfx'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-{project}-verify-CIBT-h3ulcb-nogfx'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER

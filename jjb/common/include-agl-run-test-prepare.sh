@@ -27,6 +27,7 @@ agl_lava_releng_aliases=(
     [qemuarm]="qemu;qemuarm"
     [qemuarm64]="qemu;qemuarm64"
     [m3ulcb-nogfx]="r8a7796-m3ulcb;m3ulcb"
+    [h3ulcb-nogfx]="r8a7795-h3ulcb-kf;h3ulcb"
     [porter-nogfx]="renesas-porter;porter"
     [dra7xx-evm]="dra7-evm;dra7xx-evm"
     [intel-corei7-64]="upsquare;upsquare"
