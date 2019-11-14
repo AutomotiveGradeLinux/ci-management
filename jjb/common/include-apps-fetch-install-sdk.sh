@@ -28,6 +28,10 @@ SDKBASEURL="http://mirror.automotivelinux.org/AGL/release/${AGLBRANCH}/latest/${
 if test x"master" = x"$AGLBRANCH" ; then
   SDKBASEURL="http://mirror.automotivelinux.org/AGL/snapshots/master/latest/${TARGETSDKMACHINE}/deploy/sdk/"
 fi
+if test x"halibut" = x"$AGLBRANCH" ; then
+  SDKBASEURL="http://mirror.automotivelinux.org/AGL/snapshots/halibut/latest/${TARGETSDKMACHINE}/deploy/sdk/"
+fi
+
 # special case for dab
 if test x"dab" = x"$AGLBRANCH" ; then
   if test x"qemuarm64" = x"$TARGETSDKMACHINE"; then
