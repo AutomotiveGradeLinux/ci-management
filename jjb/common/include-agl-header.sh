@@ -151,6 +151,13 @@ if test x"m3ulcb-nogfx" = x"$MACHINE"; then
     export TARGETMACHINE="m3ulcb"
     export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
 fi
+# h3ulcb-nogfx means no graphic drivers
+if test x"h3ulcb-nogfx" = x"$MACHINE"; then
+    export TARGETIMAGE=${TARGETIMAGEnogfx}
+    export TARGETFEATURES="${TARGETFEATURESnogfx}"
+    export TARGETMACHINE="h3ulcb"
+    export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
+fi
 
 #if $DEBUG; then
 set | grep ^TARGET || true

@@ -3,7 +3,7 @@
 #set -x
 set +e
 #
-export BOARDS="qemux86-64 raspberrypi3 intel-corei7-64 m3ulcb-nogfx dra7xx-evm qemuarm qemuarm64"
+export BOARDS="qemux86-64 raspberrypi3 intel-corei7-64 h3ulcb-nogfx m3ulcb-nogfx dra7xx-evm qemuarm qemuarm64"
 # check: dra7xx-evm dragonboard-410c wandboard
 export FEATURES="agl-demo agl-devel agl-audio-4a-framework agl-netboot"
 export FEATURES_nogfx="agl-netboot agl-devel"
@@ -32,6 +32,10 @@ for i in $BOARDS ; do
 	TARGETIMAGE="${TARGETIMAGE_nogfx}"
     fi
     if test x"m3ulcb-nogfx" = x"$i" ; then
+	FEATURES="${FEATURES_nogfx}"
+	TARGETIMAGE="${TARGETIMAGE_nogfx}"
+    fi
+    if test x"h3ulcb-nogfx" = x"$i" ; then
 	FEATURES="${FEATURES_nogfx}"
 	TARGETIMAGE="${TARGETIMAGE_nogfx}"
     fi
