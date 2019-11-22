@@ -4,7 +4,7 @@
     machine:
       - raspberrypi3
       - intel-corei7-64
-      #- dra7xx-evm
+      - dra7xx-evm
       - m3ulcb-nogfx
       - qemux86-64
       - qemuarm
@@ -120,10 +120,10 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
-            #- name: 'ci-platform-{project}-verify-CIB-dra7xx-evm'
-            #  current-parameters: true
+            - name: 'ci-platform-{project}-verify-CIB-dra7xx-evm'
+              current-parameters: true
               #abort-all-job: true
-            #  kill-phase-on: FAILURE
+              kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-m3ulcb-nogfx'
               current-parameters: true
               #abort-all-job: true
@@ -164,10 +164,10 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER
-            #- name: 'ci-platform-{project}-verify-CIBT-dra7xx-evm'
-            #  current-parameters: true
-            #  #abort-all-job: true
-            #  kill-phase-on: NEVER
+            - name: 'ci-platform-{project}-verify-CIBT-dra7xx-evm'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-qemux86-64'
               current-parameters: true
               #abort-all-job: true
