@@ -10,6 +10,7 @@
       - qemux86-64
       - qemuarm
       - qemuarm64
+      - raspberrypi4
     project:
       - meta-agl
       - meta-agl-demo
@@ -132,6 +133,9 @@
             - name: 'ci-platform-{project}-verify-CIB-h3ulcb-nogfx'
               current-parameters: true
               #abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIB-raspberrypi4'
+              current-parameters: true
               kill-phase-on: FAILURE
       - multijob:
           name: CIB-{project}-finish-success
