@@ -6,6 +6,7 @@
 - agl-service-bluetooth
 - agl-service-bluetooth-map
 - agl-service-bluetooth-pbap
+- agl-service-can-high-level-viwi
 - agl-service-can-low-level
 - agl-service-data-persistence
 - agl-service-geoclue
@@ -43,7 +44,7 @@
 - agl-service-windowmanager-2017
 - agl-service-xds-monitoring
 - agl-telematics-demo-recorder
-- alexa-demo-ui
+- alexa-viewer
 - als-meter-demo
 - app-afb-helpers-submodule
 - app-afb-test
@@ -62,6 +63,7 @@
 - demo3-tachometer
 - demo3-warehouse
 - homescreen
+- html5-homescreen
 - html5-hvac
 - html5-launcher
 - html5-mixer
