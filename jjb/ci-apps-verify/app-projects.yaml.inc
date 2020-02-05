@@ -63,10 +63,13 @@
 - demo3-tachometer
 - demo3-warehouse
 - homescreen
+- html5-dashboard
 - html5-homescreen
 - html5-hvac
 - html5-launcher
+- html5-mediaplayer
 - html5-mixer
+- html5-settings
 - hvac
 - launcher
 - low-level-can-service
