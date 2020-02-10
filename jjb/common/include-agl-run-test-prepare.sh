@@ -10,9 +10,9 @@ cd $REPODIR
 
 # clone repo for templates and related utils, add to $PATH for later use
 if [ ! -e releng-scripts ]; then
-    git clone --branch $AGLBRANCH https://git.automotivelinux.org/AGL/releng-scripts
+    git clone --branch $TARGETBRANCH https://git.automotivelinux.org/AGL/releng-scripts
 else
-    (cd releng-scripts; git remote update; git checkout -f origin/$AGLBRANCH)
+    (cd releng-scripts; git remote update; git checkout -f origin/$TARGETBRANCH)
 fi
 
 if [ -e releng-scripts/utils ]; then
