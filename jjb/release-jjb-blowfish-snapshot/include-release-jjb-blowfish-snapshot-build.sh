@@ -156,7 +156,7 @@ mv repoclone repoclone$XTMP || true
 mkdir -p repoclone
 cd repoclone
 
-repo init --reference=/opt/AGL/preclone -q -b $TARGETBRANCH $MANIFESTMOD -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
+repo init  --repo-branch=repo-1 --reference=/opt/AGL/preclone -q -b $TARGETBRANCH $MANIFESTMOD -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
 
 # next: repo sync and dump manifest
 repo sync --force-sync --detach --no-clone-bundle
