@@ -165,6 +165,9 @@ set | grep ^GERRIT || true
 set | grep ^MACHINE || true
 #fi
 
+# to avoid .gitconfig.lock race condition do
+sleep $((1 + RANDOM % 10))
+
 if test ! -f ~/.gitconfig ; then 
   git config --global user.email "jenkins-dontreply@build.automotivelinux.org"
   git config --global user.name "jenkins-dontreply@build.automotivelinux.org"
