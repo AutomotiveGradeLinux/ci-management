@@ -3,9 +3,9 @@
     name: ci-apps-AGL
     aglbranch:
       - master
+      - icefish
       - halibut
       - guppy
-      - flounder
     architecture:
       - aarch64
       - x86-64
