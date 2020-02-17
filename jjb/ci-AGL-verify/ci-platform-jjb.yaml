@@ -125,7 +125,7 @@
             - name: 'ci-platform-{project}-verify-CIB-dra7xx-evm'
               current-parameters: true
               #abort-all-job: true
-              kill-phase-on: FAILURE
+              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIB-m3ulcb-nogfx'
               current-parameters: true
               #abort-all-job: true
