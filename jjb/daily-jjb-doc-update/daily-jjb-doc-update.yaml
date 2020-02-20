@@ -33,3 +33,9 @@
           !include-raw-escape: include-doc-update.sh
       - shell:
           !include-raw-escape: include-doc-upload.sh
+      - conditional-step:
+          condition-kind: always
+          steps:
+              - shell:
+                  !include-raw-escape:
+                  - ../common/include-agl-get-cost.sh
