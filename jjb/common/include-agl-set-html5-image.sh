@@ -9,6 +9,8 @@ set -e
 ## Header
 ################################################################################
 
+# only run on master, jellyfish and icefish
+( echo "master jellyfish icefish" | grep -q $TARGETBRANCH ) || exit 0
 
 export TARGETFEATURES="agl-profile-graphical-html5 agl-devel"
 export TARGETQA=""
