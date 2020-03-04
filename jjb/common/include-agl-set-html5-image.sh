@@ -14,7 +14,7 @@ set -e
 
 export TARGETFEATURES="agl-profile-graphical-html5 agl-devel"
 export TARGETQA=""
-export TARGETIMAGE="agl-demo-platform-html5"
+export TARGETIMAGE="agl-image-graphical-html5"
 
 eval TARGETIMAGE="$TARGETIMAGE"
 eval TARGETIMAGEnogfx="$TARGETIMAGE"
