@@ -2,33 +2,56 @@
 
 #set -x
 set -e
-#export RSYNCDST="jenkins-slave@10.30.72.8:/srv/download/AGL/release/${RELEASE_BRANCH}/${RELEASE_VERSION}/"
-#export RSYNCSRC=$(pwd)/UPLOAD/
 
 # construct upload folder
 
 
 BRANCH=${RELEASE_BRANCH}
-RELVER=${RELEASE_VERSION}
+REVISION=${RELEASE_VERSION}
 
-rm -rf release-upload || true
 
-git clone -b ${RELEASE_BRANCH} https://gerrit.automotivelinux.org/gerrit/p/staging/release-upload.git
-cd release-upload
+rm -rf AGLRELEASE || true
 
-gpg --keyserver pool.sks-keyservers.net --recv D6DD2170
+mkdir agl-${BRANCH}-${REVISION}
+pushd agl-${BRANCH}-${REVISION}
 
-ls | grep -q agl-${RELEASE_BRANCH}-${RELEASE_VERSION}.tar.bz2
+repo init --reference=/opt/AGL/preclone -q -b ${GERRIT_BRANCH} -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo -m ${BRANCH}_${REVISION}.xml
 
-( gpg --verify agl-${RELEASE_BRANCH}-${RELEASE_VERSION}.tar.bz2.sig agl-${RELEASE_BRANCH}-${RELEASE_VERSION}.tar.bz2 2>&1 | grep -e "Good signature.*Jan-Simon.*Moeller.*AGL.*Release" -q && echo "gpg key verification succeeded" ) || ( echo "gpg key verification failed" && exit 1 )
+repo sync --force-sync
 
-rm -rf ../UPLOAD || true
-mkdir -p ../UPLOAD/
+repo manifest -r > ../${BRANCH}_${REVISION}.tar.xml
 
-cp -ar agl-${RELEASE_BRANCH}-${RELEASE_VERSION}.* ../UPLOAD/
+rm -rf .repo
+find . -name *.git | xargs rm -rf
 
-export RSYNCSRC=$(pwd)/../UPLOAD
+ln -sf meta-agl/README-AGL.md
+
+cat <<EOF > aglsetup.sh
+#!/bin/bash
+
+source ./meta-agl/scripts/aglsetup.sh \$@
+EOF
+
+chmod a+x aglsetup.sh
+
+popd
+
+tar -cjvf agl-${BRANCH}-${REVISION}.tar.bz2 agl-${BRANCH}-${REVISION}
+
+md5sum agl-${BRANCH}-${REVISION}.tar.bz2 > agl-${BRANCH}-${REVISION}.tar.bz2.md5sum
+sha256sum agl-${BRANCH}-${REVISION}.tar.bz2 > agl-${BRANCH}-${REVISION}.tar.bz2.sha256sum
+
+
+
+rm -rf UPLOAD || true
+mkdir -p UPLOAD/
+
+cp -ar agl-${RELEASE_BRANCH}-${RELEASE_VERSION}.* UPLOAD/
+
+export RSYNCSRC=$(pwd)/UPLOAD
 export RSYNCDST="/srv/download/AGL/release/${RELEASE_BRANCH}/"
+
+ls -alh UPLOAD/
 
 if test x"yes" = x"${UPLOAD}" ; then
    set +x

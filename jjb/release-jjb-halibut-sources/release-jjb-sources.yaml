@@ -12,8 +12,12 @@
 
     parameters:
       - string:
+          name: GERRIT_BRANCH
+          default: halibut
+          description: "release version number for build"
+      - string:
           name: RELEASE_VERSION
-          default: 7.99.1
+          default: 8.0.0
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH

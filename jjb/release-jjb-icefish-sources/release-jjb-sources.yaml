@@ -12,8 +12,12 @@
 
     parameters:
       - string:
+          name: GERRIT_BRANCH
+          default: icefish
+          description: "release version number for build"
+      - string:
           name: RELEASE_VERSION
-          default: 8.99.1
+          default: 9.0.0
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH

@@ -12,25 +12,17 @@
 
     parameters:
       - string:
-          name: GERRIT_PROJECT
-          default: AGL/AGL-repo
-          description: "Project to build"
-      - string:
           name: GERRIT_BRANCH
-          default: master
+          default: halibut
           description: "branch to build"
-      - string:
-          name: GERRIT_REFSPEC
-          default: refs/tags/halibut_7.99.1
-          description: "refspec to build"
-      - string:
-          name: RELEASE_VERSION
-          default: 7.99.1
-          description: "release version number for build"
       - string:
           name: RELEASE_BRANCH
           default: halibut
           description: "release branch to build"
+      - string:
+          name: RELEASE_VERSION
+          default: 8.0.0
+          description: "release version number for build"
       - string:
           name: UPLOAD
           default: yes_or_no
@@ -50,3 +42,8 @@
       - shell:
           !include-raw-escape:
           - include-release-jjb-release-move-sandbox.sh
+      - trigger-builds:
+        - project: "release-jjb-halibut-sources"
+          current-parameters: true
+          block: true
+          same-node: true

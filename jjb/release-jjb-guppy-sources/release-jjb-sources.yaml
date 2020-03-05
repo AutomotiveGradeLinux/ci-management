@@ -12,8 +12,12 @@
 
     parameters:
       - string:
+          name: GERRIT_BRANCH
+          default: guppy
+          description: "release version number for build"
+      - string:
           name: RELEASE_VERSION
-          default: 6.99.1
+          default: 7.0.0
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH
