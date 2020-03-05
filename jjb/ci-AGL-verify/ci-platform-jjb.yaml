@@ -405,6 +405,7 @@
           !include-raw-escape:
           - ../common/include-agl-header.sh
           - ../common/include-agl-repo.sh
+          - ../common/include-agl-select.sh
           - ../common/include-agl-set-html5-image.sh
           - ../common/include-agl-source-aglsetup.sh
           - ../common/include-agl-auto-conf.sh
