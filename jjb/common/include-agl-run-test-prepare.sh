@@ -23,6 +23,7 @@ fi
 declare -A agl_lava_releng_aliases
 agl_lava_releng_aliases=(
     [raspberrypi3]="bcm2837-rpi-3-b-32;raspberrypi3"
+    [raspberrypi4]="bcm2711-rpi-4-b;raspberrypi4"
     [qemux86-64]="qemu;qemux86-64"
     [qemuarm]="qemu;qemuarm"
     [qemuarm64]="qemu;qemuarm64"
