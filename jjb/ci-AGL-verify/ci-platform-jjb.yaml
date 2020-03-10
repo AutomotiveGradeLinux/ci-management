@@ -2,10 +2,7 @@
 - project:
     name: ci-platform-AGL
     machine:
-      - raspberrypi3
-      - intel-corei7-64
-      - dra7xx-evm
-      - m3ulcb-nogfx
+      - bbe
       - h3ulcb-nogfx
       - qemux86-64
       - qemuarm
@@ -23,8 +20,8 @@
       - ci-platform-{project}-verify
       # - ci-platform-{project}-verify-CIB-start             #unused
       - ci-platform-{project}-verify-CIB-{machine}
-      - ci-platform-html5-{project}-verify-CIB-qemux86-64
-      - ci-platform-aglcompositor-{project}-verify-CIB-qemux86-64
+      - ci-platform-{project}-verify-CIB-html5-qemux86-64
+      - ci-platform-{project}-verify-CIB-aglcompositor-qemux86-64
       - ci-platform-{project}-verify-CIB-finish-success
       - ci-platform-{project}-verify-failure
       # - ci-platform-{project}-verify-CIBT-start            #unused
@@ -104,14 +101,6 @@
               current-parameters: true
               abort-all-job: true
               kill-phase-on: FAILURE
-            - name: 'ci-platform-html5-{project}-verify-CIB-qemux86-64'
-              current-parameters: true
-              abort-all-job: false
-              kill-phase-on: NEVER
-            - name: 'ci-platform-aglcompositor-{project}-verify-CIB-qemux86-64'
-              current-parameters: true
-              abort-all-job: false
-              kill-phase-on: NEVER
       - multijob:
           name: CIB-{project}-devboards
           condition: SUCCESSFUL
@@ -124,22 +113,10 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-intel-corei7-64'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-raspberrypi3'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-dra7xx-evm'
+            - name: 'ci-platform-{project}-verify-CIB-bbe'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIB-m3ulcb-nogfx'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-h3ulcb-nogfx'
               current-parameters: true
               #abort-all-job: true
@@ -175,18 +152,6 @@
           name: CIBT-{project}
           condition: SUCCESSFUL
           projects:
-            - name: 'ci-platform-{project}-verify-CIBT-intel-corei7-64'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIBT-raspberrypi3'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIBT-dra7xx-evm'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-qemux86-64'
               current-parameters: true
               #abort-all-job: true
@@ -199,11 +164,11 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIBT-m3ulcb-nogfx'
+            - name: 'ci-platform-{project}-verify-CIBT-h3ulcb-nogfx'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIBT-h3ulcb-nogfx'
+            - name: 'ci-platform-{project}-verify-CIBT-raspberrypi4'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER
@@ -221,8 +186,21 @@
           projects:
             - name: 'ci-platform-{project}-verify-CIBT-finish-success'
               current-parameters: true
-              abort-all-job: true
+              abort-all-job: false
               kill-phase-on: NEVER
+      - multijob:
+          name: CIB-{project}-extra-variants
+          condition: ALWAYS
+          projects:
+            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
+              current-parameters: true
+              abort-all-job: false
+              kill-phase-on: NEVER
+            - name: 'ci-platform-{project}-verify-CIB-aglcompositor-qemux86-64'
+              current-parameters: true
+              abort-all-job: false
+              kill-phase-on: NEVER
+
     publishers:
       - trigger-parameterized-builds:
         - project:
@@ -365,7 +343,7 @@
 # html5-verify-CIB-{machine}  = build for machine
 ################################################################################
 - job-template:
-    name: 'ci-platform-html5-{project}-verify-CIB-qemux86-64'
+    name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
     project-type: freestyle
     concurrent: true
     node: agl-test-slave
@@ -430,7 +408,7 @@
 # html5-verify-CIB-{machine}  = build for machine
 ################################################################################
 - job-template:
-    name: 'ci-platform-aglcompositor-{project}-verify-CIB-qemux86-64'
+    name: 'ci-platform-{project}-verify-CIB-aglcompositor-qemux86-64'
     project-type: freestyle
     concurrent: true
     node: agl-test-slave
