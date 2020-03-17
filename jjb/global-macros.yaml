@@ -85,6 +85,8 @@
                 exclude-drafts: 'true'
                 exclude-trivial-rebase: 'true'
                 exclude-no-code-change: 'true'
+                exclude-private: 'true'
+                exclude-wip: 'true'
             - draft-published-event
             - comment-added-contains-event:
                 comment-contains-value: 'recheck$'
@@ -118,6 +120,8 @@
                 exclude-drafts: 'true'
                 exclude-trivial-rebase: 'true'
                 exclude-no-code-change: 'true'
+                exclude-private: 'true'
+                exclude-wip: 'true'
             - draft-published-event
             - comment-added-contains-event:
                 comment-contains-value: 'recheck$'
@@ -157,6 +161,8 @@
                 exclude-drafts: 'true'
                 exclude-trivial-rebase: 'true'
                 exclude-no-code-change: 'true'
+                exclude-private: 'true'
+                exclude-wip: 'true'
             - draft-published-event
             - comment-added-contains-event:
                 comment-contains-value: 'recheck$'
@@ -196,6 +202,8 @@
                 exclude-drafts: 'true'
                 exclude-trivial-rebase: 'true'
                 exclude-no-code-change: 'true'
+                exclude-private: 'true'
+                exclude-wip: 'true'
             - draft-published-event
             - comment-added-contains-event:
                 comment-contains-value: 'recheck$'
@@ -227,6 +235,8 @@
                 exclude-drafts: 'true'
                 exclude-trivial-rebase: 'true'
                 exclude-no-code-change: 'true'
+                exclude-private: 'true'
+                exclude-wip: 'true'
             - draft-published-event
             - comment-added-contains-event:
                 comment-contains-value: 'recheck$'
@@ -290,7 +300,9 @@
             - patchset-created-event:
                 exclude-drafts: 'true'
                 exclude-trivial-rebase: 'true'
-                exclude-no-code-change: 'false'
+                exclude-no-code-change: 'true'
+                exclude-private: 'true'
+                exclude-wip: 'true'
             - draft-published-event
             - comment-added-contains-event:
                 comment-contains-value: 'recheck$'
