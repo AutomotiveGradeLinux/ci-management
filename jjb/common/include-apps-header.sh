@@ -107,11 +107,11 @@ case "$TARGETARCH" in
 	    export TARGETSDKMACHINE="qemuarm"
 	    ;;
 	x86-64)
+	    export TARGETSDKARCH="corei7-64"
+	    # starting with master, we use qemu for the SDK.
 	    if test x"master" = x"$AGLBRANCH" ; then
-		export TARGETSDKARCH="qemux86-64"
 		export TARGETSDKMACHINE="qemux86-64"
 	    else
-		export TARGETSDKARCH="corei7-64"
 		export TARGETSDKMACHINE="intel-corei7-64"
 	    fi
 	    ;;
