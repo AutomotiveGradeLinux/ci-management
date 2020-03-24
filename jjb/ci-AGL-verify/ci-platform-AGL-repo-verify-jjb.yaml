@@ -1,0 +1,197 @@
+---
+- project:
+    name: ci-platform-AGL-repo-1
+    machine:
+      - bbe
+      - h3ulcb-nogfx
+      - qemux86-64
+      - qemuarm
+      - qemuarm64
+      - raspberrypi4
+    jobs:
+      - ci-platform-AGL-repo-verify
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
+
+
+################################################################################################################################################################
+################################################################################################################################################################
+
+################################################################################
+################################################################################
+# -verify  = trigger from gerrit and control job, multijob order
+################################################################################
+- job-template:
+    name: 'ci-platform-AGL-repo-verify'
+    project-type: multijob
+    concurrent: true
+    node: control-slave
+    description: "Managed by JJB. Do not Edit. \
+                  <br>Build time graph:<br><img src='buildTimeGraph/png' />"
+    parameters:
+      - string:
+          name: GERRIT_PROJECT
+          default: 'AGL/AGL-repo'
+          description: "Project to build"
+      - string:
+          name: GERRIT_BRANCH
+          default: master
+          description: "branch to build"
+      - string:
+          name: GERRIT_REFSPEC
+          default: refs/heads/master
+          description: "refspec to build"
+      - string:
+          name: GERRIT_CHANGE_NUMBER
+          default: "8313"
+          description: "change # to build"
+      - string:
+          name: GERRIT_PATCHSET_NUMBER
+          default: "2"
+          description: "patchset # to build"
+    build-discarder:
+      days-to-keep: 30
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+    triggers:
+      - gerrit-trigger-patch-submitted-manual-verified:
+          name: 'AGL/AGL-repo'
+          branch: '**/**/**'
+          file-paths:
+              - compare-type: REG_EXP
+                pattern: 'jsmxml'
+
+          
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+    builders:
+      - shell: |
+          #set -x
+          export TRIGGERURL=$(echo ${{BUILD_URL}} | sed -e 's,-CIB-start.*,,')
+          echo \$TRIGGERURL
+          ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} --verified=0 -n NONE --message="CI-cycle\ started.\ URL:\ ${{BUILD_URL}}" || true
+          # - multijob:
+          #     name: CIB-AGL-repo-start
+          #     condition: SUCCESSFUL
+          #     projects:
+          #       - name: 'ci-platform-AGL-repo-verify-CIB-start'
+          #         current-parameters: true
+          #         abort-all-job: true
+          #         kill-phase-on: FAILURE
+      - multijob:
+          name: CIB-AGL-repo-touchstone
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-platform-AGL-repo-verify-CIB-qemux86-64'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: FAILURE
+      - multijob:
+          name: CIB-AGL-repo-devboards
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-platform-AGL-repo-verify-CIB-qemuarm'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-AGL-repo-verify-CIB-qemuarm64'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-AGL-repo-verify-CIB-bbe'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-AGL-repo-verify-CIB-h3ulcb-nogfx'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+            - name: 'ci-platform-AGL-repo-verify-CIB-raspberrypi4'
+              current-parameters: true
+              kill-phase-on: FAILURE
+      - multijob:
+          name: CIB-AGL-repo-finish-success
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-platform-AGL-repo-verify-CIB-finish-success'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: FAILURE
+      #- multijob:
+      #    name: CIB-AGL-repo-verify-failure
+      #    condition: FAILURE
+      #    projects:
+      #      - name: 'ci-platform-AGL-repo-verify-failure'
+      #        current-parameters: true
+      #        #abort-all-job: true
+      #        kill-phase-on: FAILURE
+      # - multijob:
+      #     name: 'CIBT-AGL-repo-start'
+      #     condition: SUCCESSFUL
+      #     projects:
+      #       - name: 'ci-platform-AGL-repo-verify-CIBT-start'
+      #         current-parameters: true
+      #         abort-all-job: true
+      #         kill-phase-on: FAILURE
+      - multijob:
+          name: CIBT-AGL-repo
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-platform-AGL-repo-verify-CIBT-qemux86-64'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-AGL-repo-verify-CIBT-qemuarm'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-AGL-repo-verify-CIBT-qemuarm64'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-AGL-repo-verify-CIBT-h3ulcb-nogfx'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-AGL-repo-verify-CIBT-raspberrypi4'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+      - multijob:
+          name: 'CIBT-AGL-repo-complete'
+          condition: ALWAYS
+          projects:
+            - name: 'ci-platform-AGL-repo-verify-CIBT-complete'
+              current-parameters: true
+              abort-all-job: true
+              kill-phase-on: NEVER
+      - multijob:
+          name: 'CIBT-AGL-repo-finish-success'
+          condition: SUCCESSFUL
+          projects:
+            - name: 'ci-platform-AGL-repo-verify-CIBT-finish-success'
+              current-parameters: true
+              abort-all-job: false
+              kill-phase-on: NEVER
+      - multijob:
+          name: CIB-AGL-repo-extra-variants
+          condition: COMPLETED
+          projects:
+            - name: 'ci-platform-AGL-repo-verify-CIB-html5-qemux86-64'
+              current-parameters: true
+              abort-all-job: false
+              kill-phase-on: NEVER
+            - name: 'ci-platform-AGL-repo-verify-CIB-aglcompositor-qemux86-64'
+              current-parameters: true
+              abort-all-job: false
+              kill-phase-on: NEVER
+
+    publishers:
+      - trigger-parameterized-builds:
+        - project:
+          - ci-platform-AGL-repo-verify-failure
+          condition: FAILED
+          current-parameters: true
+          predefined-parameters: ORIG_BUILD_URL=${{BUILD_URL}}
+
