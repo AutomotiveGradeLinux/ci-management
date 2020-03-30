@@ -25,10 +25,18 @@ cd output
 #pwd
 #ls -alhR tmp/deploy/images
 
-# copy files to $DEST
-for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
-    eval cp -avL tmp/deploy/images/${TARGETMACHINE}/$(echo "$"${i}) ${DEST}/
+for board in $(ls $BOARDOUT)
+do
+	# copy files to $DEST
+	. $BOARDOUT/$board/info
+	echo "INFO: copy artifact for $x_releng_device/$x_lava_device"
+	for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
+		eval cp -avL tmp/deploy/images/${TARGETMACHINE}/$(echo "$"${i}) ${DEST}/
+	done
 done
+
+# for the moment, nothing more use this directory, clean it
+rm -r $BOARDOUT
 
 tree $DEST
 ls -alhR $DEST

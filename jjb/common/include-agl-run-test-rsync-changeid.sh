@@ -10,16 +10,12 @@ echo "\n\n\n"
 
 export RSYNCDST="/srv/download/AGL/upload/ci/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}"
 export RSYNCSRC=$(pwd)/UPLOAD/
-export RSYNCSRCstorage=$(pwd)/UPLOADstorage/
 
 # construct upload folder
 mv UPLOAD UPLOAD2 || true
 rm -rf UPLOAD2 || true
 mkdir -p UPLOAD/${MACHINE}
 export DEST=$(pwd)/UPLOAD/${MACHINE}
-
-export DEST2=$(pwd)/UPLOADstorage/AGL/upload/ci/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/
-mkdir -p ${DEST2}
 
 cd $REPODIR
 
@@ -30,29 +26,29 @@ ls -alhR tmp/deploy/images
 
 #set -x
 
-echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}"
-echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
+for board in $(ls $BOARDOUT)
+do
+	. $BOARDOUT/$board/info
+	echo "INFO: copy artifact for $x_releng_device/$x_lava_device"
+	echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}"
+	echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
 
-## fixed in releng with --branch
-# workaround for thud until fixed in templates:
-#if [ ! -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB} -a -e tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} ] ; then
-#    cp -avL tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-} tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}
-#fi
+	if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ] ; then
+		cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST}/
+	fi
 
-if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ] ; then
-      cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST}/
-      cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST2}/
-fi
-
-# copy files to $DEST (only if variable is non-empty)
-for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
-    FILE=$(eval echo \$${i})
-    if [ -n "$FILE" ]; then
-      cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST}/
-      cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST2}/
-    fi
+	# copy files to $DEST (only if variable is non-empty)
+	for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
+		FILE=$(eval echo \$${i})
+		if [ -n "$FILE" ]; then
+			cp -avL tmp/deploy/images/${TARGETMACHINE}/${FILE} ${DEST}/
+		fi
+	done
 done
 set +x
+
+# for the moment, nothing more use this directory, clean it
+rm -r $BOARDOUT
 
 tree $DEST
 ls -alhR $DEST
