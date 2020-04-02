@@ -20,51 +20,6 @@ if [ -e releng-scripts/utils ]; then
     RELENG=$PWD/releng-scripts
 fi
 
-# WARNING: we need gen_info in last, the device of the current JENKINS CIBT
-# example: for x86, the JENKINS CIBT job is for "qemu" and produce artifacts for all x86 boards.
-# so we need to gen_info for qemux86 and upsquare, this content will be used to copy artifacts just after.
-# but the LAVA job need to be generated only for qemu. So we need to have lava_device and releng_device for it.
-export BOARDOUT=$(mktemp --directory)
-case $MACHINE in
-qemux86-64)
-	lava_device=upsquare
-	releng_device=upsquare
-	gen_info || exit 0
-	lava_device=qemu
-	releng_device=qemux86-64
-	gen_info || exit 0
-;;
-raspberrypi4)
-	lava_device=bcm2711-rpi-4-b
-	releng_device=raspberrypi4
-	gen_info || exit 0
-;;
-qemuarm)
-	lava_device=qemu
-	releng_device=qemuarm
-	gen_info || exit 0
-;;
-qemuarm64)
-	lava_device=qemu
-	releng_device=qemuarm64
-	gen_info || exit 0
-;;
-h3ulcb-nogfx)
-	lava_device=r8a7795-h3ulcb-kf
-	releng_device=h3ulcb-kf
-	gen_info || exit 0
-;;
-upsquare)
-	lava_device=upsquare
-	releng_device=upsquare
-	# NO gen_info since, we use artifacts of the qemux86_64 CIBT
-;;
-*)
-	echo "ERROR: unknown machine $MACHINE"
-	exit 0
-;;
-esac
-
 #gen board info in $BOARDOUT
 gen_info() {
 	if [ -z "${lava_device}" -o -z "${releng_device}" ]; then
@@ -112,6 +67,51 @@ gen_info() {
 	echo "x_lava_device=$lava_device" >> $BOARDOUT/$BDIRNAME/info
 	return 0
 }
+
+# WARNING: we need gen_info in last, the device of the current JENKINS CIBT
+# example: for x86, the JENKINS CIBT job is for "qemu" and produce artifacts for all x86 boards.
+# so we need to gen_info for qemux86 and upsquare, this content will be used to copy artifacts just after.
+# but the LAVA job need to be generated only for qemu. So we need to have lava_device and releng_device for it.
+export BOARDOUT=$(mktemp --directory)
+case $MACHINE in
+qemux86-64)
+	lava_device=upsquare
+	releng_device=upsquare
+	gen_info || exit 0
+	lava_device=qemu
+	releng_device=qemux86-64
+	gen_info || exit 0
+;;
+raspberrypi4)
+	lava_device=bcm2711-rpi-4-b
+	releng_device=raspberrypi4
+	gen_info || exit 0
+;;
+qemuarm)
+	lava_device=qemu
+	releng_device=qemuarm
+	gen_info || exit 0
+;;
+qemuarm64)
+	lava_device=qemu
+	releng_device=qemuarm64
+	gen_info || exit 0
+;;
+h3ulcb-nogfx)
+	lava_device=r8a7795-h3ulcb-kf
+	releng_device=h3ulcb-kf
+	gen_info || exit 0
+;;
+upsquare)
+	lava_device=upsquare
+	releng_device=upsquare
+	# NO gen_info since, we use artifacts of the qemux86_64 CIBT
+;;
+*)
+	echo "ERROR: unknown machine $MACHINE"
+	exit 0
+;;
+esac
 
 # echo NEXT is rsync
 #exit 0
