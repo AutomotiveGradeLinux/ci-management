@@ -26,6 +26,7 @@
 - agl-service-network
 - agl-service-nfc
 - agl-service-platform-info
+- agl-service-poi
 - agl-service-radio
 - agl-service-signal-composer
 - agl-service-soundmanager
