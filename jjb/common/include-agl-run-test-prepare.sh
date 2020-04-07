@@ -55,9 +55,10 @@ gen_info() {
 	export DEVICE_NBDROOT=`$RELENG/utils/job-prereq.py ${CREATE_ARGS} --nbdroot`
 	# thoses variables (DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT) are only used for copying artifacts later
 
-	mkdir -p $BOARDOUT/
 	# We use both lava_device and releng_device for handling name collision (like qemu)
 	BDIRNAME="$lava_device-$releng_device"
+	mkdir -p $BOARDOUT/$BDIRNAME
+
 	echo "DEVICE_DTB=$DEVICE_DTB" > $BOARDOUT/$BDIRNAME/info
 	echo "DEVICE_KERNEL=$DEVICE_KERNEL" >> $BOARDOUT/$BDIRNAME/info
 	echo "DEVICE_INITRAMFS=$DEVICE_INITRAMFS" >> $BOARDOUT/$BDIRNAME/info
