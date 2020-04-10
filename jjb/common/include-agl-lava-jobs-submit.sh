@@ -122,6 +122,12 @@ handle_result() {
 	do
 		# Check if fail are "normal/accepted"
 		TESTNAME=$(echo "$testline" | cut -d' ' -f2)
+
+		# always skip lava.read-feedback (alone)
+		if [ x"lava.read-feedback" = x"$TESTNAME" ] ; then
+		    continue
+		fi
+
 		if [ -z "$(grep $TESTNAME $SKIPLIST)" ];then
 			echo "DEBUG: $TESTNAME not in skiplist"
 			GOODJOB=0
@@ -136,7 +142,7 @@ handle_result() {
 
 # Analyze jobs results
 lavacli -i $lab results $job_id | tee job-result
-
+set -x
 # GOODJOB is equal to 0 if any test fail (and not present in a skiplist), 1 if all test are success
 GOODJOB=1
 grep '\[fail\]$' job-result > job-result.fail || true
