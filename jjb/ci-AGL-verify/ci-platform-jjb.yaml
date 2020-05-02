@@ -395,7 +395,7 @@
           - ../common/include-agl-limit-parallelism.sh
           - ../common/include-agl-local-conf-DISTROFEATURES-AGLCI.sh
           - ../common/include-agl-cat-auto-conf.sh
-          - ../common/include-agl-bitbake-image.sh
+          - ../common/include-agl-bitbake-image-nofail.sh
       - conditional-step:
           condition-kind: always
           steps:
@@ -460,7 +460,7 @@
           - ../common/include-agl-limit-parallelism.sh
           - ../common/include-agl-local-conf-DISTROFEATURES-AGLCI.sh
           - ../common/include-agl-cat-auto-conf.sh
-          - ../common/include-agl-bitbake-image.sh
+          - ../common/include-agl-bitbake-image-nofail.sh
       - conditional-step:
           condition-kind: always
           steps:
