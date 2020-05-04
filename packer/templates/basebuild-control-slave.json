@@ -16,7 +16,7 @@
       "image_name": "{{user `distro`}} - basebuild-control-slave - {{isotime \"20060102-1504\"}}",
       "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
-      "identity_endpoint": "https://auth.vexxhost.net/v3/",
+      "identity_endpoint": "https://auth.vexxhost.net/v3",
       "username": "{{user `stack_user`}}",
       "password": "{{user `stack_pass`}}",
       "tenant_name": "{{user `stack_tenant`}}",
