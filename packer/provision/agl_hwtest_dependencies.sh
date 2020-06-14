@@ -24,7 +24,8 @@ DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y -u dist-upgrade
 DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -y install wget 
                        python-pip zip unzip iperf3 \
-		       debian-keyring debian-archive-keyring
+		       debian-keyring debian-archive-keyring \
+		       python3-jinja2 python3-yaml
 
 DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
 
