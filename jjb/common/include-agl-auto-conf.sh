@@ -33,6 +33,24 @@ SSTATE_MIRRORS = " \
 
 IMAGE_FSTYPES_remove = "ext3"
 SSTATE_DIR = "\${TOPDIR}/sstate-cache/\${MACHINE}/"
+
+INHERIT += "packagefeed-stability"
+INHERIT += "buildhistory"
+EOF
+
+fi
+
+# PRSERV and HASHSERV for CI
+# but only starting with dunfell / master -> soon jellyfish
+if test x"master" = x"${DISTROBRANCH}" -o test -x"jellyfish" = x"${DISTROBRANCH}" ; then
+
+export PRHASHSERV="10.30.72.18"
+cat << EOF >> conf/auto.conf
+# HASHSERVE
+BB_HASHSERVE = "${PRHASHSERV}:8686"
+BB_SIGNATURE_HANDLER = "OEEquivHash"
+
+PRSERV_HOST = "${PRHASHSERV}:8585"
 EOF
 
 fi
