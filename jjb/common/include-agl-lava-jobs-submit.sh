@@ -13,7 +13,7 @@ fi
 
 if [ ! -e $JOB_FILE ]; then
     echo "ERROR: LAVA job file $JOB_FILE not present."
-    exit 1
+    exit 123
 fi
 JOB_BASE=$(basename $JOB_FILE .yaml)
 
@@ -34,7 +34,7 @@ fi
 job_id=$(lavacli -i $lab jobs submit $JOB_FILE_NEW)
 if [ $? -ne 0 ]; then
 	echo "ERROR: job submission error"
-	exit 1
+	exit 123
 fi
 # Printing the job URL in the log
 echo "THe job id is: ${job_id}"
@@ -48,7 +48,7 @@ echo "####################################################"
 echo ""
 
 # use lavacli wait job instead of the polling.
-lavacli -i $lab jobs wait $job_id --timeout 7200
+lavacli -i $lab jobs wait $job_id --timeout 7200 || true
 lavacli -i $lab jobs show $job_id --yaml > $JOB_STATUS
 state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
 if [ "$state" == "Finished" ]; then
@@ -190,6 +190,6 @@ set +x
 if [ x"$status" = x"Complete" ]; then
     exit 0
 fi
-#exit 1
+#exit 123
 # for now do not fail
 exit 0
