@@ -159,6 +159,13 @@ if test x"h3ulcb-nogfx" = x"$MACHINE"; then
     export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
 fi
 
+if test x"raspberrypi4" = x"${MACHINE}" -a x"master" = x"${TARGETBRANCH}" ; then
+    export TARGETMACHINE="raspberrypi4-64"
+fi
+if test x"raspberrypi4" = x"${MACHINE}" -a x"jellyfish" = x"${TARGETBRANCH}" ; then
+    export TARGETMACHINE="raspberrypi4-64"
+fi
+
 #if $DEBUG; then
 set | grep ^TARGET || true
 set | grep ^GERRIT || true
