@@ -21,7 +21,7 @@
       # - ci-platform-{project}-verify-CIB-start             #unused
       - ci-platform-{project}-verify-CIB-{machine}
       - ci-platform-{project}-verify-CIB-html5-qemux86-64
-      - ci-platform-{project}-verify-CIB-aglcompositor-qemux86-64
+      #- ci-platform-{project}-verify-CIB-aglcompositor-qemux86-64
       - ci-platform-{project}-verify-CIB-finish-success
       - ci-platform-{project}-verify-failure
       # - ci-platform-{project}-verify-CIBT-start            #unused
@@ -196,10 +196,10 @@
               current-parameters: true
               abort-all-job: false
               kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIB-aglcompositor-qemux86-64'
-              current-parameters: true
-              abort-all-job: false
-              kill-phase-on: NEVER
+            #- name: 'ci-platform-{project}-verify-CIB-aglcompositor-qemux86-64'
+            #  current-parameters: true
+            #  abort-all-job: false
+            #  kill-phase-on: NEVER
 
     publishers:
       - trigger-parameterized-builds:
