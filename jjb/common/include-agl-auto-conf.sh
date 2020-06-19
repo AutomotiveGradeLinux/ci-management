@@ -42,7 +42,7 @@ fi
 
 # PRSERV and HASHSERV for CI
 # but only starting with dunfell / master -> soon jellyfish
-if test x"master" = x"${DISTROBRANCH}" -o test -x"jellyfish" = x"${DISTROBRANCH}" ; then
+if test x"master" = x"${DISTROBRANCH}" -o x"jellyfish" = x"${DISTROBRANCH}" ; then
 
 export PRHASHSERV="10.30.72.18"
 cat << EOF >> conf/auto.conf
