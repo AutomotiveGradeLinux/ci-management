@@ -6,10 +6,13 @@ set -x
 sudo su -c "echo 'deb http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
 sudo su -c "echo 'Acquire::Check-Valid-Until no;' > /etc/apt/apt.conf.d/99no-check-valid-until"
 
-sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553
+sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553 || true
 
 # go
-sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com F6BC817356A3D45E
+sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com F6BC817356A3D45E || true
+
+sudo su -c "sed -i 's;http://archive.debian.org/debian;http://deb.debian.org/debian;' /etc/apt/sources.list"
+sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 7638D0442B90D010 || true
 
 cat /etc/apt/sources.list
 
