@@ -3,7 +3,6 @@
 
 set -x
 
-sudo su -c "echo 'deb http://archive.debian.org/debian jessie-backports main' >> /etc/apt/sources.list"
 sudo su -c "echo 'Acquire::Check-Valid-Until no;' > /etc/apt/apt.conf.d/99no-check-valid-until"
 
 sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553 || true
@@ -29,8 +28,6 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        python-pip zip unzip iperf3 \
 		       debian-keyring debian-archive-keyring \
 		       python3-pip python3-yaml
-
-DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports lava-tool=0.19-1~bpo8+1
 
 # Adding stretch-backports for lavacli
 echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
