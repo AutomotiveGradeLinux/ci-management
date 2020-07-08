@@ -115,6 +115,7 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
                 export isAUTOBUILD=1
 	    else
                 make package || true
+		make package-all || true
 	    fi
             popd
             export isCMAKE=1
