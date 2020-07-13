@@ -315,6 +315,7 @@
           - ../common/include-agl-cat-auto-conf.sh
           - include-release-eel-fix-task-depends.sh
           - ../common/include-agl-bitbake-image.sh
+          - ../common/include-agl-bitbake-sdk-x64only.sh
           - ../common/include-agl-run-test-prepare.sh
           - ../common/include-agl-run-test-rsync-changeid.sh
       - conditional-step:
