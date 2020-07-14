@@ -1,6 +1,7 @@
 - agl-cluster-demo-dashboard
 - agl-cluster-demo-gauges
 - agl-cluster-demo-receiver
+- agl-qt-cluster-demo-receiver
 - agl-service-audio-4a
 - agl-service-audiomixer
 - agl-service-bluetooth
