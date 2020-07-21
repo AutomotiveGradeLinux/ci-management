@@ -36,12 +36,6 @@ if [ $? -ne 0 ]; then
 	echo "ERROR: job submission error"
 	exit 123
 fi
-
-# check if the job ends
-# resend the jobs in some error case
-# arg1 is the retry count
-wait_jobs() {
-retrycount=$1
 # Printing the job URL in the log
 echo "THe job id is: ${job_id}"
 JOB_URL="${url}scheduler/job/${job_id}"
@@ -60,27 +54,7 @@ state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
 if [ "$state" == "Finished" ]; then
         status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
         echo "LAVA job $job_id completed with status: $status"
-	# Check for resend RPI4
-	grep -q 'bcm2711-rpi-4-b' $JOB_STATUS
-	if [ $? -eq 0 ];then
-		if [ "$status" == 'Incomplete' ];then
-			if [ $retrycount -ge 1 ];then
-				# resubmit the jobs, overwritting the job_id
-				job_id=$(lavacli -i $lab jobs submit $JOB_FILE_NEW)
-				if [ $? -ne 0 ]; then
-					echo "ERROR: job submission error"
-					return 1
-				fi
-				wait_jobs $(($retrycount-1))
-			else
-				echo "INFO: too many retries"
-			fi
-		fi
-	fi
 fi
-}
-
-wait_jobs 2
 
 echo "####"
 echo "#### Start: Output from LAVA job $job_id ####"
