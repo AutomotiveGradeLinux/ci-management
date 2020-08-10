@@ -10,6 +10,7 @@ if test x"" = x"${GERRIT_BRANCH}"; then
     export DISTROBRANCH="master"
 else
     export DISTROBRANCH="${GERRIT_BRANCH}"
+    grep -q sandbox <<< $GERRIT_BRANCH && export DISTROBRANCH="master"
 fi
 cat << EOF >> conf/auto.conf
 PREMIRRORS = "\

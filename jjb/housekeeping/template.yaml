@@ -1,0 +1,28 @@
+---
+- project:
+    name: snapshot-jjb-template
+    jobs:
+      - snapshot-jjb-template
+
+- job-template:
+    name: 'snapshot-jjb-template'
+    project-type: freestyle
+    concurrent: false
+    node: agl-test-slave
+
+    build-discarder:
+      days-to-keep: 30
+      num-to-keep: 40
+      artifact-days-to-keep: -1
+      artifact-num-to-keep: 5
+
+#    triggers:
+#      - timed: '@weekly'
+
+    wrappers:
+      - agl-infra-wrappers:
+          build-timeout: '{build-timeout}'
+
+    builders:
+      - shell:
+          !include-raw-escape: include-template.sh
