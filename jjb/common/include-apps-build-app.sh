@@ -60,7 +60,7 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
             pip install --user git-review
             git review -d ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER}
           fi
-          sleep 2
+          #sleep 2
           # if not reset, we leave it to master
         fi
 
@@ -69,7 +69,7 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
            git submodule init && git submodule update
         fi
 
-        git log -1 --pretty=oneline
+        git log -1 --pretty=oneline | more
 
         export DONE=0
         export isAUTOBUILD=0
@@ -90,8 +90,11 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
 	    echo "  autobuild/agl/autobuild package-all DEST=somefolder"
 	    exit 1
         fi
+    ls -alh
+    ls -alh package || true
 
     popd
 
     HANDLED="yes"
 fi
+

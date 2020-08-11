@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#set -x
+set -x
 export AGLBRANCH=master
-export GERRIT_REFSPEC="refs/changes/51/9551/2"
-export GERRIT_PROJECT="apps/mediaplayer"
-export GERRIT_CHANGE_NUMBER="10799"
+export GERRIT_REFSPEC="refs/changes/46/25046/1"
+export GERRIT_PROJECT="apps/agl-service-bluetooth"
+export GERRIT_CHANGE_NUMBER="25046"
 export GERRIT_PATCHSET_NUMBER="1"
-export GERRIT_PATCHSET_REVISION="1a1ff962da92aff5a1d3e757710c725e03238458"
+export GERRIT_PATCHSET_REVISION="cb8db512e462af970735aa86781ca2cfa58d0760"
 export GERRIT_HOST="gerrit.automotivelinux.org"
 export GERRIT_PORT="29418"
 
