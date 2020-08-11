@@ -21,7 +21,7 @@
     name: ci-management-verify-jjb
 
     project-type: freestyle
-    node: master
+    node: control-slave
     concurrent: true
 
     parameters:
@@ -47,15 +47,15 @@
           files: '**/**'
 
     builders:
-      - shell: |
-          ls -alh ; jenkins-jobs test --recursive jjb/
+      - shell:
+          !include-raw-escape: include-raw-jjb-update.sh
       - ci-management-check-unicode
 
 - job-template:
     name: 'ci-management-merge'
 
     project-type: freestyle
-    node: master
+    node: control-slave
 
     build-discarder:
       days-to-keep: 30
