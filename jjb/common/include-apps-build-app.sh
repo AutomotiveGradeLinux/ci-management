@@ -71,72 +71,25 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
 
         git log -1 --pretty=oneline
 
-        # Fixme: use aglbuild script
-        #set -x
-
         export DONE=0
         export isAUTOBUILD=0
 	if [[ -f autobuild/agl/autobuild ]]
 	then
             mkdir -p $(pwd)/package/
-	    chmod a+x autobuild/agl/autobuild
-	    autobuild/agl/autobuild package DEST=$(pwd)/package
+            chmod a+x autobuild/agl/autobuild
+            autobuild/agl/autobuild package-all DEST=$(pwd)/package
             export isAUTOBUILD=1
             export DONE=1
 	else
             echo "Your binding doesn't use an autobuild script. Please add it in your project."
 	    echo "It has to be stored in your root project directory in autobuild/agl/autobuild file"
-	    echo "and be able to generate an AGL package in the build root directory using the call"
-	    echo "autobuild/agl/autobuild package DEST=build"
+	    echo "and be able to generate an AGL package in the build root directory using the call:"
+            echo "  autobuild/agl/autobuild package DEST=somefolder"
+            echo ""
+            echo "and for all subtypes ... debug, test, coverage:"
+	    echo "  autobuild/agl/autobuild package-all DEST=somefolder"
+	    exit 1
         fi
-
-        ######################################################################
-        # /!\/!\/!\   DEPRECATED FALLBACK WAY TO BUILD AGL APPS /!\/!\/!\    #
-        ######################################################################
-
-        export isCMAKE=0
-        export isMAKE=0
-        export isQMAKE=0
-
-        if test x"0" = x"$DONE" -a -f conf.d/autobuild/agl/autobuild ; then
-            mkdir -p $(pwd)/package/
-            conf.d/autobuild/agl/autobuild package DEST=$(pwd)/package/
-            export isAUTOBUILD=1
-            export DONE=1
-        fi
-        if test x"0" = x"$DONE" -a -f CMakeLists.txt; then
-            rm -rf build || true
-            mkdir build
-            pushd build
-            cmake ../
-            make
-            if test x"0" = x"$DONE" -a -f ../conf.d/autobuild/agl/autobuild ; then
-                ../conf.d/autobuild/agl/autobuild package DEST=$(pwd)/package
-                export isAUTOBUILD=1
-	    else
-                make package || true
-		make package-all || true
-	    fi
-            popd
-            export isCMAKE=1
-            export DONE=1
-        fi
-        if test x"0" = x"$DONE" -a -f Makefile ; then
-            make
-            make package
-            export isMAKE=1
-            export DONE=1
-        fi
-        if test x"0" = x"$DONE" -a -f ${MYPROJECT}.pro; then
-            qmake
-            make
-            make package
-            export isQMAKE=1
-            export DONE=1
-        fi
-        ######################################################################
-        # /!\/!\/!\                  Ends Here                  /!\/!\/!\    #
-        ######################################################################
 
     popd
 
