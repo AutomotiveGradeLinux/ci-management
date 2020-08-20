@@ -47,6 +47,10 @@ echo ""
 echo "####################################################"
 echo ""
 
+#### echo back to gerrit
+eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} -n NONE --message="Submitted\ to\ LAVA\ as\ job:\ \$JOB_URL" || true
+
+
 # use lavacli wait job instead of the polling.
 lavacli -i $lab jobs wait $job_id --timeout 7200 || true
 lavacli -i $lab jobs show $job_id --yaml > $JOB_STATUS
