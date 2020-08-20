@@ -47,8 +47,15 @@ echo ""
 echo "####################################################"
 echo ""
 
+cat << EOF > .msg
+Submitted as job: $JOB_URL
+EOF
+# escape
+sed -i -e "s/ /\\\ /g" .msg
 #### echo back to gerrit
-eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${{GERRIT_CHANGE_NUMBER}},${{GERRIT_PATCHSET_NUMBER}} -n NONE --message="Submitted\ to\ LAVA\ as\ job:\ \$JOB_URL" || true
+#set -x
+eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} -n NONE --message='"$(cat .msg)"'  || true
+#set +x
 
 
 # use lavacli wait job instead of the polling.
