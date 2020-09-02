@@ -3,6 +3,11 @@
 #set -x
 set -e
 
+mkdir -p ~/bin/ || true
+curl https://storage.googleapis.com/git-repo-downloads/repo-1 > ~/bin/repo
+chmod a+x ~/bin/repo
+export PATH=$PATH:~/bin/
+
 # construct upload folder
 
 
