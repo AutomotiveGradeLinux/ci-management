@@ -12,9 +12,9 @@ set -e
 # only run on master, jellyfish and icefish
 ( echo "master jellyfish icefish" | grep -q $TARGETBRANCH ) || exit 0
 
-export TARGETFEATURES="agl-profile-graphical-html5 agl-devel"
+export TARGETFEATURES="agl-demo agl-profile-graphical-html5 agl-devel"
 export TARGETQA=""
-export TARGETIMAGE="agl-image-graphical-html5"
+export TARGETIMAGE="agl-demo-platform-html5"
 
 eval TARGETIMAGE="$TARGETIMAGE"
 eval TARGETIMAGEnogfx="$TARGETIMAGE"
