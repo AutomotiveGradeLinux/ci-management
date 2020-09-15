@@ -8,7 +8,7 @@
     name: 'release-jjb-jellyfish-release-from-snapshot'
     project-type: freestyle
     concurrent: false
-    node: control-slave
+    node: agl-test-slave
 
     parameters:
       - string:
