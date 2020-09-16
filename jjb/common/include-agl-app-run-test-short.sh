@@ -39,7 +39,7 @@ BUILD_VERSION="AGL-app-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 CREATE_ARGS+="--name AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER "
 CREATE_ARGS+="--build-version $BUILD_VERSION "
 CREATE_ARGS+="--callback-from ${LAVA_LAB} "
-CREATE_ARGS+="--test application-lifecycle "
+CREATE_ARGS+="--test application-lifecycle pyagl"
 $RELENG/utils/create-jobs.py ${CREATE_ARGS} > testjob.yaml
 
 if [ $? != 0 ]; then
