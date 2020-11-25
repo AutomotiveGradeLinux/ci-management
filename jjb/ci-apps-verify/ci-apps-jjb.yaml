@@ -4,8 +4,7 @@
     aglbranch:
       - master
       - icefish
-      - halibut
-      - guppy
+      - jellyfish
     architecture:
       - aarch64
       - x86-64

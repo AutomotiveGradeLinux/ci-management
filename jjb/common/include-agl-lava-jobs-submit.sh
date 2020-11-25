@@ -162,13 +162,20 @@ if [ -s job-result.fail ];then
 	handle_skiplist
 	handle_result
 fi
-
 set -x
-MSG_FAIL="CI-Image-Boot-Test fail on ${MACHINE}"
-MSG_SUCCESS="CI-Image-Boot-Test success on ${MACHINE}"
+LINES_PERCENT=$(grep LINES_PERCENT= $JOB_LOG | sed -e 's#LINES_PERCENT=##g' | head -1)
+BRANCHES_PERCENT=$(grep BRANCHES_PERCENT= $JOB_LOG | sed -e 's#LINES_PERCENT=##g' | head -1)
+
+MSG_FAIL="CI-Image-Boot-Test fail on ${MACHINE}. Coverage: Lines ${LINES_PERCENT:-0}% , Branches ${BRANCHES_PERCENT:-0}%
+${JOB_URL}"
+MSG_SUCCESS="CI-Image-Boot-Test success on ${MACHINE}. Coverage: Lines ${LINES_PERCENT:-0}% , Branches ${BRANCHES_PERCENT:-0}%
+${JOB_URL}"
+
 MSG_BUILD_LOG="${BUILD_URL}consoleFull"
 MSG_JOBFAIL="Failed jobs:
 $(cat job-result.fail)"
+
+set +x
 
 if [ $GOODJOB -eq 0 ];then
         #construct message

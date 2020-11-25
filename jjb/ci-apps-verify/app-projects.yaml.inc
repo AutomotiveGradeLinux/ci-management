@@ -66,6 +66,7 @@
 - demo3-tachometer
 - demo3-warehouse
 - homescreen
+- homescreen-demo-ci
 - html5-dashboard
 - html5-homescreen
 - html5-hvac
@@ -93,3 +94,4 @@
 - taskmanager
 - tbtnavi
 - videoplayer
+- waltham-receiver
