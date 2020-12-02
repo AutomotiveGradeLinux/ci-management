@@ -23,16 +23,18 @@ cat /etc/apt/sources.list
 
 DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y -u dist-upgrade
 
+DEBIAN_FRONTEND=noninteractive dpkg --configure -a 
+
 DEBIAN_FRONTEND=noninteractive apt-get update && \
-    apt-get -y install wget 
-                       python-pip zip unzip iperf3 \
+    apt-get -y install wget python python3 python-pip zip unzip iperf3 \
 		       debian-keyring debian-archive-keyring \
 		       python3-pip python3-yaml
 
 # Adding stretch-backports for lavacli
-echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+#echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
+#DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
-DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
+pip3 install lavacli
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
