@@ -57,15 +57,37 @@ sed -i -e "s/ /\\\ /g" .msg
 #eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} -n NONE --message='"$(cat .msg)"'  || true
 #set +x
 
+lavacli --version
+
+set +e
 
 # use lavacli wait job instead of the polling.
-lavacli -i $lab jobs wait $job_id --timeout 7200 || true
+lavacli -i $lab jobs wait $job_id --timeout 7200
+if [ $? -ne 0 ];then
+        retry=1
+        # retry a few times with a small delay
+        while [ $retry -le 5 ] ; do
+            sleep 5
+	    # Work aroung SPEC-3705 "Unable to call 'jobs.wait': [Errno 2] No such file or directory"
+	    lavacli -i $lab jobs show $job_id > status
+	    grep -q 'state.*Finished' status
+	    if [ $? -ne 0 ];then
+		# retry
+                retry=$(( $retry + 1 ))
+		lavacli -i $lab jobs wait $job_id --timeout 7200 || true
+            else
+                break
+	    fi
+         done
+fi
 lavacli -i $lab jobs show $job_id --yaml > $JOB_STATUS
 state=$(grep ^state: $JOB_STATUS| cut -d' ' -f2)
 if [ "$state" == "Finished" ]; then
         status=$(grep ^health: $JOB_STATUS| cut -d' ' -f2)
         echo "LAVA job $job_id completed with status: $status"
 fi
+
+set -e
 
 echo "####"
 echo "#### Start: Output from LAVA job $job_id ####"
