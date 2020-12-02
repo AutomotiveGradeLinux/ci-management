@@ -54,7 +54,7 @@ EOF
 sed -i -e "s/ /\\\ /g" .msg
 #### echo back to gerrit
 #set -x
-eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} -n NONE --message='"$(cat .msg)"'  || true
+#eval ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -p 29418 agl-jobbuilder@gerrit.automotivelinux.org gerrit review ${GERRIT_CHANGE_NUMBER},${GERRIT_PATCHSET_NUMBER} -n NONE --message='"$(cat .msg)"'  || true
 #set +x
 
 
@@ -164,12 +164,17 @@ if [ -s job-result.fail ];then
 fi
 set -x
 LINES_PERCENT=$(grep LINES_PERCENT= $JOB_LOG | sed -e 's#LINES_PERCENT=##g' | head -1)
-BRANCHES_PERCENT=$(grep BRANCHES_PERCENT= $JOB_LOG | sed -e 's#LINES_PERCENT=##g' | head -1)
+BRANCHES_PERCENT=$(grep BRANCHES_PERCENT= $JOB_LOG | sed -e 's#BRANCHES_PERCENT=##g' | head -1)
 
+if [ -n $LINES_PERCENT -a -n $BRANCHES_PERCENT ] ; then
 MSG_FAIL="CI-Image-Boot-Test fail on ${MACHINE}. Coverage: Lines ${LINES_PERCENT:-0}% , Branches ${BRANCHES_PERCENT:-0}%
 ${JOB_URL}"
 MSG_SUCCESS="CI-Image-Boot-Test success on ${MACHINE}. Coverage: Lines ${LINES_PERCENT:-0}% , Branches ${BRANCHES_PERCENT:-0}%
 ${JOB_URL}"
+else
+MSG_FAIL="CI-Image-Boot-Test fail on ${MACHINE}. ${JOB_URL}"
+MSG_SUCCESS="CI-Image-Boot-Test success on ${MACHINE}. ${JOB_URL}"
+fi
 
 MSG_BUILD_LOG="${BUILD_URL}consoleFull"
 MSG_JOBFAIL="Failed jobs:
