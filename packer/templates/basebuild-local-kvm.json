@@ -1,88 +1,78 @@
 {
-  "variables": {
-    "stack_tenant": "ubuntu",
-    "stack_user": "ubuntu",
-    "stack_pass": "ubuntu",
-    "stack_network": "none",
-
-    "base_image": null,
-    "cloud_user": "ubuntu",
-    "distro": null,
-    "cloud_user_data": null
-  },
   "builders": [
-{
-      "type": "qemu",
-      "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04.6-server-amd64.iso",
-      "iso_checksum": "ac8a79a86a905ebdc3ef3f5dd16b7360",
-      "iso_checksum_type": "md5",
-
-      "output_directory": "output_ubuntu",
-
-      "disk_size": 20000,
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "/install/vmlinuz url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+        "hostname=jenkinstest ",
+        "keyboard-configuration/modelcode=SKIP ",
+        "keyboard-configuration/layout=USA ",
+        "keyboard-configuration/variant=USA ",
+        "passwd/user-fullname=ubuntu ",
+        "passwd/user-password-again=ubuntu ",
+        "passwd/user-password=ubuntu ",
+        "passwd/username=ubuntu ",
+        "initrd=/install/initrd.gz -- <enter>"
+      ],
+      "boot_wait": "5s",
+      "disk_interface": "virtio",
       "format": "qcow2",
       "headless": true,
-      "accelerator": "kvm",
-
+      "disk_size": "20480",
       "http_directory": "httpdir",
-      "http_port_min": 10082,
       "http_port_max": 10089,
-      "ssh_host_port_min": 2222,
-      "ssh_host_port_max": 2229,
-      "ssh_username": "ubuntu",
+      "http_port_min": 10082,
+      "iso_checksum": "md5:9bb30a2ea6466b0c02aacfa96f6e3516",
+      "iso_url": "http://releases.ubuntu.com/16.04/ubuntu-16.04.7-server-amd64.iso",
+      "net_device": "virtio-net",
+      "output_directory": "output_ubuntu",
       "ssh_password": "ubuntu",
       "ssh_port": 22,
-      "ssh_wait_timeout": "11m",
-
-      "vm_name": "jenkins-new-test",
-      "net_device": "virtio-net",
-      "disk_interface": "virtio",
-      "boot_wait": "5s",
-
-      "boot_command": [
-                "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
-                "/install/vmlinuz url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
-                "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-                "hostname=jenkinstest ",
-
-                "keyboard-configuration/modelcode=SKIP ",
-                "keyboard-configuration/layout=USA ",
-                "keyboard-configuration/variant=USA ",
-
-                "passwd/user-fullname=ubuntu ",
-                "passwd/user-password-again=ubuntu ",
-                "passwd/user-password=ubuntu ",
-                "passwd/username=ubuntu ",
-
-                "initrd=/install/initrd.gz -- <enter>"
-      ]
-
+      "ssh_timeout": "11m",
+      "ssh_username": "ubuntu",
+      "type": "qemu",
+      "vm_name": "jenkins-new-test"
     }
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "inline": ["mkdir -p /tmp/packer"]
+      "inline": [
+        "mkdir -p /tmp/packer"
+      ],
+      "type": "shell"
     },
     {
-      "type": "file",
+      "destination": "/tmp/packer",
       "source": "provision/basebuild/",
-      "destination": "/tmp/packer"
+      "type": "file"
     },
     {
-      "type": "shell",
+      "environment_vars": [
+        "LAVAHOST={{user `lavahost`}}",
+        "LAVAUSER={{user `lavauser`}}",
+        "LAVATOKEN={{user `lavatoken`}}"
+      ],
+      "execute_command": "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else echo 'ubuntu' | {{ .Vars }} sudo -S -E sh '{{ .Path }}'; fi",
       "scripts": [
         "provision/baseline.sh",
         "provision/basebuild.sh",
         "provision/agl_dependencies.sh",
         "provision/system_reseal.sh"
       ],
-      "environment_vars": [
-        "LAVAHOST={{user `lavahost`}}",
-        "LAVAUSER={{user `lavauser`}}",
-        "LAVATOKEN={{user `lavatoken`}}"
-      ],
-      "execute_command": "chmod +x {{ .Path }}; if [ \"$UID\" == \"0\" ]; then {{ .Vars }} '{{ .Path }}'; else echo 'ubuntu' | {{ .Vars }} sudo -S -E sh '{{ .Path }}'; fi"
+      "type": "shell"
     }
-  ]
+  ],
+  "variables": {
+    "base_image": null,
+    "cloud_user": "ubuntu",
+    "cloud_user_data": null,
+    "distro": null,
+    "stack_network": "none",
+    "stack_pass": "ubuntu",
+    "stack_tenant": "ubuntu",
+    "stack_user": "ubuntu"
+  }
 }
+

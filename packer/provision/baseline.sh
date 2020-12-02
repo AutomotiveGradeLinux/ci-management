@@ -109,6 +109,13 @@ EOF
     cat /etc/apt/sources.list
     echo "---> printing sources.list <---"
 
+    sed -i -e "s#xenial#bionic#g" /etc/apt/sources.list
+
+    echo "---> printing sources.list <---"
+    cat /etc/apt/sources.list
+    echo "---> printing sources.list <---"
+
+
     echo "---> printing resolv.conf <---"
     cat /etc/resolv.conf || true
     echo "---> printing resolv.conf <---"

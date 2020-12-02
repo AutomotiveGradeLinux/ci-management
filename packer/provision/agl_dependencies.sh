@@ -24,6 +24,8 @@ cat /etc/apt/sources.list
 
 DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y -u dist-upgrade
 
+DEBIAN_FRONTEND=noninteractive dpkg --configure -a
+
 DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat \
                        libsdl1.2-dev xterm make xsltproc docbook-utils fop dblatex xmlto autoconf automake \
@@ -31,7 +33,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
                        python-pip python-simplejson g++-multilib make zip unzip iperf3 \
-                       debian-keyring debian-archive-keyring python3-yaml python3-pip
+                       debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip
 
 # Adding stretch-backports for lavacli
 echo "deb https://apt.lavasoftware.org/release stretch-backports main" >> /etc/apt/sources.list
@@ -97,28 +99,16 @@ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB8
 
 mkdir -p /opt/AGL
 cd /opt/AGL/
-#mkdir webdocs
-#cd webdocs
-#git clone http://github.com/iotbzh/webdocs-tools
-#git clone http://github.com/iotbzh/webdocs-sample
-git clone https://github.com/automotive-grade-linux/docs-agl
 
-cd ./docs-agl/doctools/webdocs/
-npm install
-#gem install --no-user-install -V kramdown
-#gem install --no-user-install -V jekyll-plantuml
-
-#gem install --no-user-install -V --version 3.1.6 jekyll
-#gem install --no-user-install -V --version 1.13.1 kramdown
-
-### hope that is enough
-################### SDX181207 } - (closing brace)
+git clone https://git.automotivelinux.org/AGL/documentation
+cd documentation
+sudo pip3 install -r requirements.txt
 
 # ruby markdown linter
-sudo gem install mdl
+#sudo gem install mdl
 
 # python markdown linter
-sudo pip install mdlint
+sudo pip3 install mdlint
 
 # releng-scripts needs latest (stable v2.9) jinja2
 sudo pip install --force-reinstall --ignore-installed jinja2
@@ -136,7 +126,7 @@ sudo pip3 show jinja2
 . /etc/os-release
 wget -O - "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x52B59B1571A79DBC054901C0F6BC817356A3D45E" | sudo apt-key add -
 sudo bash -c "cat >> /etc/apt/sources.list.d/golang.list <<EOF
-deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu ${VERSION_CODENAME} main
+deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu bionic main
 EOF"
 sudo apt-get update
 sudo apt-get install golang-go
