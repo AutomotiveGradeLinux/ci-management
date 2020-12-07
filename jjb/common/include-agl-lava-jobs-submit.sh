@@ -185,8 +185,8 @@ if [ -s job-result.fail ];then
 	handle_result
 fi
 set -x
-LINES_PERCENT=$(grep LINES_PERCENT= $JOB_LOG | sed -e 's#LINES_PERCENT=##g' | head -1)
-BRANCHES_PERCENT=$(grep BRANCHES_PERCENT= $JOB_LOG | sed -e 's#BRANCHES_PERCENT=##g' | head -1)
+LINES_PERCENT=$(grep LINES_PERCENT= $JOB_LOG | sed -e 's#LINES_PERCENT=##g' | sed -e 's#+ ##g' | head -1)
+BRANCHES_PERCENT=$(grep BRANCHES_PERCENT= $JOB_LOG | sed -e 's#BRANCHES_PERCENT=##g' | sed -e 's#+ ##g' | head -1)
 
 if [ -n $LINES_PERCENT -a -n $BRANCHES_PERCENT ] ; then
 MSG_FAIL="CI-Image-Boot-Test fail on ${MACHINE}. Coverage: Lines ${LINES_PERCENT:-0}% , Branches ${BRANCHES_PERCENT:-0}%
