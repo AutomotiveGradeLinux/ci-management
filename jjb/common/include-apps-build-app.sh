@@ -78,7 +78,7 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
             mkdir -p $(pwd)/package/
             chmod a+x autobuild/agl/autobuild
             AUTOBUILD_TARGET="package-all"
-            if [[ x"halibut" = x"$GERRIT_BRANCH" -o x"icefish" = x"$GERRIT_BRANCH" ]] ; then
+            if test x"halibut" = x"$GERRIT_BRANCH" -o x"icefish" = x"$GERRIT_BRANCH" ; then
                 AUTOBUILD_TARGET="package"
             fi
             autobuild/agl/autobuild ${AUTOBUILD_TARGET} DEST=$(pwd)/package
