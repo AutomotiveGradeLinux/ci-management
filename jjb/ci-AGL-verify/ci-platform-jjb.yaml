@@ -187,14 +187,14 @@
               current-parameters: true
               abort-all-job: false
               kill-phase-on: NEVER
-      - multijob:
-          name: CIB-{project}-extra-variants
-          condition: COMPLETED
-          projects:
-            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
-              current-parameters: true
-              abort-all-job: false
-              kill-phase-on: NEVER
+      #- multijob:
+      #    name: CIB-{project}-extra-variants
+      #    condition: COMPLETED
+      #    projects:
+      #      - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
+      #         current-parameters: true
+      #         abort-all-job: false
+      #         kill-phase-on: NEVER
 
     publishers:
       - trigger-parameterized-builds:
