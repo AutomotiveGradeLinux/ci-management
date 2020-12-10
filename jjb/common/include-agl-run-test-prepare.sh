@@ -102,6 +102,9 @@ h3ulcb-nogfx)
 	lava_device=r8a7795-h3ulcb-kf
 	releng_device=h3ulcb-kf
 	gen_info || exit 0
+	lava_device=r8a7795-agl-refhw
+	releng_device=r8a7795-agl-refhw
+	gen_info || exit 0
 ;;
 upsquare)
 	lava_device=upsquare
