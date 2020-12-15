@@ -154,7 +154,7 @@ fi
 # h3ulcb-nogfx means no graphic drivers
 if test x"h3ulcb-nogfx" = x"$MACHINE"; then
     export TARGETIMAGE=${TARGETIMAGEnogfx}
-    export TARGETFEATURES="${TARGETFEATURESnogfx}"
+    export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
     export TARGETMACHINE="h3ulcb"
     export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
 fi
