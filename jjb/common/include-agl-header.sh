@@ -151,17 +151,19 @@ if test x"m3ulcb-nogfx" = x"$MACHINE"; then
     export TARGETMACHINE="m3ulcb"
     export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
 fi
+set -x
 # h3ulcb-nogfx means no graphic drivers
 if test x"h3ulcb-nogfx" = x"$MACHINE"; then
     export TARGETIMAGE=${TARGETIMAGEnogfx}
     if test x"master" = x"${TARGETBRANCH}" ; then
-    export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
+        export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
     else
-    export TARGETFEATURES="${TARGETFEATURESnogfx}"
+        export TARGETFEATURES="${TARGETFEATURESnogfx}"
     fi
     export TARGETMACHINE="h3ulcb"
     export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
 fi
+set +x
 
 if test x"raspberrypi4" = x"${MACHINE}" -a x"master" = x"${TARGETBRANCH}" ; then
     export TARGETMACHINE="raspberrypi4-64"
