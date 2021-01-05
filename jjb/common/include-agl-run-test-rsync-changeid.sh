@@ -37,6 +37,18 @@ do
 		cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST}/
 	fi
 
+	# detect BUG SPEC-3751
+	F_NBDROOT="tmp/deploy/images/${TARGETMACHINE}/$DEVICE_NBDROOT"
+	if [ ! -e "$F_NBDROOT" ];then
+		NOXZ=$(echo "$F_NBDROOT" | sed 's,.xz$,,')
+		if [ ! -e "$NOXZ" ];then
+			echo "ERROR: cannot recovery from SPEC-3751, $NOXZ does not exists"
+		else
+			echo "DEBUG: xz $NOXZ to $F_NBDROOT"
+			xz --threads=0 --stdout "$NOXZ" > "$F_NBDROOT"
+		fi
+	fi
+
 	# copy files to $DEST (only if variable is non-empty)
 	for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
 		FILE=$(eval echo \$${i})
