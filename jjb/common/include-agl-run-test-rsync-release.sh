@@ -29,6 +29,19 @@ for board in $(ls $BOARDOUT)
 do
 	# copy files to $DEST
 	. $BOARDOUT/$board/info
+
+	# detect BUG SPEC-3751
+	F_NBDROOT="tmp/deploy/images/${TARGETMACHINE}/$DEVICE_NBDROOT"
+	if [ ! -e "$F_NBDROOT" ];then
+		NOXZ=$(echo "$F_NBDROOT" | sed 's,.xz$,,')
+		if [ ! -e "$NOXZ" ];then
+			echo "ERROR: cannot recovery from SPEC-3751, $NOXZ does not exists"
+		else
+			echo "DEBUG: xz $NOXZ to $F_NBDROOT"
+			xz --threads=0 --stdout "$NOXZ" > "$F_NBDROOT"
+		fi
+	fi
+
 	echo "INFO: copy artifact for $x_releng_device/$x_lava_device"
 	for i in DEVICE_DTB DEVICE_KERNEL DEVICE_INITRAMFS DEVICE_NBDROOT; do
 		eval cp -avL tmp/deploy/images/${TARGETMACHINE}/$(echo "$"${i}) ${DEST}/
