@@ -29,8 +29,8 @@ export TARGETPROJECT="AGL/AGL-repo"
 export TARGETBRANCH="master"
 export TARGETREFSPEC="refs/heads/master"
 
-export TARGETFEATURESnogfx="agl-ci-change-features-nogfx"
-export TARGETFEATURES="agl-ci-change-features"
+export TARGETFEATURESnogfx="agl-ci-change-features-nogfx agl-ci"
+export TARGETFEATURES="agl-ci-change-features agl-ci"
 
 export TARGETQA=""
 export TARGETIMAGE="agl-demo-platform\${TARGETQA}"
