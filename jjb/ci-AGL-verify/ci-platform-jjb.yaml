@@ -8,6 +8,14 @@
       - qemuarm
       - qemuarm64
       - raspberrypi4
+    testmachine:
+      - h3ulcb-nogfx
+      - qemux86-64
+      - qemuarm
+      - qemuarm64
+      - raspberrypi4
+      - upsquare
+      - r8a7795-agl-refhw
     project:
       - meta-agl
       - meta-agl-demo
@@ -22,7 +30,7 @@
       - ci-platform-{project}-verify-CIB-finish-success
       - ci-platform-{project}-verify-failure
       # - ci-platform-{project}-verify-CIBT-start            #unused
-      - ci-platform-{project}-verify-CIBT-{machine}
+      - ci-platform-{project}-verify-CIBT-{testmachine}
       - ci-platform-{project}-verify-CIBT-complete
       - ci-platform-{project}-verify-CIBT-finish-success
       - ci-platform-{project}-remove-artifacts
@@ -166,6 +174,14 @@
               #abort-all-job: true
               kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-raspberrypi4'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-{project}-verify-CIBT-upsquare'
+              current-parameters: true
+              #abort-all-job: true
+              kill-phase-on: NEVER
+            - name: 'ci-platform-{project}-verify-CIBT-r8a7795-agl-refhw'
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER
@@ -548,7 +564,7 @@
 # -verify-CIBT-{machine} = CI BOOT TEST on machine
 ################################################################################
 - job-template:
-    name: 'ci-platform-{project}-verify-CIBT-{machine}'
+    name: 'ci-platform-{project}-verify-CIBT-{testmachine}'
     project-type: freestyle
     concurrent: true
     node: hwtest-slave
@@ -577,7 +593,7 @@
           description: "patchset # to build"
       - string:
           name: MACHINE
-          default: '{machine}'
+          default: '{testmachine}'
           description: "Machine to build"
     build-discarder:
       days-to-keep: 30
@@ -618,12 +634,6 @@
           - ../common/include-agl-lava-labs-prepare.sh
           - ../common/include-agl-run-test-short.sh
           - ../common/include-agl-lava-jobs-submit.sh
-      - conditional-step:
-          condition-kind: always
-          steps:
-              - shell:
-                  !include-raw-escape:
-                  - ../common/include-agl-get-cost.sh
 
 #    publishers:
 #      - naginator:
