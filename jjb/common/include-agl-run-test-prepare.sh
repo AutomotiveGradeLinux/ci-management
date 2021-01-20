@@ -79,6 +79,7 @@ qemux86-64)
 	lava_device=upsquare
 	releng_device=upsquare
 	gen_info || exit 0
+	# qemu-x86-64 must be the latest
 	lava_device=qemu
 	releng_device=qemux86-64
 	gen_info || exit 0
@@ -99,14 +100,20 @@ qemuarm64)
 	gen_info || exit 0
 ;;
 h3ulcb-nogfx)
-	lava_device=r8a7795-h3ulcb-kf
-	releng_device=h3ulcb-kf
-	gen_info || exit 0
 	if test x"master" = x"${TARGETBRANCH}" ; then
 	lava_device=r8a7795-agl-refhw
 	releng_device=r8a7795-agl-refhw
 	gen_info || exit 0
 	fi
+	# h3ulcf-kf must be the latest
+	lava_device=r8a7795-h3ulcb-kf
+	releng_device=h3ulcb-kf
+	gen_info || exit 0
+;;
+r8a7795-agl-refhw)
+	lava_device=r8a7795-agl-refhw
+	releng_device=r8a7795-agl-refhw
+	gen_info || exit 0
 ;;
 upsquare)
 	lava_device=upsquare
