@@ -54,6 +54,7 @@
             - raspberrypi4
             - m3ulcb-nogfx
             - h3ulcb-nogfx
+            - bbe
             # for aarch64
       - axis:
           type: slave

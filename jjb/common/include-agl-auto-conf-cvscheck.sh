@@ -7,9 +7,5 @@
 
 # only morty and newer support the cve-check, so check for master branch
 
-if [ x"master" = x"$GERRIT_BRANCH" ] ; then
-
-# archive sources within  tmp/deploy/
 echo '' >> conf/auto.conf
 echo 'INHERIT += "cve-check"' >> conf/auto.conf
-fi

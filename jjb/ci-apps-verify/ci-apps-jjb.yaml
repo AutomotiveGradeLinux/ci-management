@@ -5,6 +5,7 @@
       - master
       - icefish
       - jellyfish
+      - koi
     architecture:
       - aarch64
       - x86-64

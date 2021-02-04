@@ -10,10 +10,10 @@ set -e
 ################################################################################
 
 # only run on master, jellyfish and icefish
-( echo "master jellyfish icefish" | grep -q $TARGETBRANCH ) || exit 0
+( echo "master jellyfish icefish koi" | grep -q $TARGETBRANCH ) || exit 0
 
 # Use the agl-compositor
-export TARGETFEATURES="agl-demo agl-devel agl-netboot agl-compositor"
+export TARGETFEATURES="agl-demo agl-devel agl-netboot"
 export TARGETQA=""
 export TARGETIMAGE="agl-demo-platform"
 

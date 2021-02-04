@@ -155,7 +155,7 @@ set -x
 # h3ulcb-nogfx means no graphic drivers
 if test x"h3ulcb-nogfx" = x"$MACHINE"; then
     export TARGETIMAGE=${TARGETIMAGEnogfx}
-    if test x"master" = x"${TARGETBRANCH}" ; then
+    if test x"master" = x"${TARGETBRANCH}" -o x"koi" = x"${TARGETBRANCH}"; then
         export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
     else
         export TARGETFEATURES="${TARGETFEATURESnogfx}"
@@ -169,6 +169,9 @@ if test x"raspberrypi4" = x"${MACHINE}" -a x"master" = x"${TARGETBRANCH}" ; then
     export TARGETMACHINE="raspberrypi4-64"
 fi
 if test x"raspberrypi4" = x"${MACHINE}" -a x"jellyfish" = x"${TARGETBRANCH}" ; then
+    export TARGETMACHINE="raspberrypi4-64"
+fi
+if test x"raspberrypi4" = x"${MACHINE}" -a x"koi" = x"${TARGETBRANCH}" ; then
     export TARGETMACHINE="raspberrypi4-64"
 fi
 

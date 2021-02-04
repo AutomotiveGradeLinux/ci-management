@@ -100,7 +100,7 @@ qemuarm64)
 	gen_info || exit 0
 ;;
 h3ulcb-nogfx)
-	if test x"master" = x"${TARGETBRANCH}" ; then
+	if test x"master" = x"${TARGETBRANCH}" -o x"koi" = x"${TARGETBRANCH}"; then
 	lava_device=r8a7795-agl-refhw
 	releng_device=r8a7795-agl-refhw
 	gen_info || exit 0
