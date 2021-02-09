@@ -13,7 +13,7 @@
     parameters:
       - string:
           name: GERRIT_BRANCH
-          default: master
+          default: koi
           description: "branch to build"
       - string:
           name: RELEASE_BRANCH
@@ -21,7 +21,7 @@
           description: "release branch to build"
       - string:
           name: RELEASE_VERSION
-          default: 10.91.0
+          default: 11.0.0
           description: "release version number for build"
       - string:
           name: UPLOAD
@@ -46,4 +46,3 @@
         - project: "release-jjb-koi-sources"
           current-parameters: true
           block: true
-          same-node: true
