@@ -17,15 +17,15 @@
           description: "Project to build"
       - string:
           name: GERRIT_BRANCH
-          default: master
+          default: koi
           description: "branch to build"
       - string:
           name: GERRIT_REFSPEC
-          default: refs/tags/koi_10.91.0
+          default: refs/tags/koi_11.0.0
           description: "refspec to build"
       - string:
           name: RELEASE_VERSION
-          default: 10.91.0
+          default: 11.0.0
           description: "release version number for build"
       - string:
           name: RELEASE_BRANCH
@@ -113,6 +113,7 @@
           - ../common/include-agl-local-conf-rpi3-imagetype.sh
           #- ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-bitbake-sdk.sh
+          - bitbake-html5-image-qemux86-64.sh
       - shell:
           !include-raw-escape: include-release-jjb-koi-snapshot-rsync.sh
       - shell:
