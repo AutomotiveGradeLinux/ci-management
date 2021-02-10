@@ -28,10 +28,10 @@
       ],
       "user_data_file": "{{user `cloud_user_data`}}",
       "ssh_username": "{{user `cloud_user`}}",
-      "flavor": "v2-standard-2-iops",
+      "flavor": "v3-standard-2",
       "image_disk_format": "qcow2",
       "use_blockstorage_volume": true,
-      "volume_size": "200",
+      "volume_size": "159",
       "metadata": {
         "ci_managed": "yes"
       }
