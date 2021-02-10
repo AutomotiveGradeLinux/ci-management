@@ -13,6 +13,11 @@ sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com F6BC817356A3D45E ||
 sudo su -c "sed -i 's;http://archive.debian.org/debian;http://deb.debian.org/debian;' /etc/apt/sources.list"
 sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 7638D0442B90D010 || true
 
+# UPDATE things
+sed -i -e "s,xenial,bionic,g" /etc/apt/sources.list
+
+sync
+
 cat /etc/apt/sources.list
 
 # Make sure that we aren't using the vexxhost mirrors as they have issues
@@ -29,6 +34,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -y install wget python python3 python-pip zip unzip iperf3 \
 		       debian-keyring debian-archive-keyring \
 		       python3-pip python3-yaml
+DEBIAN_FRONTEND=noninteractive apt-get clean
 
 # Adding stretch-backports for lavacli
 #echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
@@ -48,7 +54,7 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
 #EOFHOSTS
 
 # install newer version of jjb ... fixes issues with rendering
-sudo pip install --upgrade --force-reinstall -v jenkins-job-builder==1.6.1
+sudo pip install --upgrade --force-reinstall -v jenkins-job-builder
 
 cat <<EOFSYSCTL >> /etc/sysctl.conf
 # we have a lot of make jobs, this helps a lot

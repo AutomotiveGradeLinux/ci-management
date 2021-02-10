@@ -20,6 +20,11 @@ cat /etc/apt/sources.list
 echo "---> Removing Vexxhost Ubuntu mirrors"
 sed -i 's/ubuntu.mirror.vexxhost.com/us.archive.ubuntu.com/g' /etc/apt/sources.list
 
+# UPDATE things
+sed -i -e "s,xenial,bionic,g" /etc/apt/sources.list
+
+sync
+
 cat /etc/apt/sources.list
 
 DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y -u dist-upgrade
@@ -35,15 +40,17 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        python-pip python-simplejson g++-multilib make zip unzip iperf3 \
                        debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip
 
-# Adding stretch-backports for lavacli
-echo "deb https://apt.lavasoftware.org/release stretch-backports main" >> /etc/apt/sources.list
+DEBIAN_FRONTEND=noninteractive apt-get clean
 
-wget https://apt.lavasoftware.org/lavasoftware.key.asc
-sudo apt-key add lavasoftware.key.asc
-rm lavasoftware.key.asc
+# Adding stretch-backports for lavacli
+#echo "deb https://apt.lavasoftware.org/release buster-backports main" >> /etc/apt/sources.list
+
+#wget https://apt.lavasoftware.org/lavasoftware.key.asc
+#sudo apt-key add lavasoftware.key.asc
+#rm lavasoftware.key.asc
 #sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com A791358F2E49B100
 
-DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
+DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y lavacli
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
@@ -62,7 +69,7 @@ cat <<EOFHOSTS >> /etc/hosts
 EOFHOSTS
 
 # install newer version of jjb ... fixes issues with rendering
-sudo pip install --upgrade --force-reinstall -v jenkins-job-builder==1.6.1
+sudo pip install --upgrade --force-reinstall -v jenkins-job-builder
 
 cat <<EOFSYSCTL >> /etc/sysctl.conf
 # we have a lot of make jobs, this helps a lot
@@ -85,7 +92,7 @@ EOFSYSCTL
 # taken from container setup script. not documented in readme.
 # install node.js and tools (npm, gulp, bower)
 #
-curl -v --connect-timeout 60 --retry 3 -sL https://deb.nodesource.com/setup_8.x | bash -
+curl -v --connect-timeout 60 --retry 3 -sL https://deb.nodesource.com/setup_12.x | bash -
 DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 which -a npm
 dpkg -L nodejs
@@ -93,8 +100,8 @@ npm install --global gulp bower
 
 ################### SDX181207 { - obsolete: section until closing brace should be removed after migration to next docsite
 # tools used to generate developer website (https://github.com/automotive-grade-linux/docs-agl)
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
-    && curl -sSL https://get.rvm.io | bash -s stable --ruby --gems=jekyll
+#gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
+#    && curl -sSL https://get.rvm.io | bash -s stable --ruby --gems=jekyll
 
 
 mkdir -p /opt/AGL
