@@ -22,7 +22,6 @@
       "tenant_name": "{{user `stack_tenant`}}",
       "domain_name": "Default",
       "region": "ca-ymq-1",
-      "availability_zone": "ca-ymq-2",
       "networks": [
         "{{user `stack_network`}}"
       ],
