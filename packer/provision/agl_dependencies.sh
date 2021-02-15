@@ -123,6 +123,10 @@ sudo pip install --upgrade jinja2
 sudo pip3 install --force-reinstall --ignore-installed jinja2
 sudo pip3 install --upgrade jinja2
 
+# updates for cloud-init
+pip3 install --upgrade jsonpatch
+pip3 install --upgrade cloud-init
+
 python -c "import sys; print sys.path"
 
 sudo pip show jinja2
