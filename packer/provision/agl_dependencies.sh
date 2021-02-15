@@ -38,7 +38,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
                        python-pip python-simplejson g++-multilib make zip unzip iperf3 \
-                       debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip
+                       debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip 
 
 DEBIAN_FRONTEND=noninteractive apt-get clean
 
@@ -124,8 +124,12 @@ sudo pip3 install --force-reinstall --ignore-installed jinja2
 sudo pip3 install --upgrade jinja2
 
 # updates for cloud-init
+pip3 install --upgrade oauthlib
+pip3 install --upgrade configobj>=5.0.2
+pip3 install --upgrade pyyaml
+pip3 install --upgrade requests
+pip3 install --upgrade jsonschema
 pip3 install --upgrade jsonpatch
-pip3 install --upgrade cloud-init
 
 python -c "import sys; print sys.path"
 

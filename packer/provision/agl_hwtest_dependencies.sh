@@ -79,9 +79,14 @@ sudo pip install --upgrade jinja2
 sudo pip3 install --force-reinstall --ignore-installed jinja2
 sudo pip3 install --upgrade jinja2
 
-# fix for cloud-init
+# updates for cloud-init
+pip3 install --upgrade oauthlib
+pip3 install --upgrade configobj>=5.0.2
+pip3 install --upgrade pyyaml
+pip3 install --upgrade requests
+pip3 install --upgrade jsonschema
 pip3 install --upgrade jsonpatch
-pip3 install --upgrade cloudinit
+
 
 python -c "import sys; print sys.path"
 
