@@ -163,6 +163,7 @@ EOF
             echo "No extra steps for $FACTER_OS"
         ;;
     esac
+    systemctl disable puppet.service || true
 }
 
 echo "---> Attempting to detect OS"

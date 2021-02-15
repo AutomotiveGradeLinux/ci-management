@@ -55,6 +55,10 @@ Host github.com
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
 
+Host gitlab.com
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+
 EOSSH
 
 cat <<EOKNOWN >  /etc/ssh/ssh_known_hosts

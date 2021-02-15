@@ -36,6 +36,11 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
 		       python3-pip python3-yaml
 DEBIAN_FRONTEND=noninteractive apt-get clean
 
+DEBIAN_FRONTEND=noninteractive apt-get install linux-image-4.15.0-123-generic
+
+DEBIAN_FRONTEND=noninteractive apt full-upgrade
+
+
 # Adding stretch-backports for lavacli
 #echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
 #DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli

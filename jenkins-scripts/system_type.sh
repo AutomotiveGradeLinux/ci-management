@@ -17,7 +17,8 @@ IFS=','
 for i in "basebuild,basebuild" \
          "centos,centos" \
          "trusty,trusty" \
-         "xenial,xenial"
+         "xenial,xenial" \
+         "bionic,bionic"
 do set -- $i
     if [[ $HOST == *"$1"* ]]; then
         SYSTEM_TYPE="$2"
