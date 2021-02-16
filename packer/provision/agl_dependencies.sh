@@ -54,7 +54,10 @@ DEBIAN_FRONTEND=noninteractive apt full-upgrade
 #rm lavasoftware.key.asc
 #sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com A791358F2E49B100
 
-DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y lavacli
+#DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y lavacli
+
+sudo pip3 install --upgrade pip
+sudo pip3 install --upgrade --force-reinstall lavacli==1.0
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with

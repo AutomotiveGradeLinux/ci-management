@@ -133,7 +133,7 @@ EOF
 
     # install Java 7
     echo "---> Configuring OpenJDK"
-    apt-get install -y default-jre-headless default-jdk-headless
+    apt-get install -y default-jre-headless default-jdk-headless unzip
 
 }
 

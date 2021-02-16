@@ -45,7 +45,8 @@ DEBIAN_FRONTEND=noninteractive apt full-upgrade
 #echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list
 #DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
-pip3 install lavacli
+sudo pip3 install --upgrade pip
+sudo pip3 install --upgrade --force-reinstall lavacli==1.0
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
@@ -59,7 +60,7 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
 #EOFHOSTS
 
 # install newer version of jjb ... fixes issues with rendering
-sudo pip install --upgrade --force-reinstall -v jenkins-job-builder
+sudo pip3 install --upgrade --force-reinstall -v jenkins-job-builder
 
 cat <<EOFSYSCTL >> /etc/sysctl.conf
 # we have a lot of make jobs, this helps a lot
