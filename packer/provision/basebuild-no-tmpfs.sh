@@ -38,7 +38,10 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -y install debian-keyring debian-archive-keyring python3-pip python-pip apt
 
 DEBIAN_FRONTEND=noninteractive apt-get clean
-DEBIAN_FRONTEND=noninteractive apt-get install linux-image-4.15.0-123-generic default-jre-headless default-jdk-headless
+# new kernel
+DEBIAN_FRONTEND=noninteractive apt-get install linux-image-4.15.0-123-generic
+# java for jenkins and unzip to extract packer
+DEBIAN_FRONTEND=noninteractive apt-get install  default-jre-headless default-jdk-headless unzip
 
 DEBIAN_FRONTEND=noninteractive apt full-upgrade
 
