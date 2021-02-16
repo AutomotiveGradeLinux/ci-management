@@ -33,7 +33,7 @@ DEBIAN_FRONTEND=noninteractive dpkg --configure -a
 DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -y install wget python python3 python-pip zip unzip iperf3 \
 		       debian-keyring debian-archive-keyring \
-		       python3-pip python3-yaml
+		       python3-pip
 DEBIAN_FRONTEND=noninteractive apt-get clean
 
 DEBIAN_FRONTEND=noninteractive apt-get install linux-image-4.15.0-123-generic
