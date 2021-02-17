@@ -1,6 +1,6 @@
 #!/bin/bash
 # vim: sw=2 ts=2 sts=2 et :
-set -e
+#set -e
 set -x
 
 sudo su -c "echo 'Acquire::Check-Valid-Until no;' > /etc/apt/apt.conf.d/99no-check-valid-until"
@@ -25,6 +25,10 @@ sed -i -e "s,xenial,bionic,g" /etc/apt/sources.list
 sync
 
 cat /etc/apt/sources.list
+
+DEBIAN_FRONTEND=noninteractive apt-get –-purge remove  plymouth-theme* plymouth
+
+DEBIAN_FRONTEND=noninteractive apt-get autoremove
 
 DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y -u dist-upgrade
 
