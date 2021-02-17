@@ -46,6 +46,7 @@ DEBIAN_FRONTEND=noninteractive apt full-upgrade
 #DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
 sudo pip3 install --upgrade pip
+sudo pip3 install --upreade --ignore-installed PyYAML
 sudo pip3 install --upgrade --force-reinstall lavacli==1.0
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
