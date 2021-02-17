@@ -1,10 +1,9 @@
 #!/bin/bash
 # vim: sw=2 ts=2 sts=2 et :
-
+set -e
 set -x
 
 sudo su -c "echo 'Acquire::Check-Valid-Until no;' > /etc/apt/apt.conf.d/99no-check-valid-until"
-
 
 sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com 8B48AD6246925553 || true
 
@@ -42,7 +41,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
 
 DEBIAN_FRONTEND=noninteractive apt-get clean
 
-DEBIAN_FRONTEND=noninteractive apt-get install linux-image-4.15.0-123-generic
+DEBIAN_FRONTEND=noninteractive apt-get -y install linux-image-4.15.0-123-generic
 
 DEBIAN_FRONTEND=noninteractive apt full-upgrade
 
@@ -57,7 +56,8 @@ DEBIAN_FRONTEND=noninteractive apt full-upgrade
 #DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y lavacli
 
 sudo pip3 install --upgrade pip
-sudo pip3 install --upgrade --force-reinstall lavacli==1.0
+sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
+sudo pip3 install --upgrade --ignore-installed --force-reinstall lavacli==1.0
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
@@ -131,12 +131,11 @@ sudo pip3 install --force-reinstall --ignore-installed jinja2
 sudo pip3 install --upgrade jinja2
 
 # updates for cloud-init
-pip3 install --upgrade oauthlib
-pip3 install --upgrade configobj>=5.0.2
-pip3 install --upgrade pyyaml
-pip3 install --upgrade requests
-pip3 install --upgrade jsonschema
-pip3 install --upgrade jsonpatch
+sudo pip3 install --upgrade oauthlib
+sudo pip3 install --upgrade configobj>=5.0.2
+sudo pip3 install --upgrade requests
+sudo pip3 install --upgrade jsonschema
+sudo pip3 install --upgrade jsonpatch
 
 python -c "import sys; print sys.path"
 
@@ -186,5 +185,6 @@ chmod 0600 /home/jenkins/.ssh/authorized_keys
 echo -e 'y\n' | ssh-keygen -N "" -f /home/jenkins/.ssh/id_rsa -t rsa
 chown -R jenkins:jenkins /home/jenkins/.ssh /w
 
+sudo chown -R ubuntu:ubuntu /home/ubuntu 
 
 exit 0

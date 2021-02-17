@@ -46,7 +46,7 @@ DEBIAN_FRONTEND=noninteractive apt full-upgrade
 #DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y -t stretch-backports lavacli
 
 sudo pip3 install --upgrade pip
-sudo pip3 install --upreade --ignore-installed PyYAML
+sudo pip3 install --upgrade --force-reinstall --ignore-installed PyYAML
 sudo pip3 install --upgrade --force-reinstall lavacli==1.0
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
@@ -130,7 +130,8 @@ chmod 0600 /home/jenkins/.ssh/authorized_keys
 
 # Generate ssh key for use by Robot jobs
 echo -e 'y\n' | ssh-keygen -N "" -f /home/jenkins/.ssh/id_rsa -t rsa
-chown -R jenkins:jenkins /home/jenkins/.ssh /w
+sudo chown -R jenkins:jenkins /home/jenkins/.ssh /w
 
+sudo chown -R ubuntu:ubuntu /home/ubuntu/
 
 exit 0
