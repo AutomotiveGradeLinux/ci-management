@@ -116,16 +116,10 @@ EOF
     echo "---> printing sources.list <---"
 
 
-    echo "---> printing resolv.conf <---"
-    cat /etc/resolv.conf || true
-    echo "---> printing resolv.conf <---"
-
-    ping -c 2 172.30.0.254
-    ping -c 2 172.30.0.253
-
     echo "---> Updating operating system"
-    apt-get update
-    apt-get dist-upgrade -y
+    DEBIAN_FRONTEND=noninteractive apt-get update
+    DEBIAN_FRONTEND=noninteractive dpkg --configure -a 
+    DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y
 
     # add in stuff we know we need
     echo "---> Installing base packages"
