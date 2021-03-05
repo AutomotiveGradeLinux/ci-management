@@ -154,14 +154,16 @@ fi
 set -x
 # h3ulcb-nogfx means no graphic drivers
 if test x"h3ulcb-nogfx" = x"$MACHINE"; then
-    export TARGETIMAGE=${TARGETIMAGEnogfx}
+    if [ "${TARGETBRANCH}" = 'jellyfish' -o "${TARGETBRANCH}" = 'halibut' ];then
+        export TARGETIMAGE=${TARGETIMAGEnogfx}
+        export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
+    fi
     if test x"master" = x"${TARGETBRANCH}" -o x"koi" = x"${TARGETBRANCH}"; then
         export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
     else
         export TARGETFEATURES="${TARGETFEATURESnogfx}"
     fi
     export TARGETMACHINE="h3ulcb"
-    export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
 fi
 set +x
 
