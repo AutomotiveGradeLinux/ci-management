@@ -6,8 +6,7 @@ echo "\n\n\n"
 
 kci-publish() {
 	# check GERRIT_PROJECT to find if we build an app or not
-	echo $GERRIT_PROJECT |grep -q apps
-	if [ $? -eq 0 ];then
+	if echo $GERRIT_PROJECT |grep -q apps ;then
 		# for app
 		BUILD_VERSION="AGL-app-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 	else
@@ -22,7 +21,7 @@ kci-publish() {
 	echo "DEBUG: arch $TARGETARCH"
 	echo "DEBUG: branch $GERRIT_BRANCH"
 	return 0
-	./agl-publish.py --machine ${TARGETMACHINE} \
+	./utils/agl-publish.py --machine ${TARGETMACHINE} \
 		--build_version $BUILD_VERSION \
 		--commit $DIST_BUILD_HASH \
 		--arch $TARGETARCH \
