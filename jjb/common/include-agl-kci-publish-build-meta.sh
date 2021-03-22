@@ -17,8 +17,13 @@ kci-publish() {
 		# for app
 		BUILD_VERSION="AGL-app-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 	else
-		# for release
-		BUILD_VERSION="AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION"
+		if [ -z "$RELEASE_BRANCH" ];then
+			# for CI
+			BUILD_VERSION="AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
+		else
+			# for release
+			BUILD_VERSION="AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION"
+		fi
 	fi
 
 	# TARGETARCH exists only in ci-apps
