@@ -34,7 +34,7 @@ kci-publish() {
 	qemuarm)
 		TARGETARCH="arm"
 	;;
-	qemux86_64)
+	qemux86-64)
 		TARGETARCH="x86_64"
 	;;
 	raspberrypi4)
@@ -55,12 +55,19 @@ kci-publish() {
 	echo "DEBUG: commit $DIST_BUILD_HASH"
 	echo "DEBUG: arch $TARGETARCH"
 	echo "DEBUG: branch $GERRIT_BRANCH"
-	return 0
-	./utils/agl-publish.py --machine ${TARGETMACHINE} \
+
+	$RELENG/utils/agl-publish.py --machine ${TARGETMACHINE} \
 		--build_version $BUILD_VERSION \
 		--commit $DIST_BUILD_HASH \
 		--arch $TARGETARCH \
 		--branch $GERRIT_BRANCH
+	# DEBUG purpose, verify what is uploaded
+	if [ -e agl-build-meta ];then
+		find agl-build-meta -type f | xargs cat
+	else
+		echo "ERROR: no agl-build-meta directory"
+	fi
+	return 0
 }
 
 kci-publish
