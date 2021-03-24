@@ -60,7 +60,8 @@ kci-publish() {
 		--build_version $BUILD_VERSION \
 		--commit $DIST_BUILD_HASH \
 		--arch $TARGETARCH \
-		--branch $GERRIT_BRANCH
+		--branch $GERRIT_BRANCH \
+		--api http://kernelci.dev.baylibre.com:8081/
 	# DEBUG purpose, verify what is uploaded
 	if [ -e agl-build-meta ];then
 		find agl-build-meta -type f | xargs cat
