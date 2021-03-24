@@ -190,6 +190,10 @@
           build-timeout: '{build-timeout}'
       - openstack:
           single-use: true
+      - credentials-binding:
+          - text:
+              credential-id: BAY_KCIAPI_TOKEN
+              variable: BAY_KCIAPI_TOKEN
 
     builders:
       - shell:
@@ -720,6 +724,9 @@
               credential-id: agl_main_lava_instance
               username: LAB_AGL_USER
               password: LAB_AGL_TOKEN
+          - text:
+              credential-id: BAY_KCIAPI_TOKEN
+              variable: BAY_KCIAPI_TOKEN
 
     builders:
       - shell:

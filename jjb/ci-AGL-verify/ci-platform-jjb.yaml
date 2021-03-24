@@ -316,6 +316,10 @@
           build-timeout: '{build-timeout}'
       - openstack:
           single-use: true
+      - credentials-binding:
+          - text:
+              credential-id: BAY_KCIAPI_TOKEN
+              variable: BAY_KCIAPI_TOKEN
     builders:
       - shell:
           !include-raw-escape:
@@ -625,6 +629,10 @@
           - text:
               credential-id: KCI_EMAIL_AUTH_TOKEN
               variable: KCI_EMAIL_AUTH_TOKEN
+          - text:
+              credential-id: BAY_KCIAPI_TOKEN
+              variable: BAY_KCIAPI_TOKEN
+
     builders:
       - shell:
           !include-raw-escape:
