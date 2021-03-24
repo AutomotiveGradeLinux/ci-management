@@ -22,6 +22,7 @@
 - agl-service-hvac
 - agl-service-identity-agent
 - agl-service-iiodevices
+- agl-service-inputmethod
 - agl-service-mediaplayer
 - agl-service-mediascanner
 - agl-service-navigation
@@ -54,6 +55,7 @@
 - app-controller-submodule
 - app-templates
 - aroundview
+- camera-gstreamer
 - chromium
 - controls
 - dashboard
