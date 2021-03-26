@@ -40,7 +40,13 @@ kci-publish() {
 	raspberrypi4)
 		TARGETARCH="arm64"
 	;;
+	raspberrypi4-64)
+		TARGETARCH="arm64"
+	;;
 	h3ulcb-nogfx)
+		TARGETARCH="arm64"
+	;;
+	h3ulcb)
 		TARGETARCH="arm64"
 	;;
 	*)
