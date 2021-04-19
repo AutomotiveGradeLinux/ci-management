@@ -12,23 +12,27 @@ kci-publish() {
 	fi
 	echo "DEBUG: GERRIT_PROJECT $GERRIT_PROJECT"
 
+	FSR=""
 	# check GERRIT_PROJECT to find if we build an app or not
 	if echo $GERRIT_PROJECT |grep -q apps ;then
 		# for app
 		BUILD_VERSION="AGL-app-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 		KERNEL_VERSION="$BUILD_VERSION"
 		echo "APP: $BUILD_VERSION $KERNEL_VERSION"
+		FSR="AGL/snapshots/$GERRIT_BRANCH/latest/$TARGETMACHINE"
 	else
 		if [ -z "$RELEASE_BRANCH" ];then
 			# for CI
 			BUILD_VERSION="AGL-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 			KERNEL_VERSION="$DIST_BUILD_TOPIC"
 			echo "CI: $BUILD_VERSION $KERNEL_VERSION"
+			FSR="AGL/upload/ci/$GERRIT_CHANGE_NUMBER/$GERRIT_PATCHSET_NUMBER/$TARGETMACHINE"
 		else
 			# for release
 			BUILD_VERSION="AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION"
 			KERNEL_VERSION="$DIST_BB_DISTRO_VERSION"
 			echo "RELEASE: $BUILD_VERSION $KERNEL_VERSION"
+			FSR="AGL/release/$RELEASE_BRANCH/$RELEASE_VERSION/$TARGETMACHINE"
 		fi
 	fi
 
@@ -72,6 +76,7 @@ kci-publish() {
 		--build_version $BUILD_VERSION \
 		--commit $DIST_BUILD_HASH \
 		--arch $TARGETARCH \
+		--fsr $FSR \
 		--branch $GERRIT_BRANCH \
 		--kernel_version $KERNEL_VERSION \
 		--api http://kernelci.dev.baylibre.com:8081/
