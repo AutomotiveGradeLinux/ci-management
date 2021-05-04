@@ -83,6 +83,15 @@ kci-publish() {
 		--branch $GERRIT_BRANCH \
 		--kernel_version $KERNEL_VERSION \
 		--api http://kernelci.dev.baylibre.com:8081/
+
+	$RELENG/utils/agl-publish.py --machine ${TARGETMACHINE} \
+		--build_version $BUILD_VERSION \
+		--commit $DIST_BUILD_HASH \
+		--arch $TARGETARCH \
+		--fsr $FSR \
+		--branch $GERRIT_BRANCH \
+		--kernel_version $KERNEL_VERSION \
+		--api https://kernelci.automotivelinux.org:8081/
 	# DEBUG purpose, verify what is uploaded
 	if [ -e agl-build-meta ];then
 		find agl-build-meta -type f | xargs cat
