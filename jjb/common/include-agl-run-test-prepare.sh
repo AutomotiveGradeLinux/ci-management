@@ -75,6 +75,11 @@ gen_info() {
 # but the LAVA job need to be generated only for qemu. So we need to have lava_device and releng_device for it.
 export BOARDOUT=$(mktemp --directory)
 case $MACHINE in
+bbe)
+	lava_device=am335x-sancloud-bbe
+	releng_device=am335x-sancloud-bbe
+	gen_info || exit 0
+;;
 qemux86-64)
 	lava_device=upsquare
 	releng_device=upsquare

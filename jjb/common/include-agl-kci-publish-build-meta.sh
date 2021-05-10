@@ -38,6 +38,9 @@ kci-publish() {
 
 	# TARGETARCH exists only in ci-apps
 	case $TARGETMACHINE in
+	bbe)
+		TARGETARCH="arm"
+	;;
 	qemuarm64)
 		TARGETARCH="arm64"
 	;;
