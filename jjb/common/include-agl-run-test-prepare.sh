@@ -77,7 +77,7 @@ export BOARDOUT=$(mktemp --directory)
 case $MACHINE in
 bbe)
 	lava_device=am335x-sancloud-bbe
-	releng_device=am335x-sancloud-bbe
+	releng_device=bbe
 	gen_info || exit 0
 ;;
 qemux86-64)
