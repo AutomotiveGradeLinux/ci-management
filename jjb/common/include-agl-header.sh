@@ -167,14 +167,11 @@ if test x"h3ulcb-nogfx" = x"$MACHINE"; then
 fi
 set +x
 
-if test x"raspberrypi4" = x"${MACHINE}" -a x"master" = x"${TARGETBRANCH}" ; then
+if test x"raspberrypi4" = x"${MACHINE}" ; then
     export TARGETMACHINE="raspberrypi4-64"
-fi
-if test x"raspberrypi4" = x"${MACHINE}" -a x"jellyfish" = x"${TARGETBRANCH}" ; then
-    export TARGETMACHINE="raspberrypi4-64"
-fi
-if test x"raspberrypi4" = x"${MACHINE}" -a x"koi" = x"${TARGETBRANCH}" ; then
-    export TARGETMACHINE="raspberrypi4-64"
+    if test x"halibut" = x"${TARGETBRANCH}" ; then
+        export TARGETMACHINE="raspberrypi4"
+    fi
 fi
 
 #if $DEBUG; then
