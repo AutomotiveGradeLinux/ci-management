@@ -6,6 +6,7 @@
       - icefish
       - jellyfish
       - koi
+      - lamprey
     architecture:
       - aarch64
       - x86-64

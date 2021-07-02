@@ -109,7 +109,7 @@ case "$TARGETARCH" in
 	x86-64)
 	    export TARGETSDKARCH="corei7-64"
 	    # starting with master, we use qemu for the SDK.
-	    if test x"master" = x"$AGLBRANCH" -o x"jellyfish" = x"${AGLBRANCH}" -o x"koi" = x"${AGLBRANCH}" ; then
+	    if test x"master" = x"$AGLBRANCH" -o x"jellyfish" = x"${AGLBRANCH}" -o x"lamprey" = x"${AGLBRANCH}" -o x"koi" = x"${AGLBRANCH}" ; then
 		export TARGETSDKMACHINE="qemux86-64"
 	    else
 		export TARGETSDKMACHINE="intel-corei7-64"

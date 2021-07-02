@@ -10,7 +10,7 @@ set -e
 ################################################################################
 
 # only run on master, jellyfish and icefish
-( echo "master jellyfish icefish koi" | grep -q $TARGETBRANCH ) || exit 0
+( echo "master jellyfish icefish koi lamprey" | grep -q $TARGETBRANCH ) || exit 0
 
 export TARGETFEATURES="agl-demo agl-devel"
 export TARGETQA=""
