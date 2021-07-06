@@ -326,6 +326,9 @@
           - text:
               credential-id: BAY_KCIAPI_TOKEN
               variable: BAY_KCIAPI_TOKEN
+          - text:
+              credential-id: AGL_KCIAPI_TOKEN
+              variable: AGL_KCIAPI_TOKEN
     builders:
       - shell:
           !include-raw-escape:
@@ -638,6 +641,9 @@
           - text:
               credential-id: BAY_KCIAPI_TOKEN
               variable: BAY_KCIAPI_TOKEN
+          - text:
+              credential-id: AGL_KCIAPI_TOKEN
+              variable: AGL_KCIAPI_TOKEN
 
     builders:
       - shell:
