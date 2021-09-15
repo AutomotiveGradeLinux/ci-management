@@ -82,7 +82,7 @@ for lab in "${!labs[@]}"; do
 	echo "lavacli: found a device available: $lavacli_line"
 	lavacli_dev=$(echo ${arr[0]} | sed 's/\*\([^(]*\).*/\1/')
 	lavacli_tags=$(lavacli -i $lab devices tags list $lavacli_dev | grep \*)
-	lavacli_tags=$(echo "$lavacli_tags" | sed 's/\* \(\)/\1/')
+	lavacli_tags=$(echo "$lavacli_tags" | sed 's/baylibre//' | sed 's/corelab//' | sed 's/docker//' | sed 's/\* \(\)/\1/' )
 	echo "Tags for $lavacli_dev: $lavacli_tags"
     else
 	echo "lavacli: did not find any device available: $lavacli_line"

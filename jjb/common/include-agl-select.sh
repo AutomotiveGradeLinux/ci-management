@@ -16,6 +16,11 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "^AGL/"); t
     else
 	MYPROJECT=`echo $TARGETPROJECT | sed -e "s#AGL/##g"`
     fi
+    if $(echo "$TARGETPROJECT" | grep -q "meta-agl-refhw") ; then
+	MYPROJECT="bsp/$(echo $TARGETPROJECT | sed -e 's#AGL/##g')"
+    else
+	MYPROJECT=`echo $TARGETPROJECT | sed -e "s#AGL/##g"`
+    fi
 
     if test x"AGL-repo" = x"$MYPROJECT" ; then
         cd .repo/manifests
