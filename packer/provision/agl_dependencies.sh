@@ -26,7 +26,7 @@ sync
 
 cat /etc/apt/sources.list
 
-DEBIAN_FRONTEND=noninteractive apt-get –-purge remove  plymouth-theme* plymouth
+DEBIAN_FRONTEND=noninteractive apt-get --purge remove  plymouth-theme* plymouth
 
 DEBIAN_FRONTEND=noninteractive apt-get autoremove
 
@@ -76,6 +76,7 @@ cat <<EOFHOSTS >> /etc/hosts
 # workaround for download
 10.30.72.8 download.automotivelinux.org
 10.30.72.8 download-internal.automotivelinux.org
+127.0.0.1 ubuntu-16
 
 EOFHOSTS
 
@@ -103,11 +104,11 @@ EOFSYSCTL
 # taken from container setup script. not documented in readme.
 # install node.js and tools (npm, gulp, bower)
 #
-curl -v --connect-timeout 60 --retry 3 -sL https://deb.nodesource.com/setup_12.x | bash -
-DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
-which -a npm
-dpkg -L nodejs
-npm install --global gulp bower
+#curl -v --connect-timeout 60 --retry 3 -sL https://deb.nodesource.com/setup_12.x | bash -
+#DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
+#which -a npm
+#dpkg -L nodejs
+#npm install --global gulp bower
 
 ################### SDX181207 { - obsolete: section until closing brace should be removed after migration to next docsite
 # tools used to generate developer website (https://github.com/automotive-grade-linux/docs-agl)
@@ -143,22 +144,22 @@ sudo pip3 install --upgrade jsonpatch
 
 python -c "import sys; print sys.path"
 
-sudo pip show jinja2
-sudo pip3 show jinja2
+#sudo pip show jinja2
+#sudo pip3 show jinja2
 
 # install go for xds build
 
 . /etc/os-release
-wget -O - "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x52B59B1571A79DBC054901C0F6BC817356A3D45E" | sudo apt-key add -
-sudo bash -c "cat >> /etc/apt/sources.list.d/golang.list <<EOF
-deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu bionic main
-EOF"
-sudo apt-get update
-sudo apt-get install golang-go
+#wget -O - "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x52B59B1571A79DBC054901C0F6BC817356A3D45E" | sudo apt-key add -
+#sudo bash -c "cat >> /etc/apt/sources.list.d/golang.list <<EOF
+#deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu bionic main
+#EOF"
+#sudo apt-get update
+#sudo apt-get install golang-go
 
 # Crossbuild standard go libraries for MacOS and Windows
-sudo GOOS=darwin GOARCH=amd64 go install -v -a std
-sudo GOOS=windows GOARCH=amd64 go install -v -a std
+#sudo GOOS=darwin GOARCH=amd64 go install -v -a std
+#sudo GOOS=windows GOARCH=amd64 go install -v -a std
 
 useradd -m -s /bin/bash jenkins
 
@@ -190,5 +191,20 @@ echo -e 'y\n' | ssh-keygen -N "" -f /home/jenkins/.ssh/id_rsa -t rsa
 chown -R jenkins:jenkins /home/jenkins/.ssh /w
 
 sudo chown -R ubuntu:ubuntu /home/ubuntu 
+
+
+# gitlab-runner
+cat <<EOF | sudo tee /etc/apt/preferences.d/pin-gitlab-runner.pref
+Explanation: Prefer GitLab provided packages over the Debian native ones
+Package: gitlab-runner
+Pin: origin packages.gitlab.com
+Pin-Priority: 1001
+EOF
+
+curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+
+DEBIAN_FRONTEND=noninteractive apt-get update 
+DEBIAN_FRONTEND=noninteractive apt-get install gitlab-runner
+
 
 exit 0
