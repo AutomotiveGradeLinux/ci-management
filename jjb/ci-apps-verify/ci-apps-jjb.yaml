@@ -557,6 +557,7 @@
       - shell:
           # including from ../common into ci-apps-{project}-merge-{aglbranch}-CIB-{architecture}
           !include-raw-escape:
+          - ../common/include-agl-skipmaster.sh
           - ../common/include-apps-header.sh
           - ../common/include-apps-fetch-install-sdk.sh
           - ../common/include-apps-build-app.sh
@@ -739,6 +740,7 @@
       - shell:
           # including from ../common into ci-apps-{project}-verify-CIBT-{architecture}
           !include-raw-escape:
+          - ../common/include-agl-skipmaster.sh
           - ../common/include-agl-header.sh
           - ../common/include-agl-repo.sh
           #- ../common/include-agl-select.sh
