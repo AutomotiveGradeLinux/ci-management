@@ -75,6 +75,8 @@ kci-publish() {
 	echo "DEBUG: arch $TARGETARCH"
 	echo "DEBUG: branch $GERRIT_BRANCH"
 
+	[[ -z $DIST_BUILD_HASH ]] && DIST_BUILD_HASH="$BUILD_VERSION"
+
 	$RELENG/utils/agl-publish.py --machine ${TARGETMACHINE} \
 		--build_version $BUILD_VERSION \
 		--commit $DIST_BUILD_HASH \
