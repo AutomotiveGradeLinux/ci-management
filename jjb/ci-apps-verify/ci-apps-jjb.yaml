@@ -2,7 +2,7 @@
 - project:
     name: ci-apps-AGL
     aglbranch:
-      - master
+      #- master
       - icefish
       - jellyfish
       - koi

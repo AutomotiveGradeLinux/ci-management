@@ -68,38 +68,43 @@ kci-publish() {
 	;;
 	esac
 
+set -x
+set +e
+	DIST_BUILD_HASH="$BUILD_VERSION"
+
 	echo "DEBUG: generate bmeta for kernelCI"
 	echo "DEBUG: machine ${TARGETMACHINE}"
 	echo "DEBUG: build_version $BUILD_VERSION"
 	echo "DEBUG: commit $DIST_BUILD_HASH"
 	echo "DEBUG: arch $TARGETARCH"
 	echo "DEBUG: branch $GERRIT_BRANCH"
+	DIST_BUILD_HASH="$BUILD_VERSION"
 
-	[[ -z $DIST_BUILD_HASH ]] && DIST_BUILD_HASH="$BUILD_VERSION"
+	$RELENG/utils/agl-publish.py --machine "${TARGETMACHINE}" \
+		--build_version "$BUILD_VERSION" \
+		--commit "$BUILD_VERSION" \
+		--arch "$TARGETARCH" \
+		--fsr "$FSR" \
+		--branch "$GERRIT_BRANCH" \
+		--kernel_version "$BUILD_VERSION" \
+		--api http://kernelci.dev.baylibre.com:8081/ || true
 
-	$RELENG/utils/agl-publish.py --machine ${TARGETMACHINE} \
-		--build_version $BUILD_VERSION \
-		--commit $DIST_BUILD_HASH \
-		--arch $TARGETARCH \
-		--fsr $FSR \
-		--branch $GERRIT_BRANCH \
-		--kernel_version $KERNEL_VERSION \
-		--api http://kernelci.dev.baylibre.com:8081/
-
-	$RELENG/utils/agl-publish.py --machine ${TARGETMACHINE} \
-		--build_version $BUILD_VERSION \
-		--commit $DIST_BUILD_HASH \
-		--arch $TARGETARCH \
-		--fsr $FSR \
-		--branch $GERRIT_BRANCH \
-		--kernel_version $KERNEL_VERSION \
-		--api https://kernelci.automotivelinux.org:8081/
+	$RELENG/utils/agl-publish.py --machine "${TARGETMACHINE}" \
+		--build_version "$BUILD_VERSION" \
+		--commit "$BUILD_VERSION" \
+		--arch "$TARGETARCH" \
+		--fsr "$FSR" \
+		--branch "$GERRIT_BRANCH" \
+		--kernel_version "$BUILD_VERSION" \
+		--api https://kernelci.automotivelinux.org:8081/ || true
 	# DEBUG purpose, verify what is uploaded
 	if [ -e agl-build-meta ];then
 		find agl-build-meta -type f | xargs cat
 	else
 		echo "ERROR: no agl-build-meta directory"
 	fi
+set +x
+set -e
 	return 0
 }
 
