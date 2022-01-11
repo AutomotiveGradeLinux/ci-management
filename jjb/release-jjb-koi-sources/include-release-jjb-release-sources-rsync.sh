@@ -16,11 +16,12 @@ REVISION=${RELEASE_VERSION}
 
 
 rm -rf AGLRELEASE || true
+rm -rf agl-${BRANCH}-${REVISION} || true
 
 mkdir agl-${BRANCH}-${REVISION}
 pushd agl-${BRANCH}-${REVISION}
 
-repo init --reference=/opt/AGL/preclone -q -b ${GERRIT_BRANCH} -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo -m ${BRANCH}_${REVISION}.xml
+repo init --repo-branch=repo-1  --reference=/opt/AGL/preclone -q -b ${GERRIT_BRANCH} -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo -m ${BRANCH}_${REVISION}.xml
 
 repo sync --force-sync
 
