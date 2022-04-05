@@ -10,7 +10,7 @@ set -e
 ################################################################################
 
 # only run on master, jellyfish and icefish
-( echo "master" | grep -q $TARGETBRANCH ) || exit 0
+( echo "marlin" | grep -q $TARGETBRANCH ) || exit 0
 
 export TARGETFEATURES="agl-flutter agl-devel"
 export TARGETQA=""

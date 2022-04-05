@@ -187,3 +187,15 @@ if test ! -f ~/.gitconfig ; then
   git config --global user.email "jenkins-dontreply@build.automotivelinux.org"
   git config --global user.name "jenkins-dontreply@build.automotivelinux.org"
 fi
+
+
+
+##### needlefish integration
+if test x"master" = x"${TARGETBRANCH}" ; then
+
+    if test x"bbe" = x"${TARGETMACHINE}" ; then
+      echo "Target not yet building - exit gracefully."
+      exit 0
+    fi
+
+fi
