@@ -42,7 +42,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
                        python-pip python-simplejson g++-multilib make zip unzip iperf3 \
                        debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip apt \
-                       lz4c pzstd zstd 
+                       liblz4-tool zstd 
 
 DEBIAN_FRONTEND=noninteractive apt-get clean
 
