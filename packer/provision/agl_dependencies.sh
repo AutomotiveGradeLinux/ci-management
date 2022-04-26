@@ -41,7 +41,8 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
                        python-pip python-simplejson g++-multilib make zip unzip iperf3 \
-                       debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip apt
+                       debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip apt \
+                       lz4c pzstd zstd 
 
 DEBIAN_FRONTEND=noninteractive apt-get clean
 
