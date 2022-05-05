@@ -133,8 +133,14 @@ sudo pip3 install mdlint
 # releng-scripts needs latest (stable v2.9) jinja2
 sudo pip install --force-reinstall --ignore-installed jinja2
 sudo pip install --upgrade jinja2
+sudo pip install --force-reinstall --ignore-installed PyYAML
+sudo pip install --upgrade PyYAML
+
 sudo pip3 install --force-reinstall --ignore-installed jinja2
 sudo pip3 install --upgrade jinja2
+sudo pip3 install --force-reinstall --ignore-installed PyYAML
+sudo pip3 install --upgrade PyYAML
+
 
 # updates for cloud-init
 sudo pip3 install --upgrade oauthlib
@@ -204,8 +210,12 @@ EOF
 
 curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
 
-DEBIAN_FRONTEND=noninteractive apt-get update 
+DEBIAN_FRONTEND=noninteractive apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install gitlab-runner
+
+# workaround for missing file that made pip bail out
+sudo touch /usr/local/lib/python3.6/dist-packages/PyYAML-6.0.dist-info/METADATA || true
+
 
 
 exit 0
