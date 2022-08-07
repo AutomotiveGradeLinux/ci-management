@@ -158,11 +158,7 @@ if test x"h3ulcb-nogfx" = x"$MACHINE"; then
         export TARGETIMAGE=${TARGETIMAGEnogfx}
         export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
     fi
-    if test x"master" = x"${TARGETBRANCH}" -o x"marlin" = x"${TARGETBRANCH}" -o x"lamprey" = x"${TARGETBRANCH}" -o x"koi" = x"${TARGETBRANCH}"; then
-        export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
-    else
-        export TARGETFEATURES="${TARGETFEATURESnogfx}"
-    fi
+    export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
     export TARGETMACHINE="h3ulcb"
 fi
 set +x

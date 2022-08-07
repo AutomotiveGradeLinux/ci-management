@@ -276,7 +276,6 @@
           - ../common/include-agl-run-test-prepare.sh
           - ../common/include-agl-run-test-rsync-changeid.sh
           - ../common/include-agl-setup-and-bitbake-ivi-image.sh
-          - ../common/include-agl-kci-publish-build-meta.sh
       - conditional-step:
           condition-kind: always
           steps:

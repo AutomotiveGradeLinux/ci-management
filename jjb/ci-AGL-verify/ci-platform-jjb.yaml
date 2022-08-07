@@ -131,6 +131,10 @@
             - name: 'ci-platform-{project}-verify-CIB-raspberrypi4'
               current-parameters: true
               kill-phase-on: FAILURE
+            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
+              current-parameters: true
+              abort-all-job: false
+              kill-phase-on: NEVER
       - multijob:
           name: CIB-{project}-finish-success
           condition: SUCCESSFUL
@@ -207,14 +211,6 @@
               current-parameters: true
               abort-all-job: false
               kill-phase-on: NEVER
-      #- multijob:
-      #    name: CIB-{project}-extra-variants
-      #    condition: COMPLETED
-      #    projects:
-      #      - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
-      #         current-parameters: true
-      #         abort-all-job: false
-      #         kill-phase-on: NEVER
 
     publishers:
       - trigger-parameterized-builds:
@@ -345,7 +341,6 @@
           - ../common/include-agl-run-test-prepare.sh
           - ../common/include-agl-run-test-rsync-changeid.sh
           - ../common/include-agl-setup-and-bitbake-ivi-image.sh
-          - ../common/include-agl-kci-publish-build-meta.sh
       - conditional-step:
           condition-kind: always
           steps:
