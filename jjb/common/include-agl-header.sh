@@ -187,11 +187,9 @@ fi
 
 
 ##### needlefish integration
-if test x"master" = x"${TARGETBRANCH}" ; then
-
+if test x"master" = x"${TARGETBRANCH}" -o test x"needlefish" = x"${TARGETBRANCH}" ; then
     if test x"bbe" = x"${TARGETMACHINE}" ; then
       echo "Target not yet building - exit gracefully."
       exit 0
     fi
-
 fi
