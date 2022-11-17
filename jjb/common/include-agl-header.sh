@@ -189,7 +189,12 @@ fi
 ##### needlefish integration
 if test x"master" = x"${TARGETBRANCH}" -o test x"needlefish" = x"${TARGETBRANCH}" ; then
     if test x"bbe" = x"${TARGETMACHINE}" ; then
-      echo "Target not yet building - exit gracefully."
-      exit 0
+      echo "Target only works for TELEMATICS PROFILE. Select this:"
+      echo "TARGETFEATURES=\"${TARGETFEATURESnogfx}\""
+      TARGETFEATURES="${TARGETFEATURESnogfx}"
+      echo "TARGETIMAGE=\"agl-telematics-demo-platform\""
+      echo "TARGETSDKIMAGE=\"agl-telematics-demo-platform\""
+      TARGETIMAGE="agl-telematics-demo-platform"
+      TARGETSDKIMAGE="agl-telematics-demo-platform"
     fi
 fi
