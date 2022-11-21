@@ -187,7 +187,7 @@ fi
 
 
 ##### needlefish integration
-if test x"master" = x"${TARGETBRANCH}" -o test x"needlefish" = x"${TARGETBRANCH}" ; then
+if test x"master" = x"${TARGETBRANCH}" -o x"needlefish" = x"${TARGETBRANCH}" ; then
     if test x"bbe" = x"${TARGETMACHINE}" ; then
       echo "Target only works for TELEMATICS PROFILE. Select this:"
       echo "TARGETFEATURES=\"${TARGETFEATURESnogfx}\""
