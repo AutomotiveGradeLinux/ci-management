@@ -133,10 +133,6 @@
             - name: 'ci-platform-{project}-verify-CIB-raspberrypi4'
               current-parameters: true
               kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
-              current-parameters: true
-              abort-all-job: false
-              kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIB-flutter-qemux86-64'
               current-parameters: true
               abort-all-job: false
@@ -218,6 +214,10 @@
           condition: SUCCESSFUL
           projects:
             - name: 'ci-platform-{project}-verify-CIBT-finish-success'
+              current-parameters: true
+              abort-all-job: false
+              kill-phase-on: NEVER
+            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
               current-parameters: true
               abort-all-job: false
               kill-phase-on: NEVER
