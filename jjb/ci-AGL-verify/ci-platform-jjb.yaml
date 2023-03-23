@@ -213,11 +213,11 @@
           name: 'CIBT-{project}-finish-success'
           condition: SUCCESSFUL
           projects:
-            - name: 'ci-platform-{project}-verify-CIBT-finish-success'
+            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
               current-parameters: true
               abort-all-job: false
               kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
+            - name: 'ci-platform-{project}-verify-CIBT-finish-success'
               current-parameters: true
               abort-all-job: false
               kill-phase-on: NEVER
