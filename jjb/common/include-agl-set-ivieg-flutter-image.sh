@@ -12,7 +12,7 @@ set -e
 # only run on master, jellyfish and icefish
 ( echo "marlin" | grep -q $TARGETBRANCH ) || exit 0
 
-export TARGETFEATURES="agl-flutter agl-devel"
+export TARGETFEATURES="agl-flutter agl-devel agl-ci"
 export TARGETQA=""
 export TARGETIMAGE="agl-image-flutter-debug"
 

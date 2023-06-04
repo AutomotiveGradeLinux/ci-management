@@ -12,7 +12,7 @@ set -e
 # only run on master, jellyfish and icefish
 ! ( echo "marlin jellyfish icefish koi lamprey" | grep -q $TARGETBRANCH ) || exit 0
 
-export TARGETFEATURES="agl-ic-container agl-devel"
+export TARGETFEATURES="agl-ic-container agl-devel agl-ci"
 export TARGETQA=""
 export TARGETIMAGE="agl-cluster-demo-lxc-host"
 
