@@ -5,7 +5,7 @@
 ## Run yocto-check-layer over AGL layers
 ################################################################################
 
-pushd
+pushd .
 
 # meta-agl
 pushd meta-agl
