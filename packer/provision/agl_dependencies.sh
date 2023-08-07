@@ -20,18 +20,16 @@ echo "---> Removing Vexxhost Ubuntu mirrors"
 sed -i 's/ubuntu.mirror.vexxhost.com/us.archive.ubuntu.com/g' /etc/apt/sources.list
 
 # UPDATE things
-sed -i -e "s,xenial,bionic,g" /etc/apt/sources.list
+sed -i -e "s,xenial,focal,g" /etc/apt/sources.list
 
 sync
 
 cat /etc/apt/sources.list
 
+DEBIAN_FRONTEND=noninteractive apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get --purge remove  plymouth-theme* plymouth
-
 DEBIAN_FRONTEND=noninteractive apt-get autoremove
-
-DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y -u dist-upgrade
-
+DEBIAN_FRONTEND=noninteractive apt-get apt-get -y -u dist-upgrade
 DEBIAN_FRONTEND=noninteractive dpkg --configure -a
 
 DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -42,23 +40,14 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
                        python-pip python-simplejson g++-multilib make zip unzip iperf3 \
                        debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip apt \
-                       liblz4-tool zstd 
+                       liblz4-tool zstd docker.io git diffstat unzip texinfo gcc build-essential \
+                       chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils \
+                       iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 \
+                       xterm python3-subunit mesa-common-dev zstd liblz4-tool
 
 DEBIAN_FRONTEND=noninteractive apt-get clean
-
-DEBIAN_FRONTEND=noninteractive apt-get -y install linux-image-4.15.0-123-generic
-
+#DEBIAN_FRONTEND=noninteractive apt-get -y install linux-image-4.15.0-123-generic
 DEBIAN_FRONTEND=noninteractive apt full-upgrade
-
-# Adding stretch-backports for lavacli
-#echo "deb https://apt.lavasoftware.org/release buster-backports main" >> /etc/apt/sources.list
-
-#wget https://apt.lavasoftware.org/lavasoftware.key.asc
-#sudo apt-key add lavasoftware.key.asc
-#rm lavasoftware.key.asc
-#sudo apt-key adv --recv-key --keyserver keyserver.ubuntu.com A791358F2E49B100
-
-#DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y lavacli
 
 sudo pip3 install --upgrade pip
 sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
@@ -101,31 +90,12 @@ net.ipv6.conf.all.disable_ipv6 = 1
 
 EOFSYSCTL
 
-### webdocs + xds
-# taken from container setup script. not documented in readme.
-# install node.js and tools (npm, gulp, bower)
-#
-#curl -v --connect-timeout 60 --retry 3 -sL https://deb.nodesource.com/setup_12.x | bash -
-#DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
-#which -a npm
-#dpkg -L nodejs
-#npm install --global gulp bower
-
-################### SDX181207 { - obsolete: section until closing brace should be removed after migration to next docsite
-# tools used to generate developer website (https://github.com/automotive-grade-linux/docs-agl)
-#gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 \
-#    && curl -sSL https://get.rvm.io | bash -s stable --ruby --gems=jekyll
-
-
 mkdir -p /opt/AGL
 cd /opt/AGL/
 
 git clone https://git.automotivelinux.org/AGL/documentation
 cd documentation
 sudo pip3 install -r requirements.txt
-
-# ruby markdown linter
-#sudo gem install mdl
 
 # python markdown linter
 sudo pip3 install mdlint
@@ -151,22 +121,7 @@ sudo pip3 install --upgrade jsonpatch
 
 python -c "import sys; print sys.path"
 
-#sudo pip show jinja2
-#sudo pip3 show jinja2
-
-# install go for xds build
-
 . /etc/os-release
-#wget -O - "http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x52B59B1571A79DBC054901C0F6BC817356A3D45E" | sudo apt-key add -
-#sudo bash -c "cat >> /etc/apt/sources.list.d/golang.list <<EOF
-#deb http://ppa.launchpad.net/longsleep/golang-backports/ubuntu bionic main
-#EOF"
-#sudo apt-get update
-#sudo apt-get install golang-go
-
-# Crossbuild standard go libraries for MacOS and Windows
-#sudo GOOS=darwin GOARCH=amd64 go install -v -a std
-#sudo GOOS=windows GOARCH=amd64 go install -v -a std
 
 useradd -m -s /bin/bash jenkins
 
