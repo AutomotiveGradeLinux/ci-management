@@ -7,6 +7,9 @@
 
 pushd .
 
+external/poky/scripts/install-buildtools
+source external/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+
 # meta-agl
 pushd meta-agl
   if test -x scripts/ci-yocto-check-layer.sh ; then

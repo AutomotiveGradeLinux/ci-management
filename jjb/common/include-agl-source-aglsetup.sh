@@ -6,6 +6,10 @@
 ################################################################################
 SETUP_OPTS=""
 
+external/poky/scripts/install-buildtools
+source external/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+
+
 # check aglsetup version
 source meta-agl/scripts/aglsetup.sh --version >/dev/null 2>&1 || AGLSETUP_VERSION=1.0.0
 
@@ -41,3 +45,6 @@ MACHINE=${MACHINE}
 GERRIT_CHANGE_NUMBER=${GERRIT_CHANGE_NUMBER}
 GERRIT_PATCHSET_NUMBER=${GERRIT_PATCHSET_NUMBER}
 EOF
+
+
+

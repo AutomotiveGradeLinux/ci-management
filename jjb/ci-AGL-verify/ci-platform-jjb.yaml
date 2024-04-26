@@ -2,7 +2,7 @@
 - project:
     name: ci-platform-AGL
     machine:
-      - bbe
+      #- bbe
       - h3ulcb-nogfx
       - qemux86-64
       - qemuarm
@@ -28,9 +28,9 @@
       # - ci-platform-{project}-verify-CIB-start             #unused
       - ci-platform-{project}-verify-CIB-{machine}
       - ci-platform-{project}-verify-YCL-qemux86-64
-      - ci-platform-{project}-verify-CIB-html5-qemux86-64
+      #- ci-platform-{project}-verify-CIB-html5-qemux86-64
       - ci-platform-{project}-verify-CIB-flutter-qemux86-64
-      - ci-platform-{project}-verify-CIB-ic-multicontainer-qemux86-64
+      #- ci-platform-{project}-verify-CIB-ic-multicontainer-qemux86-64
       - ci-platform-{project}-verify-CIB-finish-success
       - ci-platform-{project}-verify-failure
       # - ci-platform-{project}-verify-CIBT-start            #unused
@@ -119,10 +119,10 @@
           name: CIB-{project}-devboards
           condition: SUCCESSFUL
           projects:
-            - name: 'ci-platform-{project}-verify-CIB-bbe'
-              current-parameters: true
-              abort-all-job: false
-              kill-phase-on: NEVER
+            #- name: 'ci-platform-{project}-verify-CIB-bbe'
+            #  current-parameters: true
+            #  abort-all-job: false
+            #  kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIB-qemuarm'
               current-parameters: true
               #abort-all-job: true
@@ -141,12 +141,12 @@
             - name: 'ci-platform-{project}-verify-CIB-flutter-qemux86-64'
               current-parameters: true
               kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-ic-multicontainer-qemux86-64'
-              current-parameters: true
-              kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
-              current-parameters: true
-              kill-phase-on: FAILURE
+            #- name: 'ci-platform-{project}-verify-CIB-ic-multicontainer-qemux86-64'
+            #  current-parameters: true
+            #  kill-phase-on: FAILURE
+            #- name: 'ci-platform-{project}-verify-CIB-html5-qemux86-64'
+            #  current-parameters: true
+            #  kill-phase-on: FAILURE
       - multijob:
           name: CIB-{project}-finish-success
           condition: SUCCESSFUL
@@ -175,10 +175,10 @@
           name: CIBT-{project}
           condition: SUCCESSFUL
           projects:
-            - name: 'ci-platform-{project}-verify-CIBT-bbe'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: NEVER
+            #- name: 'ci-platform-{project}-verify-CIBT-bbe'
+            #  current-parameters: true
+            #  #abort-all-job: true
+            #  kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-qemux86-64'
               current-parameters: true
               #abort-all-job: true
@@ -425,7 +425,7 @@
           !include-raw-escape:
           - ../common/include-agl-header.sh
           - ../common/include-agl-repo.sh
-          #- ../common/include-agl-select.sh
+          - ../common/include-agl-select.sh
           #- ../common/include-agl-source-aglsetup.sh
           - ../common/include-agl-run-ycl-ci.sh
 
