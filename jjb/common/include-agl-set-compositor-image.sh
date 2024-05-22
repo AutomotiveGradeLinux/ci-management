@@ -9,13 +9,10 @@ set -e
 ## Header
 ################################################################################
 
-# only run on master, jellyfish and icefish
-( echo "master marlin jellyfish icefish koi lamprey" | grep -q $TARGETBRANCH ) || exit 0
-
 # Use the agl-compositor
 export TARGETFEATURES="agl-demo agl-devel agl-netboot"
 export TARGETQA=""
-export TARGETIMAGE="agl-demo-platform"
+export TARGETIMAGE="agl-ivi-demo-platform"
 
 eval TARGETIMAGE="$TARGETIMAGE"
 eval TARGETIMAGEnogfx="$TARGETIMAGE"

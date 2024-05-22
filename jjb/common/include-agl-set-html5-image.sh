@@ -9,12 +9,9 @@ set -e
 ## Header
 ################################################################################
 
-# only run on master, jellyfish and icefish
-#( echo "marlin jellyfish icefish koi lamprey" | grep -q $TARGETBRANCH ) || exit 0
-
 export TARGETFEATURES="agl-demo agl-devel agl-ci"
 export TARGETQA=""
-export TARGETIMAGE="agl-demo-platform-html5"
+export TARGETIMAGE="agl-ivi-demo-html5"
 
 eval TARGETIMAGE="$TARGETIMAGE"
 eval TARGETIMAGEnogfx="$TARGETIMAGE"

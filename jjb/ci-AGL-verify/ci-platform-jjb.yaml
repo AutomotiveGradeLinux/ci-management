@@ -21,14 +21,13 @@
       - meta-agl
       - meta-agl-demo
       - meta-agl-devel
-      - meta-agl-extra
       - AGL-repo
     jobs:
       - ci-platform-{project}-verify
       # - ci-platform-{project}-verify-CIB-start             #unused
       - ci-platform-{project}-verify-CIB-{machine}
       - ci-platform-{project}-verify-YCL-qemux86-64
-      #- ci-platform-{project}-verify-CIB-html5-qemux86-64
+      - ci-platform-{project}-verify-CIB-html5-qemux86-64
       - ci-platform-{project}-verify-CIB-flutter-qemux86-64
       #- ci-platform-{project}-verify-CIB-ic-multicontainer-qemux86-64
       - ci-platform-{project}-verify-CIB-finish-success

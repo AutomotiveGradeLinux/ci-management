@@ -33,10 +33,10 @@ export TARGETFEATURESnogfx="agl-ci-change-features-nogfx agl-ci"
 export TARGETFEATURES="agl-ci-change-features agl-ci"
 
 export TARGETQA=""
-export TARGETIMAGE="agl-demo-platform\${TARGETQA}"
-export TARGETIMAGEnogfx="agl-image-ivi-crosssdk"
+export TARGETIMAGE="agl-ivi-demo-qt"
+export TARGETIMAGEnogfx="agl-ivi-demo-qt"
 
-export TARGETSDKIMAGE="agl-demo-platform-crosssdk"
+export TARGETSDKIMAGE="agl-ivi-demo-qt-crosssdk"
 
 
 # apply GERRIT_*
@@ -132,32 +132,14 @@ if test -n "${BUILDONLY}" ; then
     fi
 fi
 
-# The exceptions
-if $NOGFX; then
-    export TARGETIMAGE=${TARGETIMAGEnogfx}
-    export TARGETFEATURES="${TARGETFEATURESnogfx}"
-fi
-# porter-nogfx means no graphic drivers
-if test x"porter-nogfx" = x"$MACHINE"; then
-    export TARGETIMAGE=${TARGETIMAGEnogfx}
-    export TARGETFEATURES="${TARGETFEATURESnogfx}"
-    export TARGETMACHINE="porter"
-    export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
-fi
 # m3ulcb-nogfx means no graphic drivers
 if test x"m3ulcb-nogfx" = x"$MACHINE"; then
-    export TARGETIMAGE=${TARGETIMAGEnogfx}
     export TARGETFEATURES="${TARGETFEATURESnogfx}"
     export TARGETMACHINE="m3ulcb"
-    export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
 fi
 set -x
 # h3ulcb-nogfx means no graphic drivers
 if test x"h3ulcb-nogfx" = x"$MACHINE"; then
-    if [ "${TARGETBRANCH}" = 'jellyfish' -o "${TARGETBRANCH}" = 'halibut' ];then
-        export TARGETIMAGE=${TARGETIMAGEnogfx}
-        export TARGETSDKIMAGE="agl-image-ivi-crosssdk"
-    fi
     export TARGETFEATURES="${TARGETFEATURESnogfx} agl-refhw-h3"
     export TARGETMACHINE="h3ulcb"
 fi
@@ -165,9 +147,6 @@ set +x
 
 if test x"raspberrypi4" = x"${MACHINE}" ; then
     export TARGETMACHINE="raspberrypi4-64"
-    if test x"halibut" = x"${TARGETBRANCH}" ; then
-        export TARGETMACHINE="raspberrypi4"
-    fi
 fi
 
 #if $DEBUG; then
@@ -182,19 +161,4 @@ sleep $((1 + RANDOM % 10))
 if test ! -f ~/.gitconfig ; then 
   git config --global user.email "jenkins-dontreply@build.automotivelinux.org"
   git config --global user.name "jenkins-dontreply@build.automotivelinux.org"
-fi
-
-
-
-##### needlefish integration
-if test x"lamprey" != x"${TARGETBRANCH}" ; then
-    if test x"bbe" = x"${TARGETMACHINE}" ; then
-      echo "Target only works for TELEMATICS PROFILE. Select this:"
-      echo "TARGETFEATURES=\"${TARGETFEATURESnogfx}\""
-      TARGETFEATURES="${TARGETFEATURESnogfx}"
-      echo "TARGETIMAGE=\"agl-telematics-demo-platform\""
-      echo "TARGETSDKIMAGE=\"agl-telematics-demo-platform\""
-      TARGETIMAGE="agl-telematics-demo-platform"
-      TARGETSDKIMAGE="agl-telematics-demo-platform"
-    fi
 fi

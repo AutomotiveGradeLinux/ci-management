@@ -12,8 +12,6 @@ set -e
 
 # VARIABLES
 OPTIND=1
-#export DLHOST="http://download.automotivelinux.org/"
-# DLHOST in auto.conf
 export NOGFX=false
 export VERBOSE=false
 export DEBUG=false
@@ -108,12 +106,7 @@ case "$TARGETARCH" in
 	    ;;
 	x86-64)
 	    export TARGETSDKARCH="corei7-64"
-	    # starting with master, we use qemu for the SDK.
-	    if test x"master" = x"$AGLBRANCH" -o x"jellyfish" = x"${AGLBRANCH}" -o x"marlin" = x"${AGLBRANCH}" -o x"lamprey" = x"${AGLBRANCH}" -o x"koi" = x"${AGLBRANCH}" ; then
-		export TARGETSDKMACHINE="qemux86-64"
-	    else
-		export TARGETSDKMACHINE="intel-corei7-64"
-	    fi
+	    export TARGETSDKMACHINE="qemux86-64"
 	    ;;
 	aarch64)
 	    export TARGETSDKARCH="aarch64"
