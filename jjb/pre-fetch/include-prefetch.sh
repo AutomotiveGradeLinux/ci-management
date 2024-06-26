@@ -3,11 +3,10 @@
 #set -x
 set +e
 #
-export BOARDS="qemux86-64 raspberrypi4 h3ulcb-nogfx m3ulcb-nogfx dra7xx-evm qemuarm qemuarm64 bbe"
-# check: dra7xx-evm dragonboard-410c wandboard
-export FEATURES="agl-demo agl-devel agl-netboot"
-export FEATURES_nogfx="agl-netboot agl-devel"
-export TARGETIMAGE="agl-demo-platform-crosssdk"
+export BOARDS="qemux86-64 qemuarm qemuarm64 raspberrypi4 raspberrypi5 h3ulcb-nogfx"
+export FEATURES="agl-demo agl-devel agl-netboot agl-ci"
+export FEATURES_nogfx="agl-netboot agl-devel agl-ci"
+export TARGETIMAGE="agl-ivi-demo-qt agl-ivi-demo-flutter"
 export TARGETIMAGE_nogfx="agl-image-minimal"
 
 mkdir -p mirror
@@ -27,10 +26,6 @@ repo sync -j8
 
 for i in $BOARDS ; do
     pushd .
-    if test x"porter-nogfx" = x"$i" ; then
-    FEATURES="${FEATURES_nogfx}"
-    TARGETIMAGE="${TARGETIMAGE_nogfx}"
-    fi
     if test x"m3ulcb-nogfx" = x"$i" ; then
     FEATURES="${FEATURES_nogfx}"
     TARGETIMAGE="${TARGETIMAGE_nogfx}"

@@ -52,6 +52,7 @@
             - qemuarm
             - qemuarm64
             - raspberrypi4
+            - raspberrypi5
             - m3ulcb-nogfx
             - h3ulcb-nogfx
             - bbe
