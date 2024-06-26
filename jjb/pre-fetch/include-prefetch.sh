@@ -24,6 +24,9 @@ cd repoclone
 repo init --repo-branch=repo-1 --reference=/opt/AGL/preclone -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo.git
 repo sync -j8
 
+external/poky/scripts/install-buildtools
+source external/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+
 for i in $BOARDS ; do
     pushd .
     if test x"m3ulcb-nogfx" = x"$i" ; then
