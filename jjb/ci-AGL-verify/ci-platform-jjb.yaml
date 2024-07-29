@@ -37,7 +37,7 @@
       - ci-platform-{project}-verify-CIBT-{testmachine}
       - ci-platform-{project}-verify-CIBT-complete
       - ci-platform-{project}-verify-CIBT-finish-success
-      - ci-platform-{project}-merge-update-next
+      #- ci-platform-{project}-merge-update-next
       - ci-platform-{project}-remove-artifacts
     description: "Managed by JJB. Do not Edit. \
                   <br>Build time graph:<br><img src='buildTimeGraph/png' />"

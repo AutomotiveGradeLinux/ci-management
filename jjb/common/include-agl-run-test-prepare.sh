@@ -16,7 +16,7 @@ else
 fi
 
 if [ -e releng-scripts/utils ]; then
-    export PATH=$PATH:$PWD/releng-scripts/utils
+    export PATH="/usr/bin:$PATH:$PWD/releng-scripts/utils"
     RELENG=$PWD/releng-scripts
 fi
 
