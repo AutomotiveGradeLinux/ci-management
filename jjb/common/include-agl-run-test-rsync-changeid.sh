@@ -33,9 +33,11 @@ do
 	echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB}"
 	echo "tmp/deploy/images/${TARGETMACHINE}/${DEVICE_DTB#"$DEVICE_KERNEL"-}"
 
-	if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ] ; then
-		cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST}/
-	fi
+#	if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ] ; then
+#		cp -avL tmp/deploy/images/${TARGETMACHINE}/build-info ${DEST}/
+#	fi
+
+set
 
 	# detect BUG SPEC-3751
 	F_NBDROOT="tmp/deploy/images/${TARGETMACHINE}/$DEVICE_NBDROOT"

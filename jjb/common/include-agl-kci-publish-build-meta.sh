@@ -5,12 +5,14 @@ echo "#########################################"
 echo "\n\n\n"
 
 kci-publish() {
-	if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ] ; then
-		echo "DEBUG: load build-info"
-		# we need some variable from here
-		source tmp/deploy/images/${TARGETMACHINE}/build-info
-	fi
+#	if [ -e tmp/deploy/images/${TARGETMACHINE}/build-info ] ; then
+#		echo "DEBUG: load build-info"
+#		# we need some variable from here
+#		source tmp/deploy/images/${TARGETMACHINE}/build-info
+#	fi
 	echo "DEBUG: GERRIT_PROJECT $GERRIT_PROJECT"
+
+set
 
 	FSR=""
 	# check GERRIT_PROJECT to find if we build an app or not
@@ -108,4 +110,4 @@ set -e
 	return 0
 }
 
-kci-publish
+#kci-publish

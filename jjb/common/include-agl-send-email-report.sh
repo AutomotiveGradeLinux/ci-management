@@ -14,7 +14,7 @@ set | grep MACH
 
 send_email_report()
 {
-wget -q ${UPLOAD_URL}/build-info || echo "ERROR: send_email_report: failed to get build-info"
+#wget -q ${UPLOAD_URL}/build-info || echo "ERROR: send_email_report: failed to get build-info"
 
 if [ ! -s build-info ]; then
 	return 0
@@ -37,4 +37,4 @@ if [ -n "$KCI_EMAIL_AUTH_TOKEN" ]; then
 fi
 }
 
-send_email_report
+#send_email_report

@@ -12,11 +12,11 @@ UPLOAD_URL=${UPLOAD_URL_BASE}/${GERRIT_CHANGE_NUMBER}/${GERRIT_PATCHSET_NUMBER}/
 
 cd $REPODIR
 
-wget -q ${UPLOAD_URL}/build-info || echo "ERROR: fail to download ${UPLOAD_URL}/build-info"
-if [ -e build-info ]; then
-	cat build-info
-	source build-info
-fi
+#wget -q ${UPLOAD_URL}/build-info || echo "ERROR: fail to download ${UPLOAD_URL}/build-info"
+#if [ -e build-info ]; then
+#	cat build-info
+#	source build-info
+#fi
 
 BUILD_VERSION=""
 if [[ ! -z $DIST_BUILD_TOPIC ]]; then
@@ -28,7 +28,8 @@ fi
 echo "# LAVA lab target: ${LAVA_LAB} #"
 # releng-scripts depends on jinja2 >= 2.9
 echo "## Check version of python-jinja2: "
-pip show jinja2
+pip3 show jinja2
+
 CREATE_ARGS=""
 CREATE_ARGS+="--machine ${releng_device} "
 CREATE_ARGS+="--build-type ci "

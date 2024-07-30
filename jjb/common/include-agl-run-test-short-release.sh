@@ -15,7 +15,8 @@ BUILD_VERSION="AGL-gerrit-$RELEASE_BRANCH-$RELEASE_VERSION"
 echo "# LAVA lab target: ${LAVA_LAB} #"
 # releng-scripts depends on jinja2 >= 2.9
 echo "## Check version of python-jinja2: "
-pip show jinja2
+pip3 show jinja2
+
 CREATE_ARGS=""
 CREATE_ARGS+="--machine ${releng_device} "
 CREATE_ARGS+="--build-type release "

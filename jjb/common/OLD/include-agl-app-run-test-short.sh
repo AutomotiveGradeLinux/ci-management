@@ -6,7 +6,8 @@
 ## Run SHORT CI test
 ################################################################################
 
-#set -x
+#
+set -x
 
 cd $REPODIR
 
@@ -16,7 +17,7 @@ BUILD_VERSION="AGL-app-gerrit-$GERRIT_CHANGE_NUMBER-$GERRIT_PATCHSET_NUMBER"
 echo "# LAVA lab target: ${LAVA_LAB} #"
 # releng-scripts depends on jinja2 >= 2.9
 echo "## Check version of python-jinja2: "
-pip show jinja2
+pip3 show jinja2
 CREATE_ARGS=""
 case $TARGETARCH in
 arm)
