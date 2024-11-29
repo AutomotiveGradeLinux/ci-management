@@ -13,8 +13,8 @@ export TARGETFEATURES="agl-demo agl-devel agl-ci"
 export TARGETQA=""
 export TARGETIMAGE="agl-ivi-demo-html5"
 
-eval TARGETIMAGE="$TARGETIMAGE"
-eval TARGETIMAGEnogfx="$TARGETIMAGE"
+#TARGETIMAGE="$TARGETIMAGE"
+TARGETIMAGEnogfx="$TARGETIMAGE"
 
 #if $DEBUG; then
 set | grep ^TARGET || true

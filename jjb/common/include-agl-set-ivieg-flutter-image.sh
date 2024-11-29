@@ -16,8 +16,8 @@ export TARGETFEATURES="agl-flutter agl-devel agl-ci"
 export TARGETQA=""
 export TARGETIMAGE="agl-image-flutter-debug"
 
-eval TARGETIMAGE="$TARGETIMAGE"
-eval TARGETIMAGEnogfx="$TARGETIMAGE"
+#TARGETIMAGE="$TARGETIMAGE"
+TARGETIMAGEnogfx="$TARGETIMAGE"
 
 #if $DEBUG; then
 set | grep ^TARGET || true

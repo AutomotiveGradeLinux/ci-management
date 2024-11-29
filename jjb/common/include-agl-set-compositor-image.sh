@@ -14,8 +14,8 @@ export TARGETFEATURES="agl-demo agl-devel agl-netboot"
 export TARGETQA=""
 export TARGETIMAGE="agl-ivi-demo-platform"
 
-eval TARGETIMAGE="$TARGETIMAGE"
-eval TARGETIMAGEnogfx="$TARGETIMAGE"
+#eval TARGETIMAGE="$TARGETIMAGE"
+#eval TARGETIMAGEnogfx="$TARGETIMAGE"
 
 #if $DEBUG; then
 set | grep ^TARGET || true

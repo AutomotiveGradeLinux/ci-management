@@ -33,10 +33,10 @@ export TARGETFEATURESnogfx="agl-ci-change-features-nogfx agl-ci"
 export TARGETFEATURES="agl-ci-change-features agl-ci"
 
 export TARGETQA=""
-export TARGETIMAGE="agl-ivi-demo-qt"
-export TARGETIMAGEnogfx="agl-ivi-demo-qt"
+export TARGETIMAGE="agl-ivi-demo-qt agl-ivi-demo-flutter"
+export TARGETIMAGEnogfx="agl-ivi-demo-qt agl-ivi-demo-flutter"
 
-export TARGETSDKIMAGE="agl-ivi-demo-qt-crosssdk"
+export TARGETSDKIMAGE="agl-ivi-demo-qt agl-ivi-demo-flutter"
 
 
 # apply GERRIT_*
@@ -116,8 +116,8 @@ while getopts ":b:i:p:r:dnqvx" opt; do
 done
 
 # expand
-eval TARGETIMAGE="$TARGETIMAGE"
-eval TARGETIMAGEnogfx="$TARGETIMAGEnogfx"
+#eval TARGETIMAGE="$TARGETIMAGE"
+#eval TARGETIMAGEnogfx="$TARGETIMAGEnogfx"
 
 # The 'real' machine name
 export TARGETMACHINE=${MACHINE}
