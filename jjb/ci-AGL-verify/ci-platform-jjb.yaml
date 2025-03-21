@@ -5,7 +5,7 @@
       #- bbe
       - h3ulcb-nogfx
       - qemux86-64
-      - qemuarm
+      #- qemuarm
       - qemuarm64
       - raspberrypi4
       - raspberrypi5
@@ -123,10 +123,10 @@
             #  current-parameters: true
             #  abort-all-job: false
             #  kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIB-qemuarm'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
+            #- name: 'ci-platform-{project}-verify-CIB-qemuarm'
+            #  current-parameters: true
+            #  #abort-all-job: true
+            #  kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-qemuarm64'
               current-parameters: true
               #abort-all-job: true
