@@ -10,7 +10,7 @@ cat <<EOFSTAB >> /etc/fstab
 # tmp should be tmpfs so gcc tmpfiles do not hit the disk
 none /tmp tmpfs defaults 0 0
 
-10.30.73.73:/srv/tank /mnt/tank nfs4 auto,x-systemd.automount,async,rsize=8192,wsize=8192,sec=sys,intr 0 0
+10.30.73.73:/srv/tank /mnt/tank nfs auto,async,rsize=8192,wsize=8192,sec=sys,intr 0 0
 
 EOFSTAB
 
