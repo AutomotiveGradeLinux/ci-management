@@ -21,12 +21,11 @@ sed -i 's/ubuntu.mirror.vexxhost.com/us.archive.ubuntu.com/g' /etc/apt/sources.l
 
 # UPDATE things
 sed -i -e "s,xenial,focal,g" /etc/apt/sources.list
-
 sync
-
 cat /etc/apt/sources.list
 
 DEBIAN_FRONTEND=noninteractive apt-get update
+DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive
 DEBIAN_FRONTEND=noninteractive apt-get --purge remove  plymouth-theme* plymouth
 DEBIAN_FRONTEND=noninteractive apt-get autoremove
 DEBIAN_FRONTEND=noninteractive apt-get apt-get -y -u dist-upgrade
@@ -49,7 +48,6 @@ DEBIAN_FRONTEND=noninteractive apt-get clean
 #DEBIAN_FRONTEND=noninteractive apt-get -y install linux-image-4.15.0-123-generic
 DEBIAN_FRONTEND=noninteractive apt full-upgrade
 
-DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive
 
 sudo pip3 install --upgrade pip
 sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
