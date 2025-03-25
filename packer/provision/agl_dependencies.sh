@@ -20,7 +20,7 @@ echo "---> Removing Vexxhost Ubuntu mirrors"
 sed -i 's/ubuntu.mirror.vexxhost.com/us.archive.ubuntu.com/g' /etc/apt/sources.list
 
 # UPDATE things
-sed -i -e "s,xenial,focal,g" /etc/apt/sources.list
+sed -i -e "s,xenial,jammy,g" /etc/apt/sources.list
 sync
 cat /etc/apt/sources.list
 
