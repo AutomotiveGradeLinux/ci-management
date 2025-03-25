@@ -44,10 +44,6 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        xterm python3-subunit mesa-common-dev zstd liblz4-tool
 
 
-# let the upgrade run anyway
-rm -rf /var/run/reboot-requir*
-
-DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive
 
 DEBIAN_FRONTEND=noninteractive apt-get clean
 #DEBIAN_FRONTEND=noninteractive apt-get -y install linux-image-4.15.0-123-generic
@@ -78,6 +74,12 @@ EOFHOSTS
 
 # install newer version of jjb ... fixes issues with rendering
 sudo pip install --upgrade --force-reinstall -v jenkins-job-builder
+
+# let the upgrade run anyway
+rm -rf /var/run/reboot-requir*
+
+DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive --mode=server
+
 
 cat <<EOFSYSCTL >> /etc/sysctl.conf
 # we have a lot of make jobs, this helps a lot
