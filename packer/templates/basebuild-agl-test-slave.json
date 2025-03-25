@@ -13,7 +13,7 @@
   "builders": [
     {
       "name": "vexxhost",
-      "image_name": "{{user `distro`}} - basebuild-agl-test-slave - {{isotime \"20060102-1504\"}}",
+      "image_name": "basebuild-agl-test-slave - {{isotime \"20060102-1504\"}}",
       "source_image_name": "{{user `base_image`}}",
       "type": "openstack",
       "identity_endpoint": "https://auth.vexxhost.net/v3/",

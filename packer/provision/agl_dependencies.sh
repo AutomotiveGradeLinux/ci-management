@@ -29,6 +29,13 @@ DEBIAN_FRONTEND=noninteractive apt-get --purge remove  plymouth-theme* plymouth
 DEBIAN_FRONTEND=noninteractive apt-get autoremove
 DEBIAN_FRONTEND=noninteractive apt-get apt-get -y -u dist-upgrade
 DEBIAN_FRONTEND=noninteractive dpkg --configure -a
+DEBIAN_FRONTEND=noninteractive apt-get update
+
+# let the upgrade run anyway
+rm -rf /var/run/reboot-requir*
+
+DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive --mode=server
+
 
 DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat \
@@ -50,9 +57,9 @@ DEBIAN_FRONTEND=noninteractive apt-get clean
 DEBIAN_FRONTEND=noninteractive apt full-upgrade
 
 
-sudo pip3 install --upgrade pip
-sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
-sudo pip3 install --upgrade --ignore-installed --force-reinstall lavacli==1.0
+#sudo pip3 install --upgrade pip
+#sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
+#sudo pip3 install --upgrade --ignore-installed --force-reinstall lavacli==1.0
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
@@ -75,10 +82,7 @@ EOFHOSTS
 # install newer version of jjb ... fixes issues with rendering
 sudo pip install --upgrade --force-reinstall -v jenkins-job-builder
 
-# let the upgrade run anyway
-rm -rf /var/run/reboot-requir*
 
-DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive --mode=server
 
 
 cat <<EOFSYSCTL >> /etc/sysctl.conf
