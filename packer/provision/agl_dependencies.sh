@@ -49,6 +49,8 @@ DEBIAN_FRONTEND=noninteractive apt-get clean
 #DEBIAN_FRONTEND=noninteractive apt-get -y install linux-image-4.15.0-123-generic
 DEBIAN_FRONTEND=noninteractive apt full-upgrade
 
+DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive
+
 sudo pip3 install --upgrade pip
 sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
 sudo pip3 install --upgrade --ignore-installed --force-reinstall lavacli==1.0
@@ -60,6 +62,7 @@ DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash
 
 # add user ubuntu to docker group:
 sudo usermod -a -G docker ubuntu
+sudo usermod -a -G docker jenkins
 
 cat <<EOFHOSTS >> /etc/hosts
 
