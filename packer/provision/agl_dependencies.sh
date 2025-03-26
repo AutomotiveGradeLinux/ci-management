@@ -30,10 +30,15 @@ DEBIAN_FRONTEND=noninteractive apt-get autoremove
 DEBIAN_FRONTEND=noninteractive apt-get apt-get -y -u dist-upgrade
 DEBIAN_FRONTEND=noninteractive dpkg --configure -a
 DEBIAN_FRONTEND=noninteractive apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get apt-get -y -u dist-upgrade
 DEBIAN_FRONTEND=noninteractive apt-get autoremove
 DEBIAN_FRONTEND=noninteractive apt-get clean
+DEBIAN_FRONTEND=noninteractive dpkg --configure -a
+DEBIAN_FRONTEND=noninteractive apt full-upgrade
+
 
 # let the upgrade run anyway
+ls -alh /var/run/
 rm -rf /var/run/reboot-requir*
 DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive --mode=server
 DEBIAN_FRONTEND=noninteractive apt-get update
