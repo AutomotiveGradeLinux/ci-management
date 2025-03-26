@@ -53,14 +53,14 @@ DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteracti
 DEBIAN_FRONTEND=noninteractive apt-get update && \
     apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat \
                        libsdl1.2-dev xterm make xsltproc docbook-utils fop dblatex xmlto autoconf automake \
-                       libtool libglib2.0-dev libarchive-dev python-git git python python-minimal repo \
-                       tree rsync python-yaml python-requests curl tar docker.io pandoc python3 \
+                       libtool libglib2.0-dev libarchive-dev git git-all repo \
+                       tree rsync curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
                        python-pip python-simplejson g++-multilib make zip unzip iperf3 \
                        debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip apt \
                        liblz4-tool zstd docker.io git diffstat unzip texinfo gcc build-essential \
-                       chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils \
-                       iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 \
+                       chrpath socat cpio python-is-python3 python3 python3-pip python3-pexpect xz-utils debianutils \
+                       iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev \
                        xterm python3-subunit mesa-common-dev zstd liblz4-tool default-jre-headless
 
 
