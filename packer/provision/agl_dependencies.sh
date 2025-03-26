@@ -56,7 +56,7 @@ DEBIAN_FRONTEND=noninteractive apt-get update && \
                        libtool libglib2.0-dev libarchive-dev git git-all repo \
                        tree rsync curl tar docker.io pandoc python3 \
                        ruby-all-dev ruby-ffi ruby-ffi-* jekyll ruby-redcarpet mkdocs \
-                       python-pip python-simplejson g++-multilib make zip unzip iperf3 \
+                       g++-multilib make zip unzip iperf3 \
                        debian-keyring debian-archive-keyring python3-yaml python3-pip python-pip apt \
                        liblz4-tool zstd docker.io git diffstat unzip texinfo gcc build-essential \
                        chrpath socat cpio python-is-python3 python3 python3-pip python3-pexpect xz-utils debianutils \
