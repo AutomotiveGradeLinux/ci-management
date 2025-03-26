@@ -19,8 +19,8 @@ cat /etc/apt/sources.list
 echo "---> Removing Vexxhost Ubuntu mirrors"
 sed -i 's/ubuntu.mirror.vexxhost.com/us.archive.ubuntu.com/g' /etc/apt/sources.list
 
-# UPDATE things
-sed -i -e "s,xenial,jammy,g" /etc/apt/sources.list
+# UPDATE things , jammy throws segfault on do-release-upgrade
+sed -i -e "s,xenial,focal,g" /etc/apt/sources.list
 sync
 cat /etc/apt/sources.list
 
@@ -30,10 +30,18 @@ DEBIAN_FRONTEND=noninteractive apt-get autoremove
 DEBIAN_FRONTEND=noninteractive apt-get apt-get -y -u dist-upgrade
 DEBIAN_FRONTEND=noninteractive dpkg --configure -a
 DEBIAN_FRONTEND=noninteractive apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get autoremove
+DEBIAN_FRONTEND=noninteractive apt-get clean
 
 # let the upgrade run anyway
 rm -rf /var/run/reboot-requir*
+DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive --mode=server
+DEBIAN_FRONTEND=noninteractive apt-get update
+DEBIAN_FRONTEND=noninteractive apt-get autoremove
+DEBIAN_FRONTEND=noninteractive apt-get clean
 
+# again
+rm -rf /var/run/reboot-requir*
 DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteractive --mode=server
 
 
