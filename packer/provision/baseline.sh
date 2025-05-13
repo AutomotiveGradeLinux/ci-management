@@ -130,7 +130,7 @@ EOF
     apt-get install -y default-jre-headless default-jdk-headless unzip
 
     # install NFS
-    apt-get install -y nfs-common
+    #apt-get install -y nfs-common
 
 }
 
