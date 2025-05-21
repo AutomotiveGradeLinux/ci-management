@@ -81,7 +81,7 @@ if [[ ! x"yes" = x"$HANDLED" ]] && $(echo "$TARGETPROJECT" | grep -q "apps/"); t
 
     mkdir AGL
     pushd AGL
-    repo init  --repo-branch=repo-1 --reference=/opt/AGL/preclone -q -b $TARGETBRANCH -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
+    repo init --reference=/opt/AGL/preclone -q -b $TARGETBRANCH -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
     repo sync --force-sync -d -j12
     
     source meta-agl/scripts/aglsetup.sh -m qemux86-64 agl-demo agl-devel agl-voiceagent-alexa agl-cluster-demo 

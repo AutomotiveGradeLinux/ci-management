@@ -4,7 +4,7 @@
 set -e
 
 mkdir -p ~/bin/ || true
-curl https://storage.googleapis.com/git-repo-downloads/repo-1 > ~/bin/repo
+curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 chmod a+x ~/bin/repo
 export PATH=$PATH:~/bin/
 

@@ -23,8 +23,20 @@ fi
 source meta-agl/scripts/aglsetup.sh ${SETUP_OPTS} -m ${MACHINE} -b output ${TARGETFEATURES}
 
 # link the shared downloads and sstate-cache
-ln -sf ../../downloads
-ln -sf ../../sstate-cache
+
+if [ -d /mnt/tank ]; then
+  rm downloads sstate-cache -rf || true
+  #mkdir -p /mnt/tank/downloads || true
+  #ln -sf /mnt/tank/downloads downloads
+  ln -sf /mnt/tank/sstate-mirror ../sstate-mirror
+  cat << EOF > conf/auto.conf
+  SSTATE_DIR = "\${TOPDIR}/../sstate-mirror/${AGLBRANCH}/\${DEFAULTTUNE}/"
+  EOF
+
+else
+  ln -sf ../../downloads
+  ln -sf ../../sstate-cache
+fi
 
 echo "" >> conf/local.conf
 echo "### ADDED BY AUTOBUILDER ###" >> conf/local.conf
