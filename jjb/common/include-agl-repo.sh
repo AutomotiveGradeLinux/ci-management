@@ -17,19 +17,17 @@ export PATH=~/bin:$PATH
 mkdir -p downloads
 mkdir -p sstate-cache
 
-# remove old files, we want to test a fresh clone
+# use a private folder
 export XTMP="$$"
-mv repoclone repoclone$XTMP || true
-( rm -rf repoclone$XTMP & ) || true
-mkdir -p repoclone
-cd repoclone
+mkdir -p "repoclone$XTMP"
+cd "repoclone$XTMP"
 
 export REPODIR=`pwd`
 
 if test x"" = x"${RELEASE_VERSION}" -a x"" = x"${RELEASE_BRANCH}" ; then
     #repo init --repo-branch=repo-1 --reference=/opt/AGL/preclone -q -b $TARGETBRANCH -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
     #GIT_TRACE=1 REPO_TRACE=1 repo init --reference=/opt/AGL/preclone -b $TARGETBRANCH -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
-    repo init --reference=/opt/AGL/preclone -b $TARGETBRANCH -u https://git.automotivelinux.org/AGL/AGL-repo
+    repo init --reference=/opt/AGL/preclone -b $TARGETBRANCH -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo
 else
   if test x"AGL/meta-renesas-rcar-gen3" = x"${TARGETPROJECT}" ; then
     #repo init --repo-branch=repo-1 --reference=/opt/AGL/preclone -q -b master -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo

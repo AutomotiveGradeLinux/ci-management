@@ -29,9 +29,9 @@ if [ -d /mnt/tank ]; then
   #mkdir -p /mnt/tank/downloads || true
   #ln -sf /mnt/tank/downloads downloads
   ln -sf /mnt/tank/sstate-mirror ../sstate-mirror
-  cat << EOF > conf/auto.conf
-  SSTATE_DIR = "\${TOPDIR}/../sstate-mirror/${AGLBRANCH}/\${DEFAULTTUNE}/"
-  EOF
+cat << EOF > conf/auto.conf
+SSTATE_DIR = "\${TOPDIR}/../sstate-mirror/\${AGL_BRANCH}/\${DEFAULTTUNE}/"
+EOF
 
 else
   ln -sf ../../downloads

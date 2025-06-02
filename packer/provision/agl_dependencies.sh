@@ -73,7 +73,7 @@ DEBIAN_FRONTEND=noninteractive apt full-upgrade
 
 #sudo pip3 install --upgrade pip
 #sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
-#sudo pip3 install --upgrade --ignore-installed --force-reinstall lavacli==1.0
+sudo pip3 install --upgrade --ignore-installed --force-reinstall lavacli
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
@@ -89,7 +89,7 @@ cat <<EOFHOSTS >> /etc/hosts
 # workaround for download
 10.30.72.8 download.automotivelinux.org
 10.30.72.8 download-internal.automotivelinux.org
-127.0.0.1 ubuntu-16
+127.0.0.1 ubuntu
 
 EOFHOSTS
 

@@ -16,4 +16,3 @@ if test x"master" = x"${TARGETBRANCH}" ; then
 fi
 
 cd ..
-rm -rf repoclone

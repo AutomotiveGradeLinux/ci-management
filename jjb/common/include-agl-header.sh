@@ -1,7 +1,7 @@
 #!/bin/bash
 # (c) 2016 Jan-Simon Moeller dl9pf(at)gmx.de
 # License GPLv2
-#
+# include-agl-header.sh
 # debugging purposes
 set -e
 
@@ -114,10 +114,6 @@ while getopts ":b:i:p:r:dnqvx" opt; do
 	    ;;
     esac
 done
-
-# expand
-#eval TARGETIMAGE="$TARGETIMAGE"
-#eval TARGETIMAGEnogfx="$TARGETIMAGEnogfx"
 
 # The 'real' machine name
 export TARGETMACHINE=${MACHINE}
