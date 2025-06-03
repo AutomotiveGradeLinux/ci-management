@@ -21,7 +21,7 @@ rm -rf repoclone2 || true
 mkdir -p repoclone
 cd repoclone
 
-repo init --repo-branch=repo-1 --reference=/opt/AGL/preclone -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo.git
+repo init --reference=/opt/AGL/preclone -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo.git
 repo sync -j8
 
 external/poky/scripts/install-buildtools
