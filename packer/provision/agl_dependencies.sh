@@ -72,8 +72,8 @@ DEBIAN_FRONTEND=noninteractive apt full-upgrade
 
 
 #sudo pip3 install --upgrade pip
-#sudo pip3 install --upgrade --force-reinstall --ignore-installed pyyaml
-sudo pip3 install --upgrade --ignore-installed --force-reinstall lavacli
+sudo python3 -mpip install --upgrade --force-reinstall --ignore-installed pyyaml
+sudo python3 -mpip install --upgrade --ignore-installed --force-reinstall lavacli
 
 # we have a build blocker wrt useradd - I assume it is caused by /bin/sh being dash
 # systemd: Performing useradd with
@@ -94,7 +94,7 @@ cat <<EOFHOSTS >> /etc/hosts
 EOFHOSTS
 
 # install newer version of jjb ... fixes issues with rendering
-sudo pip install --upgrade --force-reinstall -v jenkins-job-builder
+sudo python3 -mpip install --upgrade --force-reinstall -v jenkins-job-builder
 
 
 
@@ -121,29 +121,29 @@ cd /opt/AGL/
 
 git clone https://git.automotivelinux.org/AGL/documentation
 cd documentation
-sudo pip3 install -r requirements.txt
+sudo python3 -mpip install -r requirements.txt
 
 # python markdown linter
-sudo pip3 install mdlint
+sudo python3 -mpip install mdlint
 
 # releng-scripts needs latest (stable v2.9) jinja2
-sudo pip install --force-reinstall --ignore-installed jinja2
-sudo pip install --upgrade jinja2
-sudo pip install --force-reinstall --ignore-installed PyYAML
-sudo pip install --upgrade PyYAML
+sudo python3 -mpip install --force-reinstall --ignore-installed jinja2
+sudo python3 -mpip install --upgrade jinja2
+sudo python3 -mpip install --force-reinstall --ignore-installed PyYAML
+sudo python3 -mpip install --upgrade PyYAML
 
-sudo pip3 install --force-reinstall --ignore-installed jinja2
-sudo pip3 install --upgrade jinja2
-sudo pip3 install --force-reinstall --ignore-installed PyYAML
-sudo pip3 install --upgrade PyYAML
+sudo python3 -mpip install --force-reinstall --ignore-installed jinja2
+sudo python3 -mpip install --upgrade jinja2
+sudo python3 -mpip install --force-reinstall --ignore-installed PyYAML
+sudo python3 -mpip install --upgrade PyYAML
 
 
 # updates for cloud-init
-sudo pip3 install --upgrade oauthlib
-sudo pip3 install --upgrade configobj>=5.0.2
-sudo pip3 install --upgrade requests
-sudo pip3 install --upgrade jsonschema
-sudo pip3 install --upgrade jsonpatch
+sudo python3 -mpip install --upgrade oauthlib
+sudo python3 -mpip install --upgrade configobj>=5.0.2
+sudo python3 -mpip install --upgrade requests
+sudo python3 -mpip install --upgrade jsonschema
+sudo python3 -mpip install --upgrade jsonpatch
 
 python -c "import sys; print sys.path"
 
@@ -195,10 +195,6 @@ curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/s
 
 DEBIAN_FRONTEND=noninteractive apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install gitlab-runner
-
-# workaround for missing file that made pip bail out
-sudo touch /usr/local/lib/python3.6/dist-packages/PyYAML-6.0.dist-info/METADATA || true
-
 
 
 exit 0
