@@ -113,7 +113,7 @@
           #- ../common/include-agl-local-conf-rpi3-imagetype.sh
           #- ../common/include-agl-bitbake-image.sh
           - ../common/include-agl-bitbake-sdk.sh
-          - bitbake-html5-image-qemux86-64.sh
+          #- bitbake-html5-image-qemux86-64.sh
       - shell:
           !include-raw-escape: include-release-jjb-snapshot-rsync.sh
       - shell:
