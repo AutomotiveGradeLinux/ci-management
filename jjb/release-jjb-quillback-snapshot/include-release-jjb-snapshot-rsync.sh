@@ -17,7 +17,11 @@ set
 echo "#######################################"
 echo "#######################################"
 
-cd repoclone/output
+#cd repoclone/output
+source .mypath 
+cd $REPODIR
+cd output
+
 
 export REMOTEDST="/srv/download/AGL/upload/ci/${RELEASE_BRANCH}/${RELEASE_VERSION}/${MACHINE}/"
 export RSYNCDST="jenkins-slave@10.30.72.8:${REMOTEDST}"
