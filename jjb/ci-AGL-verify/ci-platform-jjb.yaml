@@ -12,10 +12,9 @@
       #fixme qemuriscv
       - h3ulcb-nogfx
       - qemux86-64
-      - qemuarm
       - qemuarm64
       - raspberrypi4
-      - upsquare
+      - raspberrypi5
       - r8a7795-agl-refhw
     project:
       - meta-agl
