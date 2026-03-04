@@ -51,7 +51,7 @@ DEBIAN_FRONTEND=noninteractive do-release-upgrade -f DistUpgradeViewNonInteracti
 
 
 DEBIAN_FRONTEND=noninteractive apt-get update && \
-    apt-get -y install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat \
+    apt-get -y install gawk wget git-all git-lfs diffstat unzip texinfo gcc-multilib build-essential chrpath socat \
                        libsdl1.2-dev xterm make xsltproc docbook-utils fop dblatex xmlto autoconf automake \
                        libtool libglib2.0-dev libarchive-dev git git-all repo \
                        tree rsync curl tar docker.io pandoc python3 \
@@ -184,17 +184,16 @@ sudo chown -R ubuntu:ubuntu /home/ubuntu
 
 
 # gitlab-runner
-cat <<EOF | sudo tee /etc/apt/preferences.d/pin-gitlab-runner.pref
-Explanation: Prefer GitLab provided packages over the Debian native ones
-Package: gitlab-runner
-Pin: origin packages.gitlab.com
-Pin-Priority: 1001
-EOF
+#cat <<EOF | sudo tee /etc/apt/preferences.d/pin-gitlab-runner.pref
+#Explanation: Prefer GitLab provided packages over the Debian native ones
+#Package: gitlab-runner
+#Pin: origin packages.gitlab.com
+#Pin-Priority: 1001
+#EOF
 
-curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
-
-DEBIAN_FRONTEND=noninteractive apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install gitlab-runner
+#curl -L "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh" | sudo bash
+#DEBIAN_FRONTEND=noninteractive apt-get update
+#DEBIAN_FRONTEND=noninteractive apt-get install gitlab-runner
 
 
 exit 0
