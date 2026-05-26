@@ -1,0 +1,17 @@
+header:
+  version: 14
+
+local_conf_header:
+  agl_distro: |
+    DISTRO = "agl"
+    require conf/include/base-agl.inc
+  agl_metadir: |
+    # METADIR points to workspace root — used by some AGL conf/include files
+    METADIR = "${TOPDIR}/.."
+  agl_caches: |
+    DL_DIR ?= "/downloads"
+    SSTATE_DIR ?= "/sstate-cache"
+  parallelism: |
+    BB_NUMBER_THREADS ?= "${@oe.utils.cpu_count()}"
+    BB_NUMBER_PARSE_THREADS ?= "${@oe.utils.cpu_count()}"
+    PARALLEL_MAKE ?= "-j ${@oe.utils.cpu_count()}"

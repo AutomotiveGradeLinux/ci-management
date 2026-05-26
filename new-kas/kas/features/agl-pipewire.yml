@@ -1,0 +1,6 @@
+header:
+  version: 14
+
+local_conf_header:
+  agl_pipewire: |
+    require conf/include/agl-pipewire.inc

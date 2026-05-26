@@ -1,0 +1,6 @@
+header:
+  version: 14
+
+local_conf_header:
+  agl_app_framework: |
+    require conf/include/agl-app-framework.inc

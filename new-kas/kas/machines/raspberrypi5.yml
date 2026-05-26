@@ -1,0 +1,15 @@
+header:
+  version: 14
+
+machine: raspberrypi5
+
+bblayers_conf_header:
+  rpi_bsp: |
+    BBLAYERS += "${TOPDIR}/../bsp/meta-raspberrypi"
+    BBLAYERS += "${TOPDIR}/../bsp/meta-lts-mixins_u-boot"
+
+local_conf_header:
+  machine_conf: |
+    require conf/include/agl_raspberrypi5.inc
+  fstypes: |
+    IMAGE_FSTYPES:remove = "wic.xz wic.bmap wic.vmdk.xz"

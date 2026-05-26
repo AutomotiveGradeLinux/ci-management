@@ -1,0 +1,11 @@
+header:
+  version: 14
+
+machine: qemuarm
+
+local_conf_header:
+  machine_conf: |
+    require conf/include/agl_qemuarm.inc
+  qemu_fstypes: |
+    IMAGE_FSTYPES:append = " ext4"
+    IMAGE_FSTYPES:remove = "wic.xz wic.bmap wic.vmdk.xz"

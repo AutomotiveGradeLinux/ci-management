@@ -1,0 +1,133 @@
+# AGL master branch — floating development tip (scarthgap / Yocto 5.x)
+# External repos pinned to the SHAs from AGL-repo default.xml
+
+header:
+  version: 14
+  includes:
+    - file: common.yml
+
+build_system: oe
+
+repos:
+  # ── Yocto / OpenEmbedded ───────────────────────────────────────────────────
+  poky:
+    url: https://git.yoctoproject.org/poky
+    refspec: d63005ebea93b0285b437100ce8b6845746641da
+    path: external/poky
+
+  meta-openembedded:
+    url: https://github.com/openembedded/meta-openembedded
+    refspec: 5124ac4a658899158f4a7a2ddf1d2ca931ec7d0e
+    path: external/meta-openembedded
+
+  meta-lts-mixins-rust:
+    url: https://git.yoctoproject.org/meta-lts-mixins
+    refspec: 8ed4bf1919453f20d33c492897f93164dc69f4a8
+    path: external/meta-lts-mixins_rust
+
+  meta-virtualization:
+    url: https://git.yoctoproject.org/meta-virtualization
+    refspec: 3dd635f613f7299d986a8ab6bc9f584370f8ed1d
+    path: external/meta-virtualization
+
+  # ── AGL core layers ────────────────────────────────────────────────────────
+  meta-agl:
+    url: https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl
+    branch: master
+    path: meta-agl
+
+  meta-agl-demo:
+    url: https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-demo
+    branch: master
+    path: meta-agl-demo
+
+  meta-agl-devel:
+    url: https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-devel
+    branch: master
+    path: meta-agl-devel
+
+  # ── Optional upstream components ──────────────────────────────────────────
+  meta-qt6:
+    url: https://code.qt.io/yocto/meta-qt6
+    refspec: c58fdf7af5d92f5dc0a3446a9865580511ae8691
+    path: external/meta-qt6
+
+  meta-security:
+    url: https://git.yoctoproject.org/meta-security
+    refspec: b13f1705d723650de61277670c8a76aadea4cfdd
+    path: external/meta-security
+
+  meta-selinux:
+    url: https://git.yoctoproject.org/meta-selinux
+    refspec: 80246964a419701915d020f627fcc9f90b9e8b90
+    path: external/meta-selinux
+
+  meta-clang:
+    url: https://github.com/kraj/meta-clang
+    refspec: 5bce7e26a38a58bb52242494e54ab2af40009574
+    path: external/meta-clang
+
+  meta-flutter:
+    url: https://github.com/meta-flutter/meta-flutter
+    refspec: b6e338a8b1fc9f8907f2c9a167c972a1907ff2ea
+    path: external/meta-flutter
+
+  workspace-automation:
+    url: https://github.com/meta-flutter/workspace-automation
+    refspec: 75382038b75d6a619e3181df7173edca4970fe08
+    path: external/workspace-automation
+
+  # ── BSP repos – cloned for all builds; layers activated by machine configs ─
+  meta-raspberrypi:
+    url: https://git.yoctoproject.org/meta-raspberrypi
+    refspec: 2c646d29912dcc873469a57b1c207e1549c5094d
+    path: bsp/meta-raspberrypi
+
+  meta-lts-mixins-uboot:
+    url: https://git.yoctoproject.org/meta-lts-mixins
+    refspec: 66ceeebd047d7fdfc8668b300319a76da8ae257d
+    path: bsp/meta-lts-mixins_u-boot
+
+  meta-renesas:
+    url: https://github.com/renesas-rcar/meta-renesas
+    refspec: 89dddd954b07520b6b3f0aba90f69404646ce8b8
+    path: bsp/meta-renesas
+
+  meta-rcar:
+    url: https://github.com/CogentEmbedded/meta-rcar
+    refspec: fdc590b9f9853d129d2286876e22fdc91c1fcaa4
+    path: bsp/meta-rcar
+
+  meta-agl-refhw:
+    url: https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
+    branch: master
+    path: bsp/meta-agl-refhw
+
+# ── Layer activation via bblayers_conf_header ─────────────────────────────────
+# kas uses TOPDIR = KAS_BUILD_DIR (/workspace/build); ${TOPDIR}/.. = /workspace
+bblayers_conf_header:
+  core_layers: |
+    BBLAYERS += "${TOPDIR}/../external/poky/meta"
+    BBLAYERS += "${TOPDIR}/../external/poky/meta-poky"
+    BBLAYERS += "${TOPDIR}/../external/meta-lts-mixins_rust"
+    BBLAYERS += "${TOPDIR}/../meta-agl/meta-agl-core"
+    BBLAYERS += "${TOPDIR}/../meta-agl/meta-agl-bsp"
+    BBLAYERS += "${TOPDIR}/../external/meta-openembedded/meta-oe"
+  feature_layers: |
+    BBLAYERS += "${TOPDIR}/../meta-agl/meta-app-framework"
+    BBLAYERS += "${TOPDIR}/../meta-agl/meta-agl-flutter"
+    BBLAYERS += "${TOPDIR}/../meta-agl/meta-agl-kuksa-val"
+    BBLAYERS += "${TOPDIR}/../meta-agl/meta-netboot"
+    BBLAYERS += "${TOPDIR}/../meta-agl/meta-pipewire"
+    BBLAYERS += "${TOPDIR}/../meta-agl-demo"
+    BBLAYERS += "${TOPDIR}/../meta-agl-demo/meta-agl-demo-shared"
+    BBLAYERS += "${TOPDIR}/../external/meta-openembedded/meta-filesystems"
+    BBLAYERS += "${TOPDIR}/../external/meta-openembedded/meta-multimedia"
+    BBLAYERS += "${TOPDIR}/../external/meta-openembedded/meta-networking"
+    BBLAYERS += "${TOPDIR}/../external/meta-openembedded/meta-python"
+    BBLAYERS += "${TOPDIR}/../external/meta-qt6"
+    BBLAYERS += "${TOPDIR}/../external/meta-flutter"
+    BBLAYERS += "${TOPDIR}/../external/meta-flutter/meta-flutter-apps"
+    BBLAYERS += "${TOPDIR}/../external/meta-clang"
+    BBLAYERS += "${TOPDIR}/../external/meta-security"
+    BBLAYERS += "${TOPDIR}/../external/meta-selinux"

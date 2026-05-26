@@ -1,0 +1,6 @@
+header:
+  version: 14
+
+local_conf_header:
+  agl_kuksa_val: |
+    require conf/include/agl-kuksa-val.inc

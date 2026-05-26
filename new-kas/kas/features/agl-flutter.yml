@@ -1,0 +1,7 @@
+header:
+  version: 14
+
+local_conf_header:
+  agl_flutter: |
+    TOOLCHAIN_HOST_TASK:append = " nativesdk-flutter-sdk"
+    require conf/include/agl-flutter.inc

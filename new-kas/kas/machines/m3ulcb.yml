@@ -1,0 +1,17 @@
+header:
+  version: 14
+
+machine: m3ulcb
+
+# Note: m3ulcb configuration name may need verification
+bblayers_conf_header:
+  renesas_bsp: |
+    BBLAYERS += "${TOPDIR}/../bsp/meta-renesas/meta-rcar-gen3"
+    BBLAYERS += "${TOPDIR}/../bsp/meta-rcar/meta-rcar-adas"
+    BBLAYERS += "${TOPDIR}/../bsp/meta-agl-refhw/meta-agl-refhw-gen3"
+
+local_conf_header:
+  machine_conf: |
+    require conf/include/agl_refhw-m3.inc
+  fstypes: |
+    IMAGE_FSTYPES:remove = "wic.xz wic.bmap wic.vmdk.xz ext4"
