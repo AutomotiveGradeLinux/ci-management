@@ -24,8 +24,14 @@ cd repoclone
 repo init --reference=/opt/AGL/preclone -u https://gerrit.automotivelinux.org/gerrit/AGL/AGL-repo.git
 repo sync -j8
 
-external/poky/scripts/install-buildtools
-source external/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+# Detect and call install-buildtools
+if [ -f "external/openembedded-core/scripts/install-buildtools" ]; then
+    external/openembedded-core/scripts/install-buildtools
+    source external/openembedded-core/buildtools/environment-setup-x86_64-pokysdk-linux
+elif [ -f "external/poky/scripts/install-buildtools" ]; then
+    external/poky/scripts/install-buildtools
+    source external/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+fi
 
 for i in $BOARDS ; do
     pushd .

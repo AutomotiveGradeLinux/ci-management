@@ -5,6 +5,9 @@
 ## bitbake the image
 ################################################################################
 
+# debug
+echo 'SSTATE_MIRRORS := ""' >> conf/local.conf
+
 cat conf/local.conf
 
 # finally, build the agl-demo-platform (we retry to catch the tar-native bug)

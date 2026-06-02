@@ -7,8 +7,14 @@
 
 pushd .
 
-external/poky/scripts/install-buildtools
-source external/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+# Detect and call install-buildtools
+if [ -f "external/openembedded-core/scripts/install-buildtools" ]; then
+    external/openembedded-core/scripts/install-buildtools
+    source external/openembedded-core/buildtools/environment-setup-x86_64-pokysdk-linux
+elif [ -f "external/poky/scripts/install-buildtools" ]; then
+    external/poky/scripts/install-buildtools
+    source external/poky/buildtools/environment-setup-x86_64-pokysdk-linux
+fi
 
 # meta-agl
 pushd meta-agl
