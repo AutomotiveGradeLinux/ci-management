@@ -4,7 +4,7 @@ This project manages the Jenkins Job Builder (JJB) configuration, Packer templat
 
 ## Project Structure
 
-- `jjb/`: Jenkins Job Builder (JJB) YAML configurations. Defines CI pipeline jobs, daily tasks, and release workflows across multiple AGL releases (quillback, ricefish, salmon, trout, unagi).
+- `jjb/`: Jenkins Job Builder (JJB) YAML configurations. Defines CI pipeline jobs, daily tasks, and release workflows across multiple AGL releases (quillback, ricefish, salmon, trout, unagi, vimba).
 - `packer/`: Packer templates and scripts for building and provisioning CI agent images (e.g., Ubuntu).
 - `jenkins-scripts/`: Initialization and configuration scripts for Jenkins controller and agent nodes.
 - `scripts/`: General utility scripts for the CI environment.
@@ -15,6 +15,7 @@ This project manages the Jenkins Job Builder (JJB) configuration, Packer templat
 The `jjb/` directory contains job definitions. 
 - Global defaults and macros are in `jjb/global-defaults.yaml` and `jjb/global-macros.yaml`.
 - Jobs are categorized by function (verify, release, snapshot, daily tasks).
+- Note: `h3ulcb-nogfx` is currently disabled in `ci-AGL-verify` due to a broken BSP.
 
 ### Packer Build
 CI agents are built using Packer.

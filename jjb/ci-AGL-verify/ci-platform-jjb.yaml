@@ -2,7 +2,7 @@
 - project:
     name: ci-platform-AGL
     machine:
-      - h3ulcb-nogfx
+      - # h3ulcb-nogfx
       - qemux86-64
       - qemuarm64
       - qemuriscv
@@ -10,7 +10,7 @@
       - raspberrypi5
     testmachine:
       #fixme qemuriscv
-      - h3ulcb-nogfx
+      - # h3ulcb-nogfx
       - qemux86-64
       - qemuarm64
       - raspberrypi4

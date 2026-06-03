@@ -2,7 +2,7 @@
 - project:
     name: ci-platform-AGL-refhw
     machine:
-      - h3ulcb-nogfx
+      - # h3ulcb-nogfx
     testmachine:
       - r8a7795-agl-refhw
     project:
