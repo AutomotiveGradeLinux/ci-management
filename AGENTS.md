@@ -16,6 +16,7 @@ The `jjb/` directory contains job definitions.
 - Global defaults and macros are in `jjb/global-defaults.yaml` and `jjb/global-macros.yaml`.
 - Jobs are categorized by function (verify, release, snapshot, daily tasks).
 - Note: `h3ulcb-nogfx` is currently disabled in `ci-AGL-verify` due to a broken BSP.
+- Note: `r8a7795-agl-refhw` is currently disabled in `ci-AGL-verify` until the h3ulcb-nogfx machine is enabled.
 
 ### Packer Build
 CI agents are built using Packer.

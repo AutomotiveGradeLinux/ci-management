@@ -15,7 +15,7 @@
       - qemuarm64
       - raspberrypi4
       - raspberrypi5
-      - r8a7795-agl-refhw
+      # - r8a7795-agl-refhw
     project:
       - meta-agl
       - meta-agl-demo
@@ -123,10 +123,10 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: FAILURE
-            - name: 'ci-platform-{project}-verify-CIB-h3ulcb-nogfx'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: FAILURE
+            #- name: 'ci-platform-{project}-verify-CIB-h3ulcb-nogfx'
+            #  current-parameters: true
+            #  #abort-all-job: true
+            #  kill-phase-on: FAILURE
             - name: 'ci-platform-{project}-verify-CIB-raspberrypi4'
               current-parameters: true
               kill-phase-on: FAILURE
@@ -176,10 +176,10 @@
             #  current-parameters: true
             #  #abort-all-job: true
             #  kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIBT-h3ulcb-nogfx'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: NEVER
+            #- name: 'ci-platform-{project}-verify-CIBT-h3ulcb-nogfx'
+            #  current-parameters: true
+            #  #abort-all-job: true
+            #  kill-phase-on: NEVER
             - name: 'ci-platform-{project}-verify-CIBT-raspberrypi4'
               current-parameters: true
               #abort-all-job: true
@@ -188,14 +188,14 @@
               current-parameters: true
               #abort-all-job: true
               kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIBT-upsquare'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: NEVER
-            - name: 'ci-platform-{project}-verify-CIBT-r8a7795-agl-refhw'
-              current-parameters: true
-              #abort-all-job: true
-              kill-phase-on: NEVER
+            #- name: 'ci-platform-{project}-verify-CIBT-upsquare'
+            #  current-parameters: true
+            #  #abort-all-job: true
+            #  kill-phase-on: NEVER
+            # - name: 'ci-platform-{project}-verify-CIBT-r8a7795-agl-refhw'
+            #   current-parameters: true
+            #   #abort-all-job: true
+            #   kill-phase-on: NEVER
       - multijob:
           name: 'CIBT-{project}-complete'
           condition: ALWAYS
